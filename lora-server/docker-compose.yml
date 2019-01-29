@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  loraserver:
+    image: loraserver/loraserver:2
+    ports:
+      - 8000:8000 # exposed port & API for lora-app-server or third-party-app-servers 
+    volumes:
+      - ./configuration/loraserver:/etc/loraserver
+
+  appserver:
+    image: loraserver/lora-app-server:2
+    ports:
+      - 8080:8080 # public web-interface & public API port
+      # - 8001:8001 not exposed: loraserver to lora-app-server private communication only
+      - 8003:8003 # exposed port, join-server API  
+    volumes:
+      - ./configuration/lora-app-server:/etc/lora-app-server
+
+  geoserver:
+    image: loraserver/lora-geo-server:2
+    ports:
+      - 8005:8005 # exposed port, geo-server API
+    volumes:
+      - ./configuration/lora-geo-server:/etc/lora-geo-server
+
+  postgresql:
+    image: postgres:9.6-alpine
+    volumes:
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - ./data/postgresql:/var/lib/postgresql/data
+
+  redis:
+    image: redis:4-alpine
+    volumes:
+      - ./data/redis:/data
+
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
