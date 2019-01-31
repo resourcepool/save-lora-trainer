@@ -14,13 +14,8 @@ class PacketDecoder {
     if (this.payload.length < 5) {
       return false;
     }
-    console.log(this.toHexString(this.payload));
     let prefix = this.payload.readInt8(0);
     return prefix === 0x00;
-  }
-
-  toHexString(bytes) {
-    
   }
   
   toBytes(buffer) {

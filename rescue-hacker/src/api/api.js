@@ -1,41 +1,27 @@
 const path = require("path");
-const grpc = require('grpc');
-const protoLoader = require('@grpc/proto-loader');
-const ROOT_PROTO_PATH = path.resolve(__dirname, "../../../lora-server/grpc");
-const AS_PROTO_PATH = path.resolve(ROOT_PROTO_PATH, "as");
-const COMMON_PROTO_PATH = path.resolve(ROOT_PROTO_PATH, "common");
-const GW_PROTO_PATH = path.resolve(ROOT_PROTO_PATH, "gw");
-const NC_PROTO_PATH = path.resolve(ROOT_PROTO_PATH, "nc");
-const NS_PROTO_PATH = path.resolve(ROOT_PROTO_PATH, "ns");
 
-// Load Protobufs Synchronously
-const packageDefinition = protoLoader.loadSync(path.resolve(NS_PROTO_PATH, "ns.proto"), {
-  longs: String,
-  enums: String,
-  defaults: true,
-  oneofs: true,
-  includeDirs: [ROOT_PROTO_PATH]
+const AUTH_HEADER = "Grpc-Metadata-Authorization";
+const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.GVAd8NMkAZ3axU2flBJ9PbNY_R45tbu-VLLaxWAGwWI";
+const axios = require('axios');
+const client = axios.create({
+  baseURL: 'http://localhost:8080/api',
+  headers: {[AUTH_HEADER]: "Bearer " + JWT}
 });
-
-const packageObject = grpc.loadPackageDefinition(packageDefinition);
-//protoDescriptor.ns.NetworkServerService
-const networkServerService = new packageObject.ns.NetworkServerService('localhost:8000', grpc.credentials.createInsecure());//NetworkServerServiceClient('localhost:8000', grpc.credentials.createInsecure(), {});
-
-const createDevice = (device) => {
-  //let req = new CreateDeviceRequest();
-  //let device = new Device();
-  //device.setDevEui(dto.devEui);
-  //device.setDeviceProfileId(dto.deviceProfileId);
-  //device.setServiceProfileId(dto.serviceProfileId);
-  //device.setRoutingProfileId(dto.routingProfileId);
-  //req.setDevice(device);
+const createDevice = async (device) => {
+  const response = await client.post('/devices', {device: device});
   console.log(device);
-  networkServerService.createDevice({device: device}, (err, data) => {
-        console.log(err);
-        console.log(data);
+};
+
+const setDeviceNwkKey = async (devEUI, nwkKey) => {
+  const response = await client.post(`/devices/${devEUI}/keys`, {
+    deviceKeys: {
+      devEUI: devEUI,
+      nwkKey: nwkKey
+    }
   });
 };
 
 module.exports = {
-      createDevice
+  createDevice,
+  setDeviceNwkKey
 };

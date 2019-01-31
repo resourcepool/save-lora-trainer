@@ -17,6 +17,14 @@ const bytesToPrettyHexString = (bytes) => {
   return hex;
 };
 
+const bytesToHexString = (bytes) => {
+  let hex = '';
+  for (let byte of bytes.values()) {
+    hex += byteToHexString(byte);
+  }
+  return hex;
+};
+
 const SEPARATORS = new RegExp('[-:]', 'g');
 
 
@@ -45,5 +53,6 @@ module.exports = {
   byteToHexString,
   hexStringToByte,
   bytesToPrettyHexString,
+  bytesToHexString,
   arraysEqual
 };
