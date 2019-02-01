@@ -83,6 +83,8 @@ Hint 2:
 Your friends all bought the same LoRa Device which is from the manufacturer Unicorn Inc.  
 The Manufacturer's DevEUI (<=> MAC Address) all start with **13:37:00:00**:XX:XX:XX:XX
 
+Hint 3:  
+The PhyPayload binary protocol stores information in... Little-Endian... [https://en.wikipedia.org/wiki/Endianness](https://en.wikipedia.org/wiki/Endianness) 
 
 ### Step 3 - Activating the device
 Now that we know how to decode a Device JoinRequest, we need to implement the necessary steps to activation in the Gotham-IoT server.  
@@ -98,3 +100,7 @@ You can find more info on it here: [http://www.techplayon.com/lora-device-activa
 
 Your friend John Doe has already created a client allowing you to authenticate and communicate with the Gotham-IoT Server.
  
+Here is what you need to do:
+ * Take the decoded packet and use DevEUI and AppEUI to check if device exists in App.
+ * If device does not exist, create it
+ * Change the Device NwkKey to `42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42`
