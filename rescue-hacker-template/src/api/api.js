@@ -6,7 +6,7 @@
  * @type {string}
  */
 const axios = require('axios');
-const logger = require('./log/logger');
+const logger = require('../log/logger');
 const AUTH_HEADER = "Grpc-Metadata-Authorization";
 const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.GVAd8NMkAZ3axU2flBJ9PbNY_R45tbu-VLLaxWAGwWI";
 

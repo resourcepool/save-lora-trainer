@@ -14,9 +14,10 @@ const VALID_APP_EUI = utils.hexStringToBytes('42:42:42:42:42:42:42:42');
 let init = () => {
 
 // TODO Step 1: Connect to the city's remote MQTT Broker
+// Using the provided MQTT client, connect to the remote MQTT broker (cf README.md)
 // Those idiots forgot to put any security on it... Noobs!
-// You want to listen to all incoming messages
-  
+// MQTT Client documentation => https://github.com/mqttjs/MQTT.js
+// You want to listen to all incoming messages... Did I hear the word "Wildcard"?
 };
 
 /**
@@ -59,3 +60,5 @@ let onMessage = async (topic, message) => {
 let isValidAppEUI = (msgAppEUI) => {
   return utils.arraysEqual(msgAppEUI, VALID_APP_EUI);
 };
+
+init();

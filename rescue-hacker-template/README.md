@@ -1,21 +1,100 @@
 # Rescue-hacker
 
-## Step 1 - Decoding a join-request
 
- * connect to the remote MQTT broker and subscribe to all topics.
- * decode a join-request
- * if the join-request has the right AppEui, create device-profile on the AppServer
- 
- 
-### The MQTT Broker address
-The MQTT broker is exposed on 5.135.162.148:1883
+## Briefing
 
-### A Join Request
-You will receive all the messages received by all gateways. This is a lot of information.  
-You are only concerned by the Join-Request messages.  
-A join request can be recognized by the following:
+Welcome.  
+Your name is Trinity.  
+You are leading a community of hackers. By chance, you were outside when the earthquake happened and you are fine. Your computer gear as well, thanks for asking.
+
+You worry about your friends and want to establish contact with them.  
+
+Your city (Gotham) has a network of **LoRa-nodes** and **Gateways** which receive sensor-data from hundreds of devices spread across the region.  
+This data is then processed by the city council main LoRa App Server, called Gotham-IoT, which manages all device-authorization and exposes a REST & gRPC API for back-office apps used by the city council.  
+
+As all the security systems are down, you made your way inside the City Council building and managed to get into the DMZ.
+You are connected to the production private network, still running on batteries.
+
+After looking around, you found
+ * an unrestricted access to the City's MQTT broker, the one which gets ALL LoRa trafic.
+ * a restricted but insecure access to the Gotham-IoT server that manages all device-authorization / messaging of the network.
+
+
+## Main Goal
+
+Your main goal is to allow your friends to send their Geo-Location via a LoRa packet.  
+Once you have this, you can alert the local authorities and get them safe.
+
+However, there are a few issues :
+ * Devices follow a specific activation process and people can't just emit packets on the network.
+ * Once devices are activated, sending data must follow a specific protocol and can't just be sent in plain text.
+
+
+## Chapter 1 - Hacking the device activation
+
+Your mission, if you accept it, will be to tap into the MQTT broker and listen to all the packets, 
+identify your device attempts to Join the network (JoinRequest), and use your access to the Gotham-IoT server to register it yourself. 
+
+ * **Step 1**: connect to the remote MQTT broker and subscribe to all topics using a wildcard.
+ * **Step 2**: decode a join-request
+ * **Step 3**: if the join-request has the right identifier (that only you and your friends know), make it join the network. 
+
+
+### Step 1 - Connecting to the MQTT Broker
+The MQTT broker is exposed on `5.135.162.148:1883`.  
+MQTT is a typical async message protocol used for IoT. 
+To subscribe to all topics, you may have to use a **wildcard**...  
+We have provided a MQTT client, you might find the useful doc here: [https://github.com/mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js)
+
+### Step 2 - Decoding a Join Request
+
+Now that you are receiving all the messages of all the gateways, you start noticing that there are multiple types of messages and structures are.
+Some of them are encrypted, some other are not.  
+Before they can start sharing data on a Network, the devices follow an activation process called OTAA (Over-The-Air Activation).  
+We will look into the process later. For now the only thing you need to know is the following:  
+
+When a device attempts to join a LoRaNetwork, it sends JoinRequests.  
+A JoinRequest contains:
+ * its **unique ID** called Device EUI or DevEUI (<=> Mac Address)
+ * a target **Application ID** (see it as a **Realm**)
+ * other info (DevNOnce, MIC) that we won't worry about today...
+
+The good thing about JoinRequests is that they are **not** Encrypted.  
+That means we can easily decode them from the MQTT broker packets!  
+
+To understand how to spot a Join Request, you need to read the binary protocol used to encode the payload [https://hackmd.io/s/S1kg6Ymo-](https://hackmd.io/s/S1kg6Ymo-).
+
+**How to spot a JoinRequest:**  
+  A join request can be recognized by the following:
  * the message has a field called "phyPayload" containing base64 encoded data 
- * the binary message of phyPayload has the following Mac Header: 0b00000000
+ * the binary message of phyPayload has the following Mac Header (first byte of phyPayload): 0b00000000
+  
+Now that you have found which Packets are JoinRequests, you need to extract its metadata from the binary buffer.
 
-Once you have recognized a join request, you can find the details of the binary structure of the payload [HERE](https://hackmd.io/s/S1kg6Ymo-).  
+Fill-out the **JoinRequestPacketDecoder** methods to do so.  
+We are looking for the AppEUI, the DevEUI, the DevNOnce and the MIC.  
 
+**Important:**  
+Hint 1:  
+Your friends know the **answer to life, the universe, and everything** (which is **42**, by the way!).  
+You can assume that the AppEUI will be 42:42:42:42:42:42:42:42  
+
+Hint 2:  
+Your friends all bought the same LoRa Device which is from the manufacturer Unicorn Inc.  
+The Manufacturer's DevEUI (<=> MAC Address) all start with **13:37:00:00**:XX:XX:XX:XX
+
+
+### Step 3 - Activating the device
+Now that we know how to decode a Device JoinRequest, we need to implement the necessary steps to activation in the Gotham-IoT server.  
+
+The OTAA concept is very simple:  
+ * The device sends a JoinRequest containing its **unique ID** called Device EUI or DevEUI (<=> Mac Address), the **Application ID**, and other info (DevNOnce, MIC).
+ * The Gotham-IoT server checks if the Application has registered the current Device.
+ * If the device exists, it will send a JoinAccept response.
+ * The GothamIoT server needs to generate a Network Key called NwkKey (it's like a 16-byte **token** set by the Gotham-IoT admin to authenticate your device)
+ * After this, the device needs to set the Network Key for all exchanges. 
+ 
+You can find more info on it here: [http://www.techplayon.com/lora-device-activation-call-flow-join-procedure-using-otaa-and-abp](http://www.techplayon.com/lora-device-activation-call-flow-join-procedure-using-otaa-and-abp)
+
+Your friend John Doe has already created a client allowing you to authenticate and communicate with the Gotham-IoT Server.
+ 
