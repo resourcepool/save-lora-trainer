@@ -1,3 +1,4 @@
 import searchRoutes from "./search/routes";
+import teamRoutes from "./team/routes";
 
-export default [...searchRoutes];
+export default [...searchRoutes, ...teamRoutes];
