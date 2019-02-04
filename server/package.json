@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MQTT client which monitors and registers LoRa devices in the Save Lora hack game",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node ./dist/index.js\"",
+    "start": "tsc-watch --onSuccess \"node --inspect=4444 ./dist/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Resourcepool",
@@ -16,15 +16,18 @@
     "@types/node": "^10.12.12",
     "@types/request-promise": "^4.1.42",
     "@types/swagger-ui-express": "^3.0.0",
+    "btoa": "^1.2.1",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^5.0.0-alpha.7",
     "mqtt": "^2.18.8",
+    "node-aes-cmac": "^0.1.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "swagger-ui-express": "^4.0.2",
     "tsc-watch": "^1.0.31",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "winston": "^3.2.1"
   }
 }

@@ -4,8 +4,9 @@ class JoinRequestPacketDecoder {
   
   constructor(topic, msg) {
     this.topic = topic;
+    
     try {
-      this.msg = JSON.parse(msg.toString());
+      this.msg = JSON.parse(msg.toString());  
     } catch (e) {
       // Someone sent a weird payload. Not supposed to happen.
     }
@@ -21,8 +22,14 @@ class JoinRequestPacketDecoder {
    * false otherwise
    */
   isSupported() {
-    // TODO Step 2.1
-    return false;
+    if (!this.payload) {
+      return false;
+    }
+    if (this.payload.length < 5) {
+      return false;
+    }
+    let prefix = this.payload.readInt8(0);
+    return prefix === 0x00;
   }
   
   /**
@@ -41,13 +48,15 @@ class JoinRequestPacketDecoder {
       devNOnce: null,
       mic: null
     };
-    // TODO Step 2.2
-    // Don't forget to look at the method utils#hexStringToBytes()
+    request.appEUI = utils.bytesToHexString(this.payload.slice(1, 9).reverse());
+    request.devEUI = utils.bytesToHexString(this.payload.slice(9, 17).reverse());
+    request.devNOnce = utils.bytesToHexString(this.payload.slice(17, 19).reverse());
+    request.mic = utils.bytesToHexString(this.payload.slice(19, 23).reverse());
     return request;
   }
 
 }
 
 
-
 module.exports = JoinRequestPacketDecoder;
+
