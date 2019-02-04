@@ -1,19 +1,15 @@
 const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
+const conf = require('./conf/conf');
 
 const JoinRequestPacketDecoder = require('./join-request-packet-decoder');
 
-const GATEWAY_RX_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
+const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 
-const RAK811_DEVICE_PROFILE_ID = '1d99a006-e617-4fb3-9ffe-a71567ee36a7';
-const LORA_APPLICATION_ID = 1;
-const VALID_APP_EUI = utils.hexStringToBytes('42:42:42:42:42:42:42:42');
-
-// TODO Step 0
-const DEVICE_EUI = utils.hexStringToBytes('TODO');// Put your Device EUI here
-const DEVICE_NETWORK_KEY = utils.normalizeHexString("42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42");
-
+const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
+const deviceEUI = utils.hexStringToBytes(conf.user.deviceEUI);
+const deviceNetworkKey = utils.normalizeHexString(conf.user.nwkKey);
 
  /**
  * Step 1
@@ -34,7 +30,7 @@ let init = () => {
  * @param message
  */
 let onMessage = async (topic, message) => {
-  if (!GATEWAY_RX_TOPIC_REGEX.test(topic)) {
+  if (!gatewayRxTopicRegex.test(topic)) {
     return;
   }
   // TODO Step 2: 
@@ -74,7 +70,7 @@ let onMessage = async (topic, message) => {
  * @returns {boolean}
  */
 let isValidAppEUI = (msgAppEUI) => {
-  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, VALID_APP_EUI);
+  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI);
 };
 
 /**
@@ -84,7 +80,7 @@ let isValidAppEUI = (msgAppEUI) => {
  * @returns {boolean}
  */
 let isRightDeviceEUI = (devEUI) => {
-  return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, DEVICE_EUI);
+  return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, deviceEUI);
 };
 
 init();

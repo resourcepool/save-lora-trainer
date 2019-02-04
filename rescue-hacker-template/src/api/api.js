@@ -5,15 +5,17 @@
  * Good luck!
  * @type {string}
  */
+const Logger = require('../log/logger');
+const conf = require('../conf/conf');
 const axios = require('axios');
-const logger = require('../log/logger');
-const AUTH_HEADER = "Grpc-Metadata-Authorization";
-const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.GVAd8NMkAZ3axU2flBJ9PbNY_R45tbu-VLLaxWAGwWI";
+
+const authHeader = "Grpc-Metadata-Authorization";
+const logger = Logger.child({service: 'api'});
 
 
 const client = axios.create({
-  baseURL: 'http://localhost:8080/api',
-  headers: {[AUTH_HEADER]: "Bearer " + JWT}
+  baseURL: conf.loRaServer.baseUrl,
+  headers: {[authHeader]: "Bearer " + conf.loRaServer.authToken}
 });
 
 const deviceExists = async (devEUI) => {
@@ -30,7 +32,7 @@ const deviceExists = async (devEUI) => {
 /**
  * @param device
  * {
- *     devEUI: {hexString},
+ *     devEUI: {string},
  *     applicationID: {string|number},
  *     deviceProfileID: {string},
  *     name: {string},
@@ -51,8 +53,8 @@ const createDevice = async (device) => {
 
 /**
  * 
- * @param devEUI {hexString}
- * @param nwkKey {hexString}
+ * @param devEUI {string} hex string
+ * @param nwkKey {string} hex string
  * @returns {Promise<*>}
  */
 const setDeviceNwkKey = async (devEUI, nwkKey) => {
