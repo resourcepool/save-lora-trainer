@@ -63,7 +63,7 @@ export default class JoinRequestBuilder {
         joinRequestPayload.set(this._appEUI!.reverse(), 1);
         joinRequestPayload.set(this._devEUI!.reverse(), 9);
         joinRequestPayload[17] = this._devNOnce! & 0x00FF;
-        joinRequestPayload[18] = this._devNOnce! & 0xFF00;
+        joinRequestPayload[18] = this._devNOnce!>>8 & 0x00FF;
         phyPayload.set(joinRequestPayload, 0);
         phyPayload.set(this.computeMIC(joinRequestPayload), 19);
         let date: Date = new Date();

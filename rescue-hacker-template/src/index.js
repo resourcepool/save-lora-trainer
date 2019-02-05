@@ -3,7 +3,7 @@ const utils = require('./utils');
 const mqtt = require('mqtt');
 const conf = require('./conf/conf');
 
-const JoinRequestPacketDecoder = require('./decoder/join-request-packet-decoder');
+const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
 
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 
