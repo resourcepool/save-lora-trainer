@@ -1,7 +1,7 @@
 import Challenge from './Challenge';
 import Team from "../team/Team";
 import * as teamDao from "../team/team-dao";
-import {create, findOne} from "./challenge-dao";
+import * as challengeDao from "./challenge-dao";
 import Logger from "../log/logger";
 import * as helper from '../joinrequest/join-request-helper';
 import ChallengeResultDto from "../web/services/challenges/dto/ChallengeResultDto";
@@ -83,16 +83,17 @@ export const createJoinRequestChallenge = async (tag: string, clientId: string):
         content.messages.push(tag === CHALLENGE_TAG_JOIN_REQUEST_SUPPORTED ? helper.randomRequest() : helper.randomJoinRequest());
     }
     const challenge = new Challenge(tag, team, content);
-    return await create(challenge);
+    return await challengeDao.create(challenge);
 };
 
 export const solveJoinRequestChallenge = async (result: ChallengeResultDto, stepTag: string, validator: Function): Promise<boolean | Error> => {
-    const challenge: Challenge | Error = await findOne(result.challengeId!);
+    const challenge: Challenge | Error = await challengeDao.findOne(result.challengeId!);
     if (challenge instanceof Error) {
         logger.warn(`Failed to retrieve challenge for id: ${result.challengeId}`);
         return challenge;
     }
-
+    // We don't need the challenge anymore
+    await challengeDao.deleteOne(challenge.id!);
     let stepValidated = validator(challenge, result);
     if (!stepValidated) {
         return false;

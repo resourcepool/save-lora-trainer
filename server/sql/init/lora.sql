@@ -53,7 +53,6 @@ CREATE TABLE `team` (
 CREATE TABLE `challenge` (
   `id` int(11) NOT NULL,
   `teamId` int(11) NOT NULL,
-  `devEUI` varchar(50) DEFAULT NULL,
   `tag` varchar(250) NOT NULL,
   `content` json DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
