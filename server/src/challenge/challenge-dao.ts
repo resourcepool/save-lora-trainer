@@ -1,20 +1,18 @@
-import Challenge from './Challenge';
+import Challenge from './models/Challenge';
 import {dbInstance} from '../web/utils/db-config';
 
-export const findOne = async (id: number): Promise<Challenge | Error> => {
+export const findOne = async (id: number): Promise<Challenge | undefined> => {
     const con = await dbInstance();
     let rows;
     try {
         rows = await con.query(`SELECT * FROM challenge WHERE id = ?`, id);
-    } catch (error) {
-        return new Error(error.code);
     } finally {
         con.end();
     }
-    return rows.length > 0 ? Challenge.fromDto(rows[0]) : new Error('Challenge not found');
+    return rows.length > 0 ? Challenge.fromDto(rows[0]) : undefined;
 };
 
-export const create = async (challenge: Challenge): Promise<Challenge | Error> => {
+export const create = async (challenge: Challenge): Promise<Challenge> => {
     const con = await dbInstance();
     let res;
     try {
@@ -22,32 +20,26 @@ export const create = async (challenge: Challenge): Promise<Challenge | Error> =
             id: challenge.id,
             tag: challenge.tag,
             teamId: challenge.teamId,
-            devEUI: challenge.devEUI,
             content: JSON.stringify(challenge.content)
         };
         res = await con.query('INSERT INTO challenge SET ?', dto);
-    } catch (error) {
-        return new Error(error.code);
     } finally {
         con.end();
     }
     if (res.affectedRows === 0) {
-        return new Error('No challenge added');
+        throw new Error("Failed to add challenge");
     }
     challenge.id = res.insertId;
     return challenge;
 };
 
-export const deleteOne = async (id: number): Promise<boolean | Error> => {
+export const deleteOne = async (id: number): Promise<boolean> => {
     const con = await dbInstance();
     let res;
     try {
         res = await con.query(`DELETE FROM challenge WHERE id = ?`, id);
-    } catch (error) {
-        return new Error(error.code);
     } finally {
         con.end();
     }
-
-    return res.affectedRows > 0 ? true : new Error('Challenge not found or impossible to delete');
+    return res.affectedRows > 0;
 };

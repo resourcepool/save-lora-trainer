@@ -1,7 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
-import Team from '../../../team/Team';
+import Team from '../../../team/models/Team';
 import {addTeam, findByClientId} from '../../../team/team-dao';
-import Progress from "../../../progress/Progress";
+import Progress from "../../../progress/models/Progress";
 
 export const addTeamAction = async (req: Request, res: Response, next: NextFunction) => {
     const team: Team = {
@@ -10,18 +10,14 @@ export const addTeamAction = async (req: Request, res: Response, next: NextFunct
         devEUI: req.body.devEUI,
         progress: new Progress()
     };
-    const result = await addTeam(team);
-    if (typeof result !== 'boolean') {
-        return res.status(400).send(result.message);
-    }
+    await addTeam(team);
     return res.status(204).send('CREATED');
 };
 
-
 export const getTeamProgressAction = async (req: Request, res: Response, next: NextFunction) => {
     const team = await findByClientId(req.params.clientId);
-    if (team instanceof Error) {
-        return res.status(400).send(team.message);
+    if (!team) {
+        return res.status(404).send("Team not found");
     }
     return res.status(200).send(team.progress);
 };

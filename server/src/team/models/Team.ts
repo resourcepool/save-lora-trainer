@@ -1,4 +1,4 @@
-import Progress from "../progress/Progress";
+import Progress from "../../progress/models/Progress";
 
 export default class Team {
     id?: number;

@@ -1,5 +1,5 @@
 import * as utils from "../utils";
-import JoinRequestBuilder from "./JoinRequestBuilder";
+import JoinRequestBuilder from "./models/JoinRequestBuilder";
 import btoa from 'btoa';
 
 const MS_BTW_EPOCH_AND_GPS_EPOCH: number = new Date(1980, 0, 6, 0, 0, 0, 0).getTime();

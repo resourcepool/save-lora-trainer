@@ -1,6 +1,6 @@
-import * as utils from '../utils';
+import * as utils from '../../utils';
 import {aesCmac} from 'node-aes-cmac';
-import {randomRxInfo} from './join-request-helper';
+import {randomRxInfo} from '../join-request-helper';
 
 export default class JoinRequestBuilder {
     private static readonly MHDR: number = 0x00;

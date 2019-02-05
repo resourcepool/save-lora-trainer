@@ -3,7 +3,7 @@ const conf = require('../conf/conf');
 const axios = require('axios');
 
 const authHeader = "Client-Authorization";
-const logger = Logger.child({service: 'review'});
+const logger = Logger.child({service: 'progress-client'});
 
 const client = axios.create({
   baseURL: conf.progressClient.baseUrl,
@@ -16,7 +16,7 @@ const logError = (e) => {
     details = `[${e.response.status}] ${e.response.data}`;
   }
   logger.error("Error occured during call to http api: " + details);
-  throw e;
+  process.exit(1);
 };
 
 

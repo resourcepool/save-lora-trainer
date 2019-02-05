@@ -1,4 +1,4 @@
-import JoinRequestBuilder from '../joinrequest/JoinRequestBuilder';
+import JoinRequestBuilder from '../joinrequest/models/JoinRequestBuilder';
 import Logger from '../log/logger';
 import * as mqttService from './mqtt-service';
 import Timeout = NodeJS.Timeout;

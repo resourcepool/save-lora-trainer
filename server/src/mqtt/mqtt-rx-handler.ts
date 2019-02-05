@@ -1,4 +1,4 @@
-import JoinRequestPacketDecoder from "../joinrequest/JoinRequestPacketDecoder";
+import JoinRequestPacketDecoder from "../joinrequest/models/JoinRequestPacketDecoder";
 import Logger from '../log/logger';
 const logger = Logger.child({service: "mqtt-rx-handler"});
 

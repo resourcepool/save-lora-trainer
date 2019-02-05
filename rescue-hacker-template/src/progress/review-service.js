@@ -10,7 +10,7 @@ const conf = require('../conf/conf');
 const client = require('./progress-client');
 const JoinRequestPacketDecoder = require('../decoder/JoinRequestPacketDecoder');
 const pg = require('./Progress');
-const logger = Logger.child({service: 'review'});
+const logger = Logger.child({service: 'review-service'});
 
 let loopCallback;
 
@@ -69,8 +69,7 @@ const solveJoinRequestSupportedChallenge = async () => {
   }
 
   // Submit challenge result
-  let response = await client.submitJoinRequestSupportedChallenge(result);
-  reviews.joinRequestSupported = response.done;
+  await client.submitJoinRequestSupportedChallenge(result);
 };
 
 const solveJoinRequestDecodeChallenge = async () => {
@@ -98,8 +97,7 @@ const solveJoinRequestDecodeChallenge = async () => {
   }
 
   // Submit challenge result
-  let response = await client.submitJoinRequestDecodeChallenge(result);
-  reviews.joinRequestDecode = response.done;
+  await client.submitJoinRequestDecodeChallenge(result);
 };
 
 module.exports = {

@@ -1,4 +1,4 @@
-import {normalizeHexString} from "../utils";
+import {normalizeHexString} from "../../utils";
 
 export default class JoinRequestPacket {
     appEUI: string;

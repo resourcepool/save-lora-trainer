@@ -1,5 +1,5 @@
 import JoinRequestPacket from "./JoinRequestPacket";
-import * as utils from '../utils';
+import * as utils from '../../utils';
 
 export default class JoinRequestPacketDecoder {
   

@@ -1,5 +1,5 @@
 import JoinRequestBuilder from './JoinRequestBuilder';
-import * as utils from '../utils';
+import * as utils from '../../utils';
 import JoinRequestPacketDecoder from "./JoinRequestPacketDecoder";
 
 const validTopic = 'gateway/abcdef0123456789/rx';

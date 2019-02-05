@@ -1,5 +1,5 @@
 import Decoder from './JoinRequestPacketDecoder';
-import * as utils from '../utils';
+import * as utils from '../../utils';
 
 const validTopic = 'gateway/abcdef0123456789/rx';
 const invalidTopic = 'gateway/abcdef0123456789/tx';

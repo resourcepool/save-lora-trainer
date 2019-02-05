@@ -1,7 +1,7 @@
 import Logger from '../log/logger';
 import * as progressService from '../progress/progress-service';
 import * as teamDao from '../team/team-dao';
-import Team from "../team/Team";
+import Team from "../team/models/Team";
 
 const logger = Logger.child({service: "mqtt-log-handler"});
 
@@ -34,14 +34,14 @@ export const handleSubscriptionLogMessage = async (message: Buffer) => {
     }
 };
 
-const updateProgressWithClientId = async (func: (team: Team) => Promise<boolean | Error>, clientId: string): Promise<boolean> => {
-    let team: Team|Error = await teamDao.findByClientId(clientId);
-    if (team instanceof Error) {
+const updateProgressWithClientId = async (func: (team: Team) => Promise<boolean>, clientId: string): Promise<boolean> => {
+    let team = await teamDao.findByClientId(clientId);
+    if (!team) {
         logger.warn(`Failed to retrieve team for: ${clientId}`);
         return false;
     }
     let result = await func(team);
-    if (result instanceof Error) {
+    if (!result) {
         logger.warn(`Failed to update progress for team: ${team.name}`);
         return false;
     }

@@ -1,31 +1,32 @@
-import Challenge from './Challenge';
-import Team from "../team/Team";
+import Challenge from './models/Challenge';
+import Team from "../team/models/Team";
 import * as teamDao from "../team/team-dao";
 import * as challengeDao from "./challenge-dao";
 import Logger from "../log/logger";
 import * as helper from '../joinrequest/join-request-helper';
 import ChallengeResultDto from "../web/services/challenges/dto/ChallengeResultDto";
-import JoinRequestPacketDecoder from "../joinrequest/JoinRequestPacketDecoder";
+import JoinRequestPacketDecoder from "../joinrequest/models/JoinRequestPacketDecoder";
 import * as progressService from '../progress/progress-service';
+import {HTTP404Error, HTTPClientError} from "../web/utils/http-errors";
 
 const logger = Logger.child({service: "challenge-service"});
 
 const CHALLENGE_TAG_JOIN_REQUEST_SUPPORTED = 'joinrequestsupported';
 const CHALLENGE_TAG_JOIN_REQUEST_DECODE = 'joinrequestdecode';
 
-export const createJoinRequestSupportedChallenge = async (clientId: string): Promise<Challenge | Error> => {
+export const createJoinRequestSupportedChallenge = async (clientId: string): Promise<Challenge> => {
     return createJoinRequestChallenge(CHALLENGE_TAG_JOIN_REQUEST_SUPPORTED, clientId);
 };
 
-export const createJoinRequestDecodeChallenge = async (clientId: string): Promise<Challenge | Error> => {
+export const createJoinRequestDecodeChallenge = async (clientId: string): Promise<Challenge> => {
     return createJoinRequestChallenge(CHALLENGE_TAG_JOIN_REQUEST_DECODE, clientId);
 };
 
-export const solveJoinRequestSupportedChallenge = async (result: ChallengeResultDto): Promise<boolean | Error> => {
+export const solveJoinRequestSupportedChallenge = async (result: ChallengeResultDto): Promise<boolean> => {
     return solveJoinRequestChallenge(result, checkJoinRequestSupported, progressService.validateJoinRequestSupported);
 };
 
-export const solveJoinRequestDecodeChallenge = async (result: ChallengeResultDto): Promise<boolean | Error> => {
+export const solveJoinRequestDecodeChallenge = async (result: ChallengeResultDto): Promise<boolean> => {
     return solveJoinRequestChallenge(result, checkJoinRequestDecode, progressService.validateJoinRequestDecode);
 };
 
@@ -71,11 +72,11 @@ const checkJoinRequestDecode = (challenge: Challenge, dto: ChallengeResultDto): 
 };
 
 
-export const createJoinRequestChallenge = async (tag: string, clientId: string): Promise<Challenge | Error> => {
-    const team: Team | Error = await teamDao.findByClientId(clientId);
-    if (team instanceof Error) {
+export const createJoinRequestChallenge = async (tag: string, clientId: string): Promise<Challenge> => {
+    const team = await teamDao.findByClientId(clientId);
+    if (!team) {
         logger.warn(`Failed to retrieve team for client: ${clientId}`);
-        return team;
+        throw new HTTP404Error("Team not found. Check clientId");
     }
     const content: { messages: { topic: string, message: string }[] } = {
         messages: []
@@ -87,11 +88,11 @@ export const createJoinRequestChallenge = async (tag: string, clientId: string):
     return await challengeDao.create(challenge);
 };
 
-export const solveJoinRequestChallenge = async (result: ChallengeResultDto, validator: Function, updateStep: Function): Promise<boolean | Error> => {
-    const challenge: Challenge | Error = await challengeDao.findOne(result.challengeId!);
-    if (challenge instanceof Error) {
+export const solveJoinRequestChallenge = async (result: ChallengeResultDto, validator: Function, updateStep: Function): Promise<boolean> => {
+    const challenge = await challengeDao.findOne(result.challengeId!);
+    if (!challenge) {
         logger.warn(`Failed to retrieve challenge for id: ${result.challengeId}`);
-        return challenge;
+        throw new HTTP404Error("Challenge not found. Check clientId and challengeId");
     }
     // We don't need the challenge anymore
     await challengeDao.deleteOne(challenge.id!);
@@ -100,10 +101,10 @@ export const solveJoinRequestChallenge = async (result: ChallengeResultDto, vali
         return false;
     }
 
-    let team: Team | Error = await teamDao.findOne(challenge.teamId!);
-    if (team instanceof Error) {
+    let team = await teamDao.findOne(challenge.teamId!);
+    if (!team) {
         logger.warn(`Failed to retrieve team: ${challenge.teamId}`);
-        return team;
+        throw new Error("Failed to retrieve team. This should not happen");
     }
     return await updateStep(team);
 };
