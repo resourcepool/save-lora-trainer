@@ -86,6 +86,10 @@ The Manufacturer's DevEUI (<=> MAC Address) all start with **13:37:00:00**:XX:XX
 Hint 3:  
 The PhyPayload binary protocol stores information in... Little-Endian... [https://en.wikipedia.org/wiki/Endianness](https://en.wikipedia.org/wiki/Endianness) 
 
+**Tests:**
+To make your life easier, we have implemented a sequence of tests to validate this.  
+Just run `npm test` and it should give you a head start
+
 ### Step 3 - Activating the device
 Now that we know how to decode a Device JoinRequest, we need to implement the necessary steps to activation in the Gotham-IoT server.  
 
