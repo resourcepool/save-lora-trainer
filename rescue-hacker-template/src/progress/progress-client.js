@@ -43,7 +43,7 @@ const submitJoinRequestSupportedChallenge = async (result) => {
   try {
     const response = await client.post(`/api/v1/challenges/joinrequestsupported/${result.challengeId}`, result);
     logger.debug("Response received", response.data);
-    return response;
+    return response.data;
   } catch (e) {
     logError(e);
   }
@@ -56,7 +56,7 @@ const submitJoinRequestSupportedChallenge = async (result) => {
  */
 const requestJoinRequestDecodeChallenge = async () => {
   try {
-    const response = await client.get(`/challenges/joinrequest/client/${conf.user.clientId}`);
+    const response = await client.get(`/api/v1/challenges/joinrequestdecode/client/${conf.user.clientId}`);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {
@@ -71,9 +71,9 @@ const requestJoinRequestDecodeChallenge = async () => {
  */
 const submitJoinRequestDecodeChallenge = async (result) => {
   try {
-    const response = await client.post('/devices', {device: device});
+    const response = await client.post(`/api/v1/challenges/joinrequestdecode/${result.challengeId}`, result);
     logger.debug("Response received", response.data);
-    return response;
+    return response.data;
   } catch (e) {
     logError(e);
   }

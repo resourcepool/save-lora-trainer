@@ -12,13 +12,16 @@ const JoinRequestPacketDecoder = require('../decoder/JoinRequestPacketDecoder');
 
 const logger = Logger.child({service: 'review'});
 
+let loopCallback;
+
 const reviews = {
   joinRequestSupported: false,
   joinRequestDecode: false,
 };
 
 const init = () => {
-  setInterval(solveNextChallenge, 10000 + (Math.random() * 5000));
+  loopCallback = setInterval(solveNextChallenge, 10000 + (Math.random() * 5000));
+  solveNextChallenge();
 };
 
 /**
@@ -33,24 +36,26 @@ const solveNextChallenge= async () => {
   if (!reviews.joinRequestDecode) {
     return await solveJoinRequestDecodeChallenge();
   }
+  // If all challenges have been solved, no need to call it anymore.
+  clearInterval(loopCallback);
 };
 
 const solveJoinRequestSupportedChallenge = async () => {
-  // Request challenge from watchdog
+  // Request challenge from progress client
   const challenge = await client.requestJoinRequestSupportedChallenge();
   logger.debug(`Challenge ${challenge.id} received`);
-  
+
   // Solve challenge
   let result = {
     challengeId: challenge.id,
     errors: undefined,
-    content: []
+    content: {messages: []}
   };
-  
+
   try {
-    challenge.content.forEach(message => {
+    challenge.content.messages.forEach(message => {
       let packetDecoder = new JoinRequestPacketDecoder(message.topic, message.message);
-      result.content.push({supported: packetDecoder.isSupported()});
+      result.content.messages.push({supported: packetDecoder.isSupported()});
     });
   } catch (e) {
     if (!result.errors) {
@@ -58,13 +63,14 @@ const solveJoinRequestSupportedChallenge = async () => {
     }
     result.errors.push(e);
   }
-  
+
   // Submit challenge result
-  reviews.joinRequestSupported = await client.submitJoinRequestSupportedChallenge(result).done;
+  let response = await client.submitJoinRequestSupportedChallenge(result);
+  reviews.joinRequestSupported = response.done;
 };
 
 const solveJoinRequestDecodeChallenge = async () => {
-  // Request challenge from watchdog
+  // Request challenge from progress client
   const challenge = await client.requestJoinRequestDecodeChallenge();
   logger.debug(`Challenge ${challenge.id} received`);
 
@@ -72,13 +78,13 @@ const solveJoinRequestDecodeChallenge = async () => {
   let result = {
     challengeId: challenge.id,
     errors: undefined,
-    content: []
+    content: {messages: []}
   };
 
   try {
-    challenge.content.forEach(message => {
+    challenge.content.messages.forEach(message => {
       let packetDecoder = new JoinRequestPacketDecoder(message.topic, message.message);
-      result.content.push({supported: packetDecoder.isSupported(), decoded: packetDecoder.decode()});
+      result.content.messages.push({supported: packetDecoder.isSupported(), decodedPacket: JSON.stringify(packetDecoder.decode())});
     });
   } catch (e) {
     if (!result.errors) {
@@ -88,9 +94,10 @@ const solveJoinRequestDecodeChallenge = async () => {
   }
 
   // Submit challenge result
-  reviews.joinRequestDecode = await client.submitJoinRequestDecodeChallenge(result).done;
+  let response = await client.submitJoinRequestDecodeChallenge(result);
+  reviews.joinRequestDecode = response.done;
 };
 
-module.exports = { 
+module.exports = {
   init
 };
