@@ -1,5 +1,5 @@
 export default class ChallengeResultDto {
-    challengeId?: string;
+    challengeId?: number;
     errors?: string[];
-    content?: Object;
+    content?: any;
 }

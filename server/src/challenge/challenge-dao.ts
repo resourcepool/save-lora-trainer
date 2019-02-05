@@ -11,7 +11,7 @@ export const findOne = async (id: number): Promise<Challenge | Error> => {
     } finally {
         con.end();
     }
-    return rows.length > 0 ? rows[0] : new Error('Challenge not found');
+    return rows.length > 0 ? Challenge.fromDto(rows[0]) : new Error('Challenge not found');
 };
 
 export const create = async (challenge: Challenge): Promise<Challenge | Error> => {

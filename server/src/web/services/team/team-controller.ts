@@ -16,35 +16,3 @@ export const addTeamAction = async (req: Request, res: Response, next: NextFunct
     }
     return res.status(204).send('CREATED');
 };
-
-
-//
-//     /** @TODO comment gérer la progression d'une team ?
-//      *
-//      * Option 1 : utiliser un tableau JSON qu'on mets à jour à chaque step de l'exercice
-//      * Option 2 : Faire le controle coté server nodejs plutot que côté exercice et update en conséquence
-//      *
-//      */
-//     updateProgression: (req, res) => {
-//     if (!req.body && !req.body.device) {
-//         return res.sendStatus(400);
-//     }
-//
-//     const device = req.body.device || null;
-//
-//     db.createConnection()
-//         .then(con => {
-//             const result = con.query(`SELECT progression FROM team WHERE device = ?`, device, (error, results) => {
-//                 if (error) {
-//                     console.log(error);
-//                     return res.status(400).send(error);
-//                 }
-//                 if (results.affectedRows > 0) {
-//                     return res.status(200).send('OK');
-//                 }
-//                 return res.status(404).send('NOT FOUND');
-//             });
-//             con.end();
-//             return result;
-//         });
-// }

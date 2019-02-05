@@ -1,6 +1,20 @@
 import Team from './Team';
 import { dbInstance } from '../web/utils/db-config';
 
+
+export const findOne = async (id: number): Promise<Team | Error> => {
+    const con = await dbInstance();
+    let rows;
+    try {
+        rows = await con.query(`SELECT * FROM team WHERE id = ?`, id);
+    } catch (error) {
+        return new Error(error.code);
+    } finally {
+        con.end();
+    }
+    return rows.length > 0 ? Team.fromDto(rows[0]) : new Error('Team not found');
+};
+
 export const findByClientId = async (clientId: string): Promise<Team | Error> => {
     const con = await dbInstance();
     let rows;

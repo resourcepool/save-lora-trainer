@@ -1,5 +1,10 @@
 import Step from "./Step";
 
+export const HACKER_STEP_BROKER_CONNECT = 'brokerConnect';
+export const HACKER_STEP_BROKER_SUBSCRIBE = 'brokerSubscribe';
+export const HACKER_STEP_JOIN_REQUEST_SUPPORTED = 'joinRequestSupported';
+export const HACKER_STEP_JOIN_REQUEST_DECODED = 'joinRequestDecoded';
+
 export default class Progress {
     
     hackerSteps?: Step[];
@@ -7,10 +12,10 @@ export default class Progress {
     
     constructor() {
         this.hackerSteps = [
-            new Step('brokerConnect'),
-            new Step('brokerSubscribe'),
-            new Step('joinRequestSupported'),
-            new Step('joinRequestDecode'),
+            new Step(HACKER_STEP_BROKER_CONNECT),
+            new Step(HACKER_STEP_BROKER_SUBSCRIBE),
+            new Step(HACKER_STEP_JOIN_REQUEST_SUPPORTED),
+            new Step(HACKER_STEP_JOIN_REQUEST_DECODED),
             new Step('createDevice'),
             new Step('setDeviceNwkKey')
         ];

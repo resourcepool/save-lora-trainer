@@ -5,7 +5,7 @@ export default class Challenge {
     teamId?: number;
     devEUI?: string;
     tag?: string;
-    content: Object;
+    content: any;
     
     constructor(tag?: string, team?: Team, content?: Object) {
         this.tag = tag;

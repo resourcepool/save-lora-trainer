@@ -21,8 +21,14 @@ class JoinRequestPacketDecoder {
    * false otherwise
    */
   isSupported() {
-    // TODO Step 2.1
-    return false;
+    if (!this.payload) {
+      return false;
+    }
+    if (this.payload.length < 5) {
+      return false;
+    }
+    let prefix = this.payload.readInt8(0);
+    return prefix === 0x00;
   }
   
   /**
