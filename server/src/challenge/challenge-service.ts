@@ -6,9 +6,10 @@ import Logger from "../log/logger";
 import * as helper from '../joinrequest/join-request-helper';
 import ChallengeResultDto from "../web/services/challenges/dto/ChallengeResultDto";
 import JoinRequestPacketDecoder from "../joinrequest/JoinRequestPacketDecoder";
-import {HACKER_STEP_JOIN_REQUEST_DECODE, HACKER_STEP_JOIN_REQUEST_SUPPORTED} from "../progress/Progress";
+import * as progressService from '../progress/progress-service';
 
 const logger = Logger.child({service: "challenge-service"});
+
 const CHALLENGE_TAG_JOIN_REQUEST_SUPPORTED = 'joinrequestsupported';
 const CHALLENGE_TAG_JOIN_REQUEST_DECODE = 'joinrequestdecode';
 
@@ -21,11 +22,11 @@ export const createJoinRequestDecodeChallenge = async (clientId: string): Promis
 };
 
 export const solveJoinRequestSupportedChallenge = async (result: ChallengeResultDto): Promise<boolean | Error> => {
-    return solveJoinRequestChallenge(result, HACKER_STEP_JOIN_REQUEST_SUPPORTED, checkJoinRequestSupported);
+    return solveJoinRequestChallenge(result, checkJoinRequestSupported, progressService.validateJoinRequestSupported);
 };
 
 export const solveJoinRequestDecodeChallenge = async (result: ChallengeResultDto): Promise<boolean | Error> => {
-    return solveJoinRequestChallenge(result, HACKER_STEP_JOIN_REQUEST_DECODE, checkJoinRequestDecode);
+    return solveJoinRequestChallenge(result, checkJoinRequestDecode, progressService.validateJoinRequestDecode);
 };
 
 const checkJoinRequestSupported = (challenge: Challenge, result: ChallengeResultDto): boolean => {
@@ -86,7 +87,7 @@ export const createJoinRequestChallenge = async (tag: string, clientId: string):
     return await challengeDao.create(challenge);
 };
 
-export const solveJoinRequestChallenge = async (result: ChallengeResultDto, stepTag: string, validator: Function): Promise<boolean | Error> => {
+export const solveJoinRequestChallenge = async (result: ChallengeResultDto, validator: Function, updateStep: Function): Promise<boolean | Error> => {
     const challenge: Challenge | Error = await challengeDao.findOne(result.challengeId!);
     if (challenge instanceof Error) {
         logger.warn(`Failed to retrieve challenge for id: ${result.challengeId}`);
@@ -104,8 +105,5 @@ export const solveJoinRequestChallenge = async (result: ChallengeResultDto, step
         logger.warn(`Failed to retrieve team: ${challenge.teamId}`);
         return team;
     }
-    let step = team.progress.hackerSteps!.filter(s => s.tag === stepTag)[0];
-    step.validated = true;
-    step.timestamp = Date.now();
-    return await teamDao.updateProgress(team);
+    return await updateStep(team);
 };

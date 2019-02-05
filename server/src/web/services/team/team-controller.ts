@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import Team from '../../../team/Team';
-import { addTeam } from '../../../team/team-dao';
+import {addTeam, findByClientId} from '../../../team/team-dao';
 import Progress from "../../../progress/Progress";
 
 export const addTeamAction = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,4 +15,13 @@ export const addTeamAction = async (req: Request, res: Response, next: NextFunct
         return res.status(400).send(result.message);
     }
     return res.status(204).send('CREATED');
+};
+
+
+export const getTeamProgressAction = async (req: Request, res: Response, next: NextFunction) => {
+    const team = await findByClientId(req.params.clientId);
+    if (team instanceof Error) {
+        return res.status(400).send(team.message);
+    }
+    return res.status(200).send(team.progress);
 };

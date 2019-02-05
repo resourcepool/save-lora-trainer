@@ -15,8 +15,26 @@ const logError = (e) => {
   if (e.response) {
     details = `[${e.response.status}] ${e.response.data}`;
   }
-  logger.error("Error occured during call to http api", details);
+  logger.error("Error occured during call to http api: " + details);
   throw e;
+};
+
+
+/**
+ * get the team current progress
+ * @returns {Promise<{
+ * hackerSteps: [{tag: string, validated: boolean, timestamp: number}],
+ * geekInDangerSteps: [{tag: string, validated: boolean, timestamp: number}]
+ * }>}
+ */
+const getProgress = async () => {
+  try {
+    const response = await client.get(`/api/v1/teams/client/${conf.user.clientId}/progress`);
+    logger.debug("Response received", response.data);
+    return response.data;
+  } catch (e) {
+    logError(e);
+  }
 };
 
 /**
@@ -36,7 +54,7 @@ const requestJoinRequestSupportedChallenge = async () => {
 
 /**
  * This allows to submit the result of a join request supported challenge to the progress server.
- * @param result {challengeId: {number}, errors: [{string}], content:[{supported: {boolean}}]} 
+ * @param result {challengeId: {number}, errors: [{string}], content:[{supported: {boolean}}]}
  * @returns {Promise<{done:{boolean}}>}
  */
 const submitJoinRequestSupportedChallenge = async (result) => {
@@ -85,4 +103,5 @@ module.exports = {
   submitJoinRequestSupportedChallenge,
   requestJoinRequestDecodeChallenge,
   submitJoinRequestDecodeChallenge,
+  getProgress,
 };

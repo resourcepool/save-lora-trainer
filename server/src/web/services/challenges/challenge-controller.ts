@@ -1,7 +1,8 @@
-import { NextFunction, Response, Request } from 'express';
+import {NextFunction, Request, Response} from 'express';
 import {
     createJoinRequestDecodeChallenge,
-    createJoinRequestSupportedChallenge, solveJoinRequestDecodeChallenge,
+    createJoinRequestSupportedChallenge,
+    solveJoinRequestDecodeChallenge,
     solveJoinRequestSupportedChallenge
 } from '../../../challenge/challenge-service';
 

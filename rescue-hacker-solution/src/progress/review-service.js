@@ -9,15 +9,18 @@ const Logger = require('../log/logger');
 const conf = require('../conf/conf');
 const client = require('./progress-client');
 const JoinRequestPacketDecoder = require('../decoder/JoinRequestPacketDecoder');
-
+const pg = require('./Progress');
 const logger = Logger.child({service: 'review'});
 
 let loopCallback;
 
-const reviews = {
-  joinRequestSupported: false,
-  joinRequestDecode: false,
-};
+/**
+ * @type {{
+ * hackerSteps: [{tag: string, validated: boolean, timestamp: number}],
+ * geekInDangerSteps: [{tag: string, validated: boolean, timestamp: number}]
+ * }}
+ */
+let progress = new pg.Progress();
 
 const init = () => {
   loopCallback = setInterval(solveNextChallenge, 10000 + (Math.random() * 5000));
@@ -30,10 +33,11 @@ const init = () => {
  * @returns {Promise<void>}
  */
 const solveNextChallenge= async () => {
-  if (!reviews.joinRequestSupported) {
+  progress = await client.getProgress();
+  if (!progress.hackerSteps.find(step => step.tag === pg.HACKER_STEP_JOIN_REQUEST_SUPPORTED).validated) {
     return await solveJoinRequestSupportedChallenge();
   }
-  if (!reviews.joinRequestDecode) {
+  if (!progress.hackerSteps.find(step => step.tag === pg.HACKER_STEP_JOIN_REQUEST_DECODE).validated) {
     return await solveJoinRequestDecodeChallenge();
   }
   // If all challenges have been solved, no need to call it anymore.
