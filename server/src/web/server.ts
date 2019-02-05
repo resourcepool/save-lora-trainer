@@ -4,14 +4,16 @@ import { applyMiddleware, applyRoutes } from "./utils";
 import middleware from "./middleware";
 import errorHandlers from "./middleware/errorHandlers";
 import routes from "./services";
+import Logger from "../log/logger";
+const logger = Logger.child({service: "http-server"});
 
 process.on("uncaughtException", e => {
-  console.log(e);
+  logger.error(e);
   process.exit(1);
 });
 
 process.on("unhandledRejection", e => {
-  console.log(e);
+  logger.error(e);
   process.exit(1);
 });
 
@@ -21,8 +23,12 @@ applyRoutes(routes, router);
 applyMiddleware(errorHandlers, router);
 
 const { PORT = 3333 } = process.env;
-const server = http.createServer(router);
 
-server.listen(PORT, () =>
-  console.log(`Server is running http://localhost:${PORT}...`)
-);
+let server;
+
+export const init = () => {
+  server = http.createServer(router);
+  server.listen(PORT, () =>
+      console.log(`Server is running http://localhost:${PORT}...`)
+  );
+};

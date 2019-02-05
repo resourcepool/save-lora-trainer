@@ -61,7 +61,8 @@ ALTER TABLE `device`
 ALTER TABLE `team`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `clientId` (`clientId`);
+  ADD UNIQUE KEY `clientId` (`clientId`),
+  ADD UNIQUE KEY `devEUI` (`devEUI`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées

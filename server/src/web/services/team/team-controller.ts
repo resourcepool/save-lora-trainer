@@ -1,42 +1,20 @@
 import { NextFunction, Response, Request } from 'express';
 import Team from '../../../models/Team';
-import { addTeam, deleteTeam, editTeam } from './providers/TeamDataProvider';
+import { addTeam } from '../../../team/team-dao';
+import Progress from "../../../models/Progress";
 
 export const addTeamAction = async (req: Request, res: Response, next: NextFunction) => {
     const team: Team = {
         name: req.body.name,
         clientId: req.body.clientId,
+        devEUI: req.body.devEUI,
+        progress: new Progress()
     };
     const result = await addTeam(team);
     if (typeof result !== 'boolean') {
         return res.status(400).send(result.message);
     }
     return res.status(204).send('CREATED');
-};
-
-export const editTeamAction = async (req: Request, res: Response, next: NextFunction) => {
-    const team: Team = {
-        name: req.body.name,
-        clientId: req.body.clientId,
-    };
-
-    const id: number = req.body.id;
-
-    const result = await editTeam(team, id);
-    if (typeof result !== 'boolean') {
-        return res.status(400).send(result.message);
-    }
-    return res.status(200).send('OK');
-};
-
-export const deleteTeamAction = async (req: Request, res: Response, next: NextFunction) => {
-    const id: number = req.body.id;
-
-    const result = await deleteTeam(id);
-    if (typeof result !== 'boolean') {
-        return res.status(400).send(result.message);
-    }
-    return res.status(200).send('OK');
 };
 
 

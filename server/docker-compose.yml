@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0.14
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lora
+    volumes:
+      - ./sql/init:/docker-entrypoint-initdb.d
+      - ./sql/data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3330:8080

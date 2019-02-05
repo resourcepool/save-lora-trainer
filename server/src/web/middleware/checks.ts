@@ -1,28 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { HTTP400Error, HTTP401Error } from '../utils/httpErrors';
+import { HTTP400Error, HTTP401Error } from '../utils/http-errors';
 import { isValidTeam } from '../validators/team.validator';
 import { config } from '../../config';
-
-export const checkSearchParams = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    if (!req.query.q) {
-        throw new HTTP400Error('Missing q parameter');
-    } else {
-        next();
-    }
-};
 
 export const checkTeamParams = (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    if (!req.body.name || !req.body.clientId) {
+    if (!req.body.name || !req.body.clientId || !req.body.devEUI) {
         throw new HTTP400Error('Missing parameter(s) of a team');
-    } else if (!isValidTeam(req.body.name, req.body.clientId)) {
+    } else if (!isValidTeam(req.body.name, req.body.clientId, req.body.devEUI)) {
         throw new HTTP400Error('Invalid parameters');
     } else {
         next();

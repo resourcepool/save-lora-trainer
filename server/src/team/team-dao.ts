@@ -1,5 +1,5 @@
-import Team from '../../../../models/Team';
-import { dbInstance } from '../../../utils/DbConfig';
+import Team from '../models/Team';
+import { dbInstance } from '../web/utils/db-config';
 
 export const addTeam = async (team: Team): Promise<boolean | Error> => {
     const con = await dbInstance();

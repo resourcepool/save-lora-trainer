@@ -1,5 +1,5 @@
-import { checkIdParams, checkPassword, checkTeamParams } from '../../middleware/checks';
-import { addTeamAction, deleteTeamAction, editTeamAction } from './TeamController';
+import { checkTeamParams } from '../../middleware/checks';
+import { addTeamAction } from './team-controller';
 
 export default [
   {
@@ -10,23 +10,4 @@ export default [
       addTeamAction,
     ]
   },
-  {
-    path: "/api/v1/teams/edit",
-    method: "patch",
-    handler: [
-      checkTeamParams,
-      checkIdParams,
-      checkPassword,
-      editTeamAction,
-    ]
-  },
-  {
-    path: "/api/v1/teams/delete",
-    method: "delete",
-    handler: [
-      checkIdParams,
-      checkPassword,
-      deleteTeamAction,
-    ]
-  }
 ];
