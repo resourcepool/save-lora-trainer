@@ -63,9 +63,23 @@ let onMessage = async (topic, message) => {
     // and your sysadmin needs to whitelist your computer's mac address).
     // Therefore we want to interact with the LoraServer API.
     // Thanks to your awesome friend John Doe, you already have a async-client available in api/api.js
-    // TODO Step 3.1: register your friend's device remotely.
-    // TODO Step 3.2: set the device Network key (NwkKey).
-    logger.debug("Device registered successfully");
+    try {
+      if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
+        await api.createDevice({
+          devEUI: decodedJoinRequest.devEUI,
+          applicationID: conf.loRaServer.loRaApplicationId,
+          deviceProfileID: conf.loRaServer.rak811DevProfileId,
+          name: "Test",
+          description: "Test description"
+        });
+      }
+      // TODO Step 3.2: set the device Network key (NwkKey).
+      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
+      logger.debug("Device registered successfully");
+    } catch (e) {
+      logger.error("Error occured during device registration:");
+      logger.error(e);
+    }
   }
 };
 

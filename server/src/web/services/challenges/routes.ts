@@ -1,5 +1,9 @@
 import {checkClientIdPathVariable, checkNumberIdPathVariable} from '../../middleware/checks';
-import {getJoinRequestSupportedChallenge, submitJoinRequestSupportedChallenge} from './challenge-controller';
+import {
+  getJoinRequestDecodeChallenge,
+  getJoinRequestSupportedChallenge, submitJoinRequestDecodeChallenge,
+  submitJoinRequestSupportedChallenge
+} from './challenge-controller';
 
 export default [
   {
@@ -16,6 +20,22 @@ export default [
     handler: [
       checkNumberIdPathVariable,
       submitJoinRequestSupportedChallenge,
+    ]
+  },
+  {
+    path: "/api/v1/challenges/joinrequestdecode/client/:clientId",
+    method: "get",
+    handler: [
+      checkClientIdPathVariable,
+      getJoinRequestDecodeChallenge,
+    ]
+  },
+  {
+    path: "/api/v1/challenges/joinrequestdecode/:id",
+    method: "post",
+    handler: [
+      checkNumberIdPathVariable,
+      submitJoinRequestDecodeChallenge,
     ]
   },
 ];

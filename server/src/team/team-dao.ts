@@ -73,7 +73,7 @@ export const updateProgress = async (team: Team): Promise<boolean | Error> => {
     } finally {
         con.end();
     }
-    return res.affectedRows > 0 ? true : new Error('Team not found or impossible to edit');
+    return true;
 };
 
 export const deleteTeam = async (id: number): Promise<boolean | Error> => {

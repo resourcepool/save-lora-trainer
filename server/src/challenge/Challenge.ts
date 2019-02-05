@@ -1,19 +1,23 @@
 import Team from "../team/Team";
 
+export class ChallengeContent {
+    messages: {topic: string, message: string}[] = [];
+}
+
 export default class Challenge {
     id?: number;
     teamId?: number;
     devEUI?: string;
     tag?: string;
-    content: any;
+    content: ChallengeContent;
     
-    constructor(tag?: string, team?: Team, content?: Object) {
+    constructor(tag?: string, team?: Team, content?: ChallengeContent) {
         this.tag = tag;
         if (team) {
             this.teamId = team.id;
             this.devEUI = team.devEUI;    
         }
-        this.content = content || {};
+        this.content = content || new ChallengeContent();
     }
 
     static fromDto(dto: {

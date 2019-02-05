@@ -1,5 +1,7 @@
 export default class ChallengeResultDto {
     challengeId?: number;
     errors?: string[];
-    content?: any;
+    content?: {
+        messages: {supported: boolean, decodedPacket?: string}[]
+    };
 }

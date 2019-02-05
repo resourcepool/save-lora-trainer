@@ -15,7 +15,7 @@ const hexStringToByte = (byteAsHexString) => {
  * @returns {string}
  */
 const byteToHexString = (byte) => {
-  return ((byte & 0xF0) >> 4).toString(16) + (byte & 0x0F).toString(16);
+  return (((byte & 0xF0) >> 4).toString(16) + (byte & 0x0F).toString(16)).toLowerCase();
 };
 
 /**
@@ -31,7 +31,7 @@ const bytesToPrettyHexString = (bytes) => {
     }
     hex += byteToHexString(byte);
   }
-  return hex;
+  return hex.toLowerCase();
 };
 
 /**
@@ -44,7 +44,7 @@ const bytesToHexString = (bytes) => {
   for (let byte of bytes.values()) {
     hex += byteToHexString(byte);
   }
-  return hex;
+  return hex.toLowerCase();
 };
 
 const SEPARATORS = new RegExp('[-:]', 'g');
@@ -86,7 +86,7 @@ const arraysEqual = (a, b) => {
  * @returns {*}
  */
 const normalizeHexString = (str) => {
-  return str.replace(SEPARATORS, '');
+  return str.replace(SEPARATORS, '').toLowerCase();
 };
 
 module.exports = {

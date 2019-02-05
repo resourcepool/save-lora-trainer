@@ -3,7 +3,7 @@ import Step from "./Step";
 export const HACKER_STEP_BROKER_CONNECT = 'brokerConnect';
 export const HACKER_STEP_BROKER_SUBSCRIBE = 'brokerSubscribe';
 export const HACKER_STEP_JOIN_REQUEST_SUPPORTED = 'joinRequestSupported';
-export const HACKER_STEP_JOIN_REQUEST_DECODED = 'joinRequestDecoded';
+export const HACKER_STEP_JOIN_REQUEST_DECODE = 'joinRequestDecode';
 
 export default class Progress {
     
@@ -15,7 +15,7 @@ export default class Progress {
             new Step(HACKER_STEP_BROKER_CONNECT),
             new Step(HACKER_STEP_BROKER_SUBSCRIBE),
             new Step(HACKER_STEP_JOIN_REQUEST_SUPPORTED),
-            new Step(HACKER_STEP_JOIN_REQUEST_DECODED),
+            new Step(HACKER_STEP_JOIN_REQUEST_DECODE),
             new Step('createDevice'),
             new Step('setDeviceNwkKey')
         ];
