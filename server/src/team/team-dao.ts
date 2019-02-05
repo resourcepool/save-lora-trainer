@@ -1,11 +1,31 @@
-import Team from '../models/Team';
+import Team from './Team';
 import { dbInstance } from '../web/utils/db-config';
+
+export const findByClientId = async (clientId: string): Promise<Team | Error> => {
+    const con = await dbInstance();
+    let rows;
+    try {
+        rows = await con.query(`SELECT * FROM team WHERE clientId = ?`, clientId);
+    } catch (error) {
+        return new Error(error.code);
+    } finally {
+        con.end();
+    }
+    return rows.length > 0 ? Team.fromDto(rows[0]) : new Error('Team not found');
+};
 
 export const addTeam = async (team: Team): Promise<boolean | Error> => {
     const con = await dbInstance();
     let res;
     try {
-        res = await con.query('INSERT INTO team SET ?', team);
+        let dto = {
+            id: team.id,
+            name: team.name,
+            clientId: team.clientId,
+            devEUI: team.devEUI,
+            progress: JSON.stringify(team.progress)
+        };
+        res = await con.query('INSERT INTO team SET ?', dto);
     } catch (error) {
         return new Error(error.code);
     } finally {
@@ -15,17 +35,16 @@ export const addTeam = async (team: Team): Promise<boolean | Error> => {
     return res.affectedRows > 0 ? true : new Error('No team added');
 };
 
-export const editTeam = async (team: Team, id: number): Promise<boolean | Error> => {
+export const updateProgress = async (team: Team): Promise<boolean | Error> => {
     const con = await dbInstance();
     let res;
     try {
-        res = await con.query(`UPDATE team SET name="${team.name}", clientId="${team.clientId}" WHERE id = ?`, id);
+        res = await con.query(`UPDATE team SET progress = ? WHERE id = ?`, [JSON.stringify(team.progress), team.id]);
     } catch (error) {
         return new Error(error.code);
     } finally {
         con.end();
     }
-
     return res.affectedRows > 0 ? true : new Error('Team not found or impossible to edit');
 };
 

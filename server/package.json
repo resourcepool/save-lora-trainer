@@ -6,7 +6,7 @@
     "start": "tsc-watch --onSuccess \"node --inspect=4444 ./dist/index.js\"",
     "start:dash": "tsc-watch --onSuccess \"node ./dist/web/server.js\"",
     "start:ts": "ts-node ./src/web/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Resourcepool",
   "license": "Apache-2.0",
@@ -35,6 +35,9 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.0",
+    "jest": "^24.0.0",
+    "ts-jest": "^23.10.5",
     "ts-node": "^8.0.2"
   }
 }

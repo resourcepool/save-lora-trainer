@@ -2,7 +2,7 @@ import http from "http";
 import express from "express";
 import { applyMiddleware, applyRoutes } from "./utils";
 import middleware from "./middleware";
-import errorHandlers from "./middleware/errorHandlers";
+import errorHandlers from "./middleware/error-handlers";
 import routes from "./services";
 import Logger from "../log/logger";
 const logger = Logger.child({service: "http-server"});

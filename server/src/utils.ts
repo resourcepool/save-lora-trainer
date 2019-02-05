@@ -3,7 +3,7 @@ const hexStringToByte = (byteAsHexString: string): number => {
 };
 
 const byteToHexString = (byte: number): string => {
-  return ((byte & 0xF0) >> 4).toString(16) + (byte & 0x0F).toString(16);
+  return (((byte & 0xF0) >> 4).toString(16) + (byte & 0x0F).toString(16)).toLowerCase();
 };
 
 const bytesToPrettyHexString = (bytes: number[]): string => {
@@ -14,7 +14,7 @@ const bytesToPrettyHexString = (bytes: number[]): string => {
     }
     hex += byteToHexString(byte);
   }
-  return hex;
+  return hex.toLowerCase();
 };
 
 const bytesToHexString = (bytes: Uint8Array): string => {
@@ -22,7 +22,7 @@ const bytesToHexString = (bytes: Uint8Array): string => {
   for (let byte of bytes.values()) {
     hex += byteToHexString(byte);
   }
-  return hex;
+  return hex.toLowerCase();
 };
 
 const SEPARATORS = new RegExp('[-:]', 'g');
@@ -48,11 +48,22 @@ const arraysEqual = (a: Uint8Array, b: Uint8Array): boolean => {
   return true;
 };
 
+
+/**
+ * Converts a pretty hex string 'FF:FF:FF:FF' to a normalized hex string 'FFFFFFFF'
+ * @param str
+ * @returns {*}
+ */
+const normalizeHexString = (str: string): string => {
+  return str.replace(SEPARATORS, '').toLowerCase();
+};
+
 export {
   hexStringToBytes,
   byteToHexString,
   hexStringToByte,
   bytesToPrettyHexString,
   bytesToHexString,
+  normalizeHexString,
   arraysEqual
 };

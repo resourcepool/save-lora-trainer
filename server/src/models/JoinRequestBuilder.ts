@@ -53,7 +53,7 @@ export default class JoinRequestBuilder {
         let secondsSinceGPSEpoch = Math.floor(msSinceGPSEpoch / 1000);
         let minutesSinceGPSEpoch = Math.floor(secondsSinceGPSEpoch / 60);
         let hoursSinceGPSEpoch = Math.floor(minutesSinceGPSEpoch / 60);
-        return hoursSinceGPSEpoch + 'h' + (minutesSinceGPSEpoch - (hoursSinceGPSEpoch * 60)) + 'm' + ((secondsSinceGPSEpoch - (minutesSinceGPSEpoch * 60)) / 60 * 100) + '.' + (msSinceGPSEpoch - secondsSinceGPSEpoch * 1000);
+        return hoursSinceGPSEpoch + 'h' + (minutesSinceGPSEpoch - (hoursSinceGPSEpoch * 60)) + 'm' + ((secondsSinceGPSEpoch - (minutesSinceGPSEpoch * 60))) + '.' + (msSinceGPSEpoch - secondsSinceGPSEpoch * 1000 + 's');
     }
     
     build(gatewayMAC: string): string {
@@ -62,8 +62,8 @@ export default class JoinRequestBuilder {
         joinRequestPayload[0] = JoinRequestBuilder.MHDR;
         joinRequestPayload.set(this._appEUI!.reverse(), 1);
         joinRequestPayload.set(this._devEUI!.reverse(), 9);
-        joinRequestPayload[17] = this._devNOnce! & 0xFF00;
-        joinRequestPayload[18] = this._devNOnce! & 0xFF;
+        joinRequestPayload[17] = this._devNOnce! & 0x00FF;
+        joinRequestPayload[18] = this._devNOnce! & 0xFF00;
         phyPayload.set(joinRequestPayload, 0);
         phyPayload.set(this.computeMIC(joinRequestPayload), 19);
         let date: Date = new Date();
@@ -72,7 +72,7 @@ export default class JoinRequestBuilder {
                 mac: gatewayMAC,
                 time: date.toISOString(),
                 timeSinceGPSEpoch: this.computeGPSEpochString(date),
-                timestamp: date.getTime(),
+                timestamp: Math.floor(date.valueOf() / 1000),
                 frequency: 867300000,
                 channel: 0,
                 rfChain: 0,

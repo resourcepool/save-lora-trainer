@@ -1,7 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
-import Team from '../../../models/Team';
+import Team from '../../../team/Team';
 import { addTeam } from '../../../team/team-dao';
-import Progress from "../../../models/Progress";
+import Progress from "../../../progress/Progress";
 
 export const addTeamAction = async (req: Request, res: Response, next: NextFunction) => {
     const team: Team = {

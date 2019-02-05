@@ -4,11 +4,14 @@ import * as utils from '../utils';
 export default class JoinRequestPacketDecoder {
   
   private topic: string;
-  private msg: Object;
-  private payload: Buffer|undefined;
+  private msg?: Object;
+  private payload?: Buffer;
   
   constructor(topic: string, msg: Buffer) {
     this.topic = topic;
+    if (msg.length === 0) {
+      return;
+    } 
     this.msg = JSON.parse(msg.toString());
     // @ts-ignore
     if (this.msg && this.msg.phyPayload) {
