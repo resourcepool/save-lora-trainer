@@ -3,13 +3,6 @@ import * as utils from '../utils';
 import JoinRequestPacketDecoder from "./JoinRequestPacketDecoder";
 
 const validTopic = 'gateway/abcdef0123456789/rx';
-const invalidTopic = 'gateway/abcdef0123456789/tx';
-const invalidTopic2 = 'gateway/abcdef0123456789/stats';
-
-const validDevEUI = '13:37:00:00:FF:FF:FF:00';
-const validAppEUI = '42:42:42:42:42:42:42:42';
-const validAppKey = '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42';
-const validGatewayMac = 'abcdef0123456789';
 
 const randomValidGatewayMAC = () => {
     let numbers: number[] = Array.from({length: 8}, () => Math.floor(Math.random() * 256));
@@ -55,5 +48,4 @@ test('join request valid random encode / decode', () => {
         expect(decodedJr.appEUI).toBe(utils.normalizeHexString(appEUI));
         expect(decodedJr.devNOnce).toBe(devNOnce);    
     }
-    
 });

@@ -26,7 +26,7 @@ class JoinRequestPacketDecoder {
   }
   
   /**
-   * @returns {{mic: {string}, appEUI: {string}, devNOnce: {string}, devEUI: {string}}}
+   * @returns {{mic: {string}, appEUI: {string}, devNOnce: {number}, devEUI: {string}}}
    * Example:
    * {
    *   mic: [25, 31, 12, 39],

@@ -1,8 +1,7 @@
 import * as utils from '../utils';
 import {aesCmac} from 'node-aes-cmac';
-import btoa from 'btoa';
+import {randomRxInfo} from './join-request-helper';
 
-const MS_BTW_EPOCH_AND_GPS_EPOCH: number = new Date(1980, 0, 6, 0, 0, 0, 0).getTime();
 export default class JoinRequestBuilder {
     private static readonly MHDR: number = 0x00;
     private _devEUI?: Uint8Array;
@@ -46,15 +45,6 @@ export default class JoinRequestBuilder {
         let cmac: string = aesCmac(appKeyBuffer, phyPayloadBuffer);
         return utils.hexStringToBytes(cmac).subarray(0, 4);
     }
-
-    private computeGPSEpochString(date: Date): string {
-        let msSinceEpoch = date.getTime();
-        let msSinceGPSEpoch = msSinceEpoch - MS_BTW_EPOCH_AND_GPS_EPOCH;
-        let secondsSinceGPSEpoch = Math.floor(msSinceGPSEpoch / 1000);
-        let minutesSinceGPSEpoch = Math.floor(secondsSinceGPSEpoch / 60);
-        let hoursSinceGPSEpoch = Math.floor(minutesSinceGPSEpoch / 60);
-        return hoursSinceGPSEpoch + 'h' + (minutesSinceGPSEpoch - (hoursSinceGPSEpoch * 60)) + 'm' + ((secondsSinceGPSEpoch - (minutesSinceGPSEpoch * 60))) + '.' + (msSinceGPSEpoch - secondsSinceGPSEpoch * 1000 + 's');
-    }
     
     build(gatewayMAC: string): string {
         let phyPayload = new Uint8Array(23);
@@ -66,25 +56,8 @@ export default class JoinRequestBuilder {
         joinRequestPayload[18] = this._devNOnce!>>8 & 0x00FF;
         phyPayload.set(joinRequestPayload, 0);
         phyPayload.set(this.computeMIC(joinRequestPayload), 19);
-        let date: Date = new Date();
         return JSON.stringify({
-            rxInfo: {
-                mac: gatewayMAC,
-                time: date.toISOString(),
-                timeSinceGPSEpoch: this.computeGPSEpochString(date),
-                timestamp: Math.floor(date.valueOf() / 1000),
-                frequency: 867300000,
-                channel: 0,
-                rfChain: 0,
-                crcStatus: 1,
-                codeRate: "5/5",
-                rssi: -Math.floor(90 + Math.random() * 20),
-                loRaSNR: -19,
-                size: 25,
-                dataRate: {modulation: "LORA", spreadFactor: 12, bandwidth: 125},
-                board: 0,
-                antenna: 0
-            },
+            rxInfo: randomRxInfo(gatewayMAC, 25),
             phyPayload: Buffer.from(phyPayload.buffer).toString('base64')
         });
     }

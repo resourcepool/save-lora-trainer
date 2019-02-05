@@ -7,7 +7,7 @@
  */
 const Logger = require('../log/logger');
 const conf = require('../conf/conf');
-const client = require('./watchdog-client');
+const client = require('./progress-client');
 const JoinRequestPacketDecoder = require('../decoder/JoinRequestPacketDecoder');
 
 const logger = Logger.child({service: 'review'});

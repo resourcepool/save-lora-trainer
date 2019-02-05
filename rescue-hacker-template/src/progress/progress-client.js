@@ -1,30 +1,22 @@
-/**
- * Hi, I'm John Doe.
- * I sniffed the App Server interactions last night (the http traffic was not secured... noobs) and managed to find the right Authentication details.
- * I made a small client for you to use with just a few features.
- * Good luck!
- * @type {string}
- */
 const Logger = require('../log/logger');
 const conf = require('../conf/conf');
 const axios = require('axios');
 
-const authHeader = "Grpc-Metadata-Authorization";
+const authHeader = "Client-Authorization";
 const logger = Logger.child({service: 'review'});
 
 const client = axios.create({
-  baseURL: conf.gothamWatchdog.baseUrl,
-  headers: {[authHeader]: "Bearer " + conf.gothamWatchdog.authToken}
+  baseURL: conf.progressClient.baseUrl,
+  headers: {[authHeader]: "Api-Key " + conf.user.progressApiKey}
 });
 
-
 /**
- * Request a join request supported challenge from the watchdog.
+ * Request a join request supported challenge from the progress server.
  * @returns {Promise<{id: {number}, content: [{topic: {string}, message: {Buffer}}]}>}
  */
 const requestJoinRequestSupportedChallenge = async () => {
   try {
-    const response = await client.get(`/challenge/joinrequestsupported/${conf.user.deviceEUI}`);
+    const response = await client.get(`/api/v1/challenges/joinrequestsupported/${conf.user.deviceEUI}`);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {
@@ -35,7 +27,7 @@ const requestJoinRequestSupportedChallenge = async () => {
 
 
 /**
- * This allows to submit the result of a join request supported challenge to the watchdog.
+ * This allows to submit the result of a join request supported challenge to the progress server.
  * @param result {challengeId: {number}, errors: [{string}], content:[{supported: {boolean}}]} 
  * @returns {Promise<{done:{boolean}}>}
  */
@@ -52,7 +44,7 @@ const submitJoinRequestSupportedChallenge = async (result) => {
 
 
 /**
- * Request a join request decode challenge from the watchdog.
+ * Request a join request decode challenge from the progress server.
  * @returns {Promise<{id: {number}, content: [{topic: {string}, message: {Buffer}}]}>}
  */
 const requestJoinRequestDecodeChallenge = async () => {
@@ -67,7 +59,7 @@ const requestJoinRequestDecodeChallenge = async () => {
 };
 
 /**
- * This allows to submit the result of a join request decode challenge to the watchdog.
+ * This allows to submit the result of a join request decode challenge to the progress server.
  * @param result
  * @returns {Promise<*>}
  */

@@ -16,7 +16,7 @@ module.exports = {
     rak811DevProfileId: '1d99a006-e617-4fb3-9ffe-a71567ee36a7',
     loRaApplicationId: 1,
   },
-  gothamWatchdog: {
+  progressClient: {
     baseUrl: 'http://localhost:3333',
   },
   user: CHANGEME

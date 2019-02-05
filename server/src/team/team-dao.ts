@@ -14,6 +14,20 @@ export const findByClientId = async (clientId: string): Promise<Team | Error> =>
     return rows.length > 0 ? Team.fromDto(rows[0]) : new Error('Team not found');
 };
 
+export const findByDevEUI = async (devEUI: string): Promise<Team | Error> => {
+    const con = await dbInstance();
+    let rows;
+    try {
+        rows = await con.query(`SELECT * FROM team WHERE devEUI = ?`, devEUI);
+    } catch (error) {
+        return new Error(error.code);
+    } finally {
+        con.end();
+    }
+    return rows.length > 0 ? Team.fromDto(rows[0]) : new Error('Team not found');
+};
+
+
 export const addTeam = async (team: Team): Promise<boolean | Error> => {
     const con = await dbInstance();
     let res;

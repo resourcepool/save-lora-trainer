@@ -66,7 +66,7 @@ let onMessage = async (topic, message) => {
 
 /**
  * Check whether the AppEUI of the intercepted message is the one we want to work on
- * @param msgAppEUI {string|Uint8Array}
+ * @param msgAppEUI string|Uint8Array
  * @returns {boolean}
  */
 let isValidAppEUI = (msgAppEUI) => {
@@ -76,7 +76,7 @@ let isValidAppEUI = (msgAppEUI) => {
 /**
  * Check whether the DeviceEUI equals the team's device.
  * If you don't implement this right, you might give a head start to all your competitors!
- * @param devEUI {string|Uint8Array}
+ * @param devEUI string|Uint8Array
  * @returns {boolean}
  */
 let isRightDeviceEUI = (devEUI) => {
