@@ -1,13 +1,21 @@
-import {checkDevEUIPathVariable} from '../../middleware/checks';
-import {getJoinRequestSupportedChallenge} from './challenge-controller';
+import {checkClientIdPathVariable, checkNumberIdPathVariable} from '../../middleware/checks';
+import {getJoinRequestSupportedChallenge, submitJoinRequestSupportedChallenge} from './challenge-controller';
 
 export default [
   {
-    path: "/api/v1/challenges/joinrequestsupported/:devEUI",
+    path: "/api/v1/challenges/joinrequestsupported/client/:clientId",
     method: "get",
     handler: [
-      checkDevEUIPathVariable,
+      checkClientIdPathVariable,
       getJoinRequestSupportedChallenge,
+    ]
+  },
+  {
+    path: "/api/v1/challenges/joinrequestsupported/:id",
+    method: "post",
+    handler: [
+      checkNumberIdPathVariable,
+      submitJoinRequestSupportedChallenge,
     ]
   },
 ];

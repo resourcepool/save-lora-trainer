@@ -4,11 +4,9 @@
  * @type {{}}
  */
 const CHANGEME = {
-  clientId: 'hacker-1234',
   appEUI: '42:42:42:42:42:42:42:42',
   nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
   deviceEUI: '13:37:00:00:FF:FF:FF:00',
-  progressApiKey: 'jaimelespates'
 };
 
 module.exports = {

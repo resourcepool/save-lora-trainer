@@ -36,7 +36,7 @@ const requestJoinRequestSupportedChallenge = async () => {
 
 /**
  * This allows to submit the result of a join request supported challenge to the progress server.
- * @param result {challengeId: {number}, errors: [{string}], content:[{supported: {boolean}}]}
+ * @param result {challengeId: {number}, errors: [{string}], content:[{supported: {boolean}}]} 
  * @returns {Promise<{done:{boolean}}>}
  */
 const submitJoinRequestSupportedChallenge = async (result) => {

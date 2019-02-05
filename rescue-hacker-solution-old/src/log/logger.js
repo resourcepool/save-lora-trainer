@@ -2,8 +2,7 @@ const winston = require('winston');
 
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'rescue' }
+  format: winston.format.json()
 });
 
 // If we're not in production then log to the `console` with the format:

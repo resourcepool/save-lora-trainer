@@ -1,3 +1,3 @@
 import teamRoutes from "./team/routes";
-
-export default [...teamRoutes];
+import challengesRoutes from "./challenges/routes";
+export default [...teamRoutes, ...challengesRoutes];

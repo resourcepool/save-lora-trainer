@@ -62,7 +62,7 @@ export const randomJoinRequestWrongMHDR = (): { topic: string, message: string }
     jr.phyPayload = btoa(utils.bytesToHexString(Uint8Array.from(buf)));
     return {
         topic: randomValidTopic(),
-        message: jr.toString()
+        message: JSON.stringify(jr)
     };
 };
 

@@ -44,13 +44,13 @@ const solveJoinRequestSupportedChallenge = async () => {
   let result = {
     challengeId: challenge.id,
     errors: undefined,
-    content: []
+    content: {messages: []}
   };
   
   try {
-    challenge.content.forEach(message => {
+    challenge.content.messages.forEach(message => {
       let packetDecoder = new JoinRequestPacketDecoder(message.topic, message.message);
-      result.content.push({supported: packetDecoder.isSupported()});
+      result.content.messages.push({supported: packetDecoder.isSupported()});
     });
   } catch (e) {
     if (!result.errors) {
@@ -91,6 +91,6 @@ const solveJoinRequestDecodeChallenge = async () => {
   reviews.joinRequestDecode = await client.submitJoinRequestDecodeChallenge(result).done;
 };
 
-module.exports = { 
+module.exports = {
   init
 };

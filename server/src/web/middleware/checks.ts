@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { HTTP400Error, HTTP401Error } from '../utils/http-errors';
 import { isValidTeam } from '../validators/team.validator';
-import { isValidHexString } from '../validators/challenge.validator';
+import {isValidHexString, isValidName, isValidNumber} from '../validators/challenge.validator';
 import { config } from '../../config';
 
 export const checkTeamParams = (
@@ -27,6 +27,35 @@ export const checkDevEUIPathVariable = (
         throw new HTTP400Error('Missing path variable devEUI');
     } else if (!isValidHexString(req.params.devEUI)) {
         throw new HTTP400Error('Invalid parameter devEUI');
+    } else {
+        next();
+    }
+};
+
+export const checkClientIdPathVariable = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.params.clientId) {
+        throw new HTTP400Error('Missing path variable clientId');
+    } else if (!isValidName(req.params.clientId)) {
+        throw new HTTP400Error('Invalid parameter clientId');
+    } else {
+        next();
+    }
+};
+
+
+export const checkNumberIdPathVariable = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.params.id) {
+        throw new HTTP400Error('Missing path variable id');
+    } else if (!isValidNumber(req.params.id)) {
+        throw new HTTP400Error('Invalid parameter id');
     } else {
         next();
     }

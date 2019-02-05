@@ -53,8 +53,8 @@ const createDevice = async (device) => {
 
 /**
  * 
- * @param devEUI {string} hex string
- * @param nwkKey {string} hex string
+ * @param devEUI {string} a hex string
+ * @param nwkKey {string} a hex string
  * @returns {Promise<*>}
  */
 const setDeviceNwkKey = async (devEUI, nwkKey) => {

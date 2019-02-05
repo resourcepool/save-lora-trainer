@@ -45,6 +45,20 @@ CREATE TABLE `team` (
   `progress` json DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+--
+-- Structure de la table `challenge`
+--
+
+CREATE TABLE `challenge` (
+  `id` int(11) NOT NULL,
+  `teamId` int(11) NOT NULL,
+  `devEUI` varchar(50) DEFAULT NULL,
+  `tag` varchar(250) NOT NULL,
+  `content` json DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 --
 -- Index pour les tables exportées
 --
@@ -65,6 +79,12 @@ ALTER TABLE `team`
   ADD UNIQUE KEY `devEUI` (`devEUI`);
 
 --
+-- Index pour la table `team`
+--
+ALTER TABLE `challenge`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
@@ -78,6 +98,12 @@ ALTER TABLE `device`
 --
 ALTER TABLE `team`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  
+--
+-- AUTO_INCREMENT pour la table `team`
+--
+ALTER TABLE `challenge`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

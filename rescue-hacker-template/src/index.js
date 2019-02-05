@@ -2,6 +2,9 @@ const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
 const conf = require('./conf/conf');
+const reviewService = require('./progress/review-service');
+
+const Logger = require('./log/logger');
 
 const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
 
@@ -11,17 +14,17 @@ const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
 const deviceEUI = utils.hexStringToBytes(conf.user.deviceEUI);
 const deviceNetworkKey = utils.normalizeHexString(conf.user.nwkKey);
 
- /**
- * Step 1
- */
-let init = () => {
+const logger = Logger.child({service: 'index'});
+let client;
 
-// TODO Step 1: Connect to the city's remote MQTT Broker
-// Using the provided MQTT client, connect to the remote MQTT broker (cf README.md)
-// Don't forget to manually set your clientId, otherwise your step wont be validated!
-// Those idiots forgot to put any security on it... Noobs!
-// MQTT Client documentation => https://github.com/mqttjs/MQTT.js
-// You want to listen to all incoming messages... Did I hear the word "Wildcard"?
+let init = () => {
+  reviewService.init();
+  // TODO Step 1: Connect to the city's remote MQTT Broker
+  // Using the provided MQTT client, connect to the remote MQTT broker (cf README.md)
+  // Don't forget to manually set your clientId, otherwise your step wont be validated!
+  // Those idiots forgot to put any security on it... Noobs!
+  // MQTT Client documentation => https://github.com/mqttjs/MQTT.js
+  // You want to listen to all incoming messages... Did I hear the word "Wildcard"?
 };
 
 /**
@@ -42,11 +45,11 @@ let onMessage = async (topic, message) => {
   if (!msgDecoder.isSupported()) {
     return;
   }
-  
+
   logger.debug("Join Request identified");
   let decodedJoinRequest = msgDecoder.decode();
   logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
-  
+
   // Congratulations, you are decoding all the join requests of the LoRa network.
   // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI 
   if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
