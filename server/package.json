@@ -11,6 +11,7 @@
   "author": "Resourcepool",
   "license": "Apache-2.0",
   "dependencies": {
+    "@types/btoa": "^1.2.2",
     "@types/compression": "0.0.36",
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^6.1.0",

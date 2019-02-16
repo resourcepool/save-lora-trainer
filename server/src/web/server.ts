@@ -32,3 +32,5 @@ export const init = () => {
       console.log(`Server is running http://localhost:${PORT}...`)
   );
 };
+
+init();
