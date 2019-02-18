@@ -2,6 +2,7 @@ import Logger from '../log/logger';
 import * as progressService from '../progress/progress-service';
 import * as teamDao from '../team/team-dao';
 import Team from "../team/models/Team";
+import {config} from "../config";
 
 const logger = Logger.child({service: "mqtt-log-handler"});
 
@@ -13,6 +14,10 @@ export const handleOtherLogMessage = async (topic: string, message: Buffer) => {
     if (MOSQUITTO_CLIENT_CONNECTION_REGEX.test(msgStr)) {
         let match: RegExpExecArray = MOSQUITTO_CLIENT_CONNECTION_REGEX.exec(msgStr)!;
         let clientId: string = match[1];
+        // Ignore mock client messages
+        if (clientId === config.mockClient.clientId) {
+            return;
+        }
         let success = await updateProgressWithClientId(progressService.validateMQTTConnect, clientId);
         if (success) {
             logger.info(`Connection success for: ${clientId}`);
@@ -28,9 +33,13 @@ export const handleSubscriptionLogMessage = async (message: Buffer) => {
     }
     let clientId = match[1];
     let topicSubscribed = match[2];
+    // Ignore mock client messages
+    if (clientId === config.mockClient.clientId) {
+        return;
+    }
     let success = await updateProgressWithClientId(progressService.validateMQTTSubscription, clientId);
     if (success) {
-        logger.info(`Subscription success for: ${clientId} on topic ${topicSubscribed}`);    
+        logger.info(`Subscription success for: ${clientId} on topic ${topicSubscribed}`);
     }
 };
 

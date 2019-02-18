@@ -13,7 +13,6 @@ services:
     volumes:
       - ./sql/init:/docker-entrypoint-initdb.d
       - ./sql/data:/var/lib/mysql
-
   adminer:
     image: adminer
     restart: always

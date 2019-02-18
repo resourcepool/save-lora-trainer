@@ -6,7 +6,12 @@ import {
     HACKER_STEP_BROKER_CONNECT,
     HACKER_STEP_BROKER_SUBSCRIBE,
     HACKER_STEP_JOIN_REQUEST_DECODE,
-    HACKER_STEP_JOIN_REQUEST_SUPPORTED
+    HACKER_STEP_JOIN_REQUEST_SUPPORTED,
+    HACKER_STEP_CREATE_DEVICE,
+    HACKER_STEP_SET_DEVICE_NWK_KEY,
+    GEEK_IN_DANGER_STEP_SET_DEVICE_SETTINGS,
+    GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
+    GEEK_IN_DANGER_STEP_PING_MESSAGE_SENT
 } from "./models/Progress";
 
 const logger = Logger.child({ service: 'progress'});
@@ -16,6 +21,23 @@ const validateStep = async (team: Team, tag: string): Promise<boolean> => {
     step.validated = true;
     step.timestamp = Date.now();
     return await teamDao.updateProgress(team);
+};
+
+export const validateJoinRequestSent = async (team: Team): Promise<boolean> => {
+    return await validateStep(team, GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT);
+};
+
+export const validatePingMessageSent = async (team: Team): Promise<boolean> => {
+    return await validateStep(team, GEEK_IN_DANGER_STEP_PING_MESSAGE_SENT);
+};
+
+
+export const validateDeviceCreated = async (team: Team): Promise<boolean> => {
+    return await validateStep(team, HACKER_STEP_CREATE_DEVICE);
+};
+
+export const validateDeviceNwkKeySet = async (team: Team): Promise<boolean> => {
+    return await validateStep(team, HACKER_STEP_SET_DEVICE_NWK_KEY);
 };
 
 export const validateMQTTConnect = async (team: Team): Promise<boolean> => {

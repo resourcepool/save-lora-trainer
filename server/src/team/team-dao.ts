@@ -1,6 +1,7 @@
 import Team from './models/Team';
 import { dbInstance } from '../web/utils/db-config';
 import {HTTP404Error} from "../web/utils/http-errors";
+import {normalizeHexString} from "../utils";
 
 
 export const findOne = async (id: number): Promise<Team|undefined> => {
@@ -54,7 +55,7 @@ export const addTeam = async (team: Team): Promise<Team> => {
             id: team.id,
             name: team.name,
             clientId: team.clientId,
-            devEUI: team.devEUI,
+            devEUI: normalizeHexString(team.devEUI!),
             progress: JSON.stringify(team.progress)
         };
         res = await con.query('INSERT INTO team SET ?', dto);

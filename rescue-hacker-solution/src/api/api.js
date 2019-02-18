@@ -24,6 +24,9 @@ const deviceExists = async (devEUI) => {
     logger.debug("Response received", response.data);
     return response;
   } catch (e) {
+    if (e.response.status === 404) {
+      return false;
+    }
     logger.error("Error occured during call to http api", e);
     throw e;
   }
@@ -51,8 +54,46 @@ const createDevice = async (device) => {
   }
 };
 
+
+const deviceNwkKeyExists = async (devEUI) => {
+  try {
+    const response = await client.get(`/devices/${devEUI}/keys`);
+    logger.debug("Response received", response.data);
+    return response;
+  } catch (e) {
+    if (e.response.status === 404) {
+      return false;
+    }
+    logger.error("Error occured during call to http api", e);
+    throw e;
+  }
+};
+
+
 /**
- * 
+ *
+ * @param devEUI {string} hex string
+ * @param nwkKey {string} hex string
+ * @returns {Promise<*>}
+ */
+const updateDeviceNwkKey = async (devEUI, nwkKey) => {
+  try {
+    const response = await client.put(`/devices/${devEUI}/keys`, {
+      deviceKeys: {
+        devEUI: devEUI,
+        nwkKey: nwkKey
+      }
+    });
+    logger.debug("Response received", response.data);
+    return response;
+  } catch (e) {
+    logger.error("Error occured during call to http api", e);
+    throw e;
+  }
+};
+
+/**
+ *
  * @param devEUI {string} hex string
  * @param nwkKey {string} hex string
  * @returns {Promise<*>}
@@ -68,13 +109,17 @@ const setDeviceNwkKey = async (devEUI, nwkKey) => {
     logger.debug("Response received", response.data);
     return response;
   } catch (e) {
+    if (e.response.status === 409) {
+      return await updateDeviceNwkKey(devEUI, nwkKey);
+    }
     logger.error("Error occured during call to http api", e);
     throw e;
   }
 };
 
 module.exports = {
+  deviceExists,
   createDevice,
+  deviceNwkKeyExists,
   setDeviceNwkKey,
-  deviceExists
 };

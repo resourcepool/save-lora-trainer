@@ -38,7 +38,7 @@ let onMessage = async (topic, message) => {
   if (!gatewayRxTopicRegex.test(topic)) {
     return;
   }
-  // TODO Step 2: 
+  // TODO Step 2:
   // We are only interested in the join request packets.
   // Problem is: those packets are encoded... Therefore we need to use a decoder.
   // You need to implement the PacketDecoder code of course!
@@ -53,13 +53,13 @@ let onMessage = async (topic, message) => {
   logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
 
   // Congratulations, you are decoding all the join requests of the LoRa network.
-  // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI 
+  // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
   if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
     logger.debug("AppEUI and DevEUI are valid. Will register device");
     // TODO Step 3:
     // JoinRequest means the device is trying to join the application network.
     // Problem is : The device was never registered in the application network.
-    // (It's like a new computer trying to go join a nazily-secured enterprise network 
+    // (It's like a new computer trying to go join a nazily-secured enterprise network
     // and your sysadmin needs to whitelist your computer's mac address).
     // Therefore we want to interact with the LoraServer API.
     // Thanks to your awesome friend John Doe, you already have a async-client available in api/api.js
@@ -73,8 +73,10 @@ let onMessage = async (topic, message) => {
           description: "Test description"
         });
       }
-      // TODO Step 3.2: set the device Network key (NwkKey).
-      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
+      if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
+        // TODO Step 3.2: set the device Network key (NwkKey).
+        await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
+      }
       logger.debug("Device registered successfully");
     } catch (e) {
       logger.error("Error occured during device registration:");

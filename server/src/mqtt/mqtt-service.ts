@@ -4,6 +4,7 @@ import * as mqttRxHandler from './mqtt-rx-handler';
 import * as mqttLogHandler from './mqtt-log-handler';
 import * as mqttJoinRequestMockService from './mqtt-joinrequest-mock-service';
 import * as winston from "winston";
+import {config} from "../config";
 
 const GATEWAY_RX_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 const GATEWAY_STATS_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
@@ -14,7 +15,7 @@ let client: MqttClient;
 let sentBytes: number = 0;
 
 export const init = () => {
-    client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: "gotham-watchdog"});
+    client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: config.mockClient.clientId});
     client.on('connect', () => {
         client.subscribe("#", (err) => {
             logger.info("Subscribed to #");
