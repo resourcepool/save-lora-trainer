@@ -1,4 +1,5 @@
-# Geek Victim   
+# Geek Victim
+
 
 ## Briefing
 
@@ -18,6 +19,7 @@ You need to tell where you are to someone and... That doesn't smell so good so f
  
  So let's work it out!
  
+ 
  ## Main goal
  
  Now that you are fully woke up you realize that this apocalypse nightmare you had last week was actually premonitory...    
@@ -26,6 +28,7 @@ You need to tell where you are to someone and... That doesn't smell so good so f
  Well, let's do it!
 
  You have this WIP wisnode-controller application, a WisNode LoraWan, a few documentation, and the hope that some LoraWan Gateway is still listening somewhere.     
+ 
  
 ### Step 1 - connect to a listening lora-server
  
