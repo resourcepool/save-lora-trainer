@@ -1,7 +1,7 @@
-import {config} from "../config";
+import {config} from "./config";
 import {
     InterfaceGpsLocation, InternalDeviceSend,
-    sendCommand,
+    sendCommand, sendPayload,
     wisnodeSerialcomServiceEventEmitter,
 } from "../wisnode-process-service";
 
@@ -41,7 +41,6 @@ export function sendGpsLocation(gpsLocation: InterfaceGpsLocation) {
 
     const gpsData = convertGpsLocationToPayloadData(gpsLocation);
     sendPayload({type: 0, port: 1, data: gpsData});
-    // sendCommand("at+send=0,1,018806765ff2960a0003e8");
 }
 
 // TODO STEP 2
@@ -70,7 +69,4 @@ function round_number(num: number, dec: number): number {
     return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 }
 
-function sendPayload(payload: InternalDeviceSend) {
-    const cmd = "at+send=" + payload.type + "," + payload.port + "," + payload.data;
-    sendCommand(cmd);
-}
+

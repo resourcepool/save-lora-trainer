@@ -19,14 +19,12 @@
   ],
   "author": "GitHub",
   "license": "CC0-1.0",
-  "devDependencies": {
+  "dependencies": {
+    "serialport": "^7.1.4",
     "@types/serialport": "^7.0.1",
     "electron": "^4.0.4",
     "electron-rebuild": "^1.8.4",
     "tslint": "^5.12.1",
     "typescript": "^2.8.3"
-  },
-  "dependencies": {
-    "serialport": "^7.1.4"
   }
 }

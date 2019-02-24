@@ -1,0 +1,30 @@
+{
+  "name": "WisNode-Controller",
+  "version": "1.0.0",
+  "description": "A minimal Electron application written with Typescript",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "install": "sass ./style.scss ./style.css && electron-rebuild",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "start": "npm run build && electron ./dist/main.js"
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo",
+    "typescript"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "serialport": "^7.1.4",
+    "@types/serialport": "^7.0.1",
+    "electron": "^4.0.4",
+    "electron-rebuild": "^1.8.4",
+    "tslint": "^5.12.1",
+    "typescript": "^2.8.3"
+  }
+}

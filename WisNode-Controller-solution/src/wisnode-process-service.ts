@@ -1,11 +1,11 @@
 import EventEmitter = require("events");
 import SerialPort = require("serialport");
-import {config} from "./config";
+import {config} from "./tobeimpl/config";
 import * as rescueService from "./tobeimpl/rescue-service";
 
 const Readline = SerialPort.parsers.Readline;
 const parser = new Readline({delimiter: "\r\n"});
-const port = new SerialPort("/dev/ttyUSB0", {baudRate: 115200});
+const port = new SerialPort(config.tty, {baudRate: 115200});
 port.pipe(parser);
 parser.on("data", processReturnFromDevice);
 
@@ -93,6 +93,10 @@ export function sendCommand(cmd: string) {
     wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", cmd);
 }
 
+export function sendPayload(payload: InternalDeviceSend) {
+    const cmd = "at+send=" + payload.type + "," + payload.port + "," + payload.data;
+    sendCommand(cmd);
+}
 
 export interface InterfaceGpsLocation {
     latitude: number;
