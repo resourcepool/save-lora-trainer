@@ -1,7 +1,6 @@
 # Geek Victim
 
-
-## Briefing
+## Briefing
 
 Let's make it quick.
 
@@ -19,8 +18,7 @@ Really? Sending out your location by radio in 2019? Well.. if that's the only op
  
 So let's work it out!
  
- 
-## Main goal
+## Main goal
  
 Now that you are fully woke up you realize that this apocalypse nightmare you had last week was actually premonitory...    
 So this app you were starting to develop (just in case...) will be usefull!    
