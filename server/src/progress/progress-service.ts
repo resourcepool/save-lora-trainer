@@ -18,6 +18,9 @@ const logger = Logger.child({ service: 'progress'});
 
 const validateStep = async (team: Team, tag: string): Promise<boolean> => {
     let step: Step = team.progress.hackerSteps!.find(s => s.tag === tag)!;
+    if (!step){
+        step = team.progress.geekInDangerSteps!.find(s => s.tag === tag)!;
+    }
     step.validated = true;
     step.timestamp = Date.now();
     return await teamDao.updateProgress(team);
