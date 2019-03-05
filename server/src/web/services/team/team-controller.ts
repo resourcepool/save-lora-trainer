@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import Team from '../../../team/models/Team';
-import {addTeam, findByClientId} from '../../../team/team-dao';
+import { addTeam, findAll, findByClientId } from '../../../team/team-dao';
 import Progress from "../../../progress/models/Progress";
 
 export const addTeamAction = async (req: Request, res: Response, next: NextFunction) => {
@@ -20,4 +20,12 @@ export const getTeamProgressAction = async (req: Request, res: Response, next: N
         return res.status(404).send("Team not found");
     }
     return res.status(200).send(team.progress);
+};
+
+export const getAllTeamProgressAction = async (req: Request, res: Response, next: NextFunction) => {
+    const teams = await findAll();
+    if (!teams) {
+        return res.status(404).send("No Team found");
+    }
+    return res.status(200).send(teams);
 };

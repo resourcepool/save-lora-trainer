@@ -19,6 +19,7 @@
     "@types/node": "^10.12.21",
     "@types/request-promise": "^4.1.42",
     "@types/swagger-ui-express": "^3.0.0",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "btoa": "^1.2.1",
     "compression": "^1.7.3",

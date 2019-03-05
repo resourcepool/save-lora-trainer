@@ -4,6 +4,25 @@ import {HTTP404Error} from "../web/utils/http-errors";
 import {normalizeHexString} from "../utils";
 
 
+export const findAll = async (): Promise<Team[]|null> => {
+    const con = await dbInstance();
+    let rows;
+    try {
+        rows = await con.query(`SELECT * FROM team`);
+    } finally {
+        con.end();
+    }
+    if (rows.length === 0) {
+        return null;
+    }
+
+    let result: Team[] = [];
+    for (const team of rows) {
+        result = [...result, Team.fromDto(team)];
+    }
+    return result;
+};
+
 export const findOne = async (id: number): Promise<Team|undefined> => {
     const con = await dbInstance();
     let rows;
