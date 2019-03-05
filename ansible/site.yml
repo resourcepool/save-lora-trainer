@@ -1,0 +1,4 @@
+---
+- import_playbook: setup-common.yml
+- import_playbook: setup-appserver.yml
+- import_playbook: setup-loraserver.yml

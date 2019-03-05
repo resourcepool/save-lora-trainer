@@ -1,0 +1,58 @@
+---
+- name: Create content directory (redis)
+  become: yes
+  file: path=/opt/loraserver/redis state=directory mode=0755 owner=1000 group=1000 recurse=yes
+
+
+- name: Create content directory (db)
+  become: yes
+  file: path=/opt/loraserver/db state=directory mode=0755 owner=1000 group=1000 recurse=yes
+
+- name: Create content directory (broker config)
+  become: yes
+  file: path=/opt/loraserver/broker/config state=directory mode=g+rwx owner=1000 group=1000 recurse=yes
+
+- name: Create content directory (broker data)
+  become: yes
+  file: path=/opt/loraserver/broker/data state=directory mode=g+rwx owner=1000 group=1000 recurse=yes
+
+- name: Create content directory (broker log)
+  become: yes
+  file: path=/opt/loraserver/broker/log state=directory mode=g+rwx owner=1000 group=1000 recurse=yes
+
+- name: Create conf directory
+  become: yes
+  file: path=/etc/loraserver state=directory mode=0755 owner={{ansible_user}} group=wheel recurse=yes
+
+- name: Copy conf
+  become: yes
+  copy: src=conf dest=/etc/loraserver
+
+# Docker-compose file
+- name: Copy docker-compose file
+  become: yes
+  copy: src=docker-compose.yml dest=/opt/loraserver/docker-compose.yml
+
+- name: Copy service
+  become: yes
+  copy: "src=loraserver.service dest=/etc/systemd/system/{{service_name}}.service"
+
+- name: Assign rights to services
+  become: yes
+  file:
+    path: /etc/systemd/system
+    recurse: yes
+    mode: 0755
+
+- firewalld:
+    port: 8883/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Make sure Service is running
+  become: yes
+  service:
+    name: "{{service_name}}"
+    state: started
+    enabled: yes

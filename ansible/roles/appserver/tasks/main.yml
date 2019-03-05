@@ -1,0 +1,35 @@
+---
+- name: Create content directory (db)
+  become: yes
+  file: path=/opt/appserver/db state=directory mode=0755 owner=1000 group=1000 recurse=yes
+
+- name: Create conf directory
+  become: yes
+  file: path=/etc/appserver state=directory mode=0755 owner={{ansible_user}} group=wheel recurse=yes
+
+- name: Copy conf
+  become: yes
+  copy: src=conf dest=/etc/appserver
+
+# Docker-compose file
+- name: Copy docker-compose file
+  become: yes
+  copy: src=docker-compose.yml dest=/opt/appserver/docker-compose.yml
+
+- name: Copy service
+  become: yes
+  copy: "src=appserver.service dest=/etc/systemd/system/{{service_name}}.service"
+
+- name: Assign rights to services
+  become: yes
+  file:
+    path: /etc/systemd/system
+    recurse: yes
+    mode: 0755
+
+- name: Make sure Service is running
+  become: yes
+  service:
+    name: "{{service_name}}"
+    state: started
+    enabled: yes

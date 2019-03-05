@@ -1,0 +1,43 @@
+---
+
+- name: Install yum utils
+  yum: name=yum-utils state=latest
+
+- name: Install device-mapper
+  yum: name=device-mapper-persistent-data state=latest
+
+- name: Install lvm2
+  yum: name=lvm2 state=latest
+
+- name: Add docker-ce repository
+  yum_repository:
+   name: docker-ce-repo
+   description: Docker CE repository for CentOS
+   gpgkey: https://download.docker.com/linux/centos/gpg
+   baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+
+- name: Make sure docker-python RPM is not installed
+  yum: name=docker-python state=absent
+
+- name: Install docker-ce
+  yum: name=docker-ce state=latest
+
+#- name: Install docker-py
+#  pip: name=docker state=latest
+#
+- name: Install docker-compose
+  #pip: name=docker-compose==1.23.2 state=latest
+  become: yes
+  shell: "curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose"
+
+- name: Add current system user to docker group
+  user:
+    name: "{{system_user}}"
+    groups: docker
+    append: yes
+
+- name: Make sure Docker is running
+  service:
+    name: docker
+    state: started
+    enabled: yes

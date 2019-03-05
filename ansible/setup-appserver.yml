@@ -1,0 +1,30 @@
+- hosts: appserver
+  roles:
+    - role: nginx
+      become: yes
+    - role: certbot
+      become: yes
+    - role: appserver
+      ansible_user: "{{system_user}}"
+      service_name: "appserver"
+  vars:
+    nginx_proxy:
+      - {name: save-lora, host: save-lora.takima.io, cert: save-lora.takima.io, port: 3000, redirect: www.save-lora.takima.io}
+      - {name: save-lora-www, host: www.save-lora.takima.io, cert: save-lora.takima.io, port: 3000}
+      - {name: save-lora-api, host: api.save-lora.takima.io, cert: save-lora.takima.io, port: 8080}
+    certbot_admin_email: contact@loicortola.com
+    certbot_install_from_source: yes
+    certbot_create_if_missing: yes
+    certbot_package: certbot
+    certbot_auto_renew: true
+    certbot_auto_renew_user: "{{ ansible_user }}"
+    certbot_auto_renew_hour: 3
+    certbot_auto_renew_minute: 30
+    certbot_auto_renew_options: "--quiet --no-self-upgrade"
+    certbot_certs:
+      - domains:
+        - save-lora.takima.io
+        - www.save-lora.takima.io
+        - api.save-lora.takima.io
+    certbot_create_standalone_stop_services:
+      - nginx

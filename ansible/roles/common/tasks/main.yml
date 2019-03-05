@@ -1,0 +1,68 @@
+---
+
+- name: Add EPEL repository
+  become: true
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://dl.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+
+- name: Disable SELinux
+  become: true
+  selinux:
+    policy: targeted
+    state: disabled
+
+- name: Install firewalld
+  become: true
+  yum: name=firewalld state=present
+
+- name: Run firewalld
+  become: true
+  service: name=firewalld state=started
+
+- name: Make sure we have a wheel group
+  become: true
+  group:
+    name: wheel
+    state: present
+
+- name: Allow wheel group to have passwordless sudo
+  become: true
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Add the system user
+  become: true
+  user:
+    name: "{{system_user}}"
+    comment: Main system user
+    uid: 1111
+    group: wheel
+
+- name: Add authorized keys
+  become: true
+  authorized_key:
+    user: "{{system_user}}"
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/ci
+    - public_keys/loic
+
+- name: Restart SSH
+  become: true
+  service: name=sshd state=restarted
+
+- name: Install python setup tools
+  become: true
+  yum: name=python-setuptools state=latest
+
+- name: Install Python Pip
+  become: true
+  easy_install: name=pip state=latest

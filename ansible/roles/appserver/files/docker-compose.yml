@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  db:
+    image: mysql:8.0.14
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lora
+    volumes:
+      - /etc/appserver/db/init:/docker-entrypoint-initdb.d
+      - /opt/appserver/db:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3333:8080
+  appserver:
+    image: resourcepool/save-lora-appserver
+    ports:
+      - 8080:8080
+    volumes:
+      - /etc/appserver/conf/config.ts:/server/src/config.ts:ro
+  website:
+    image: resourcepool/save-lora-website
+    ports:
+      - 3000:80

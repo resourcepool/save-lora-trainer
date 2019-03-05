@@ -1,0 +1,18 @@
+[Unit]
+Description= The Save-Lora loraserver service runner
+Requires=docker.service network-online.target
+After=docker.service network-online.target
+
+[Service]
+WorkingDirectory=/opt/loraserver
+Type=oneshot
+RemainAfterExit=yes
+
+ExecStart=/usr/bin/docker-compose -f /opt/loraserver/docker-compose.yml up --force-recreate -d
+ExecStop=/usr/bin/docker-compose -f /opt/loraserver/docker-compose.yml down
+
+ExecReload=/usr/bin/docker-compose -f /opt/loraserver/docker-compose.yml pull --quiet --parallel
+ExecReload=/usr/bin/docker-compose -f /opt/loraserver/docker-compose.yml up -d
+
+[Install]
+WantedBy=multi-user.target

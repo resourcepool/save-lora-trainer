@@ -1,0 +1,3 @@
+ansible_host: loras.save-lora.takima.io
+ansible_connection: ssh
+ansible_user: centos

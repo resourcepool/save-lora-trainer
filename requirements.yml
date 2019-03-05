@@ -1,0 +1,7 @@
+# from galaxy
+- src: geerlingguy.certbot
+  name: certbot
+- src: geerlingguy.git
+  name: git
+- src: geerlingguy.gitlab
+  name: gitlab
