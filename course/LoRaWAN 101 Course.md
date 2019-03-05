@@ -32,9 +32,12 @@ Topology of a LoRaWAN network consists of several elements.
 
 LoRaWAN end nodes cannot communicate between each other. All communication goes to the gateway and the App Server.
 
-End device#1 -┐
-End device#2 -┼- Gateway
-End device#n -┘
+End device#1 -┐  
+End device#2 -┼- Gateway  
+End device#n -┘  
+
+
+------
 
 ## Typical Architecture
 
