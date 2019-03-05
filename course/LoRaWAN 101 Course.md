@@ -2,9 +2,8 @@
 
 LoRaWAN™ is a protocol specification based on the LoRa technology developed by the LoRa Alliance.  
 It was originally developed by Cycleo of Grenoble, France, and acquired by Semtech in 2012.  
-LoRaWAN targets the basic needs of LoRa usage for IoT by providing Addressing, Routing and Security.
-  
-It is aimed at providing long-range, low-power and small-data-rate connectivity, and used very frequently in IoT applications.  
+LoRaWAN targets the basic needs of LoRa usage for IoT by providing long-range, low-power and small data rate connectivity as much as Addressing, Routing and Security capability.
+
 LoRa uses license-free sub-gigahertz radio frequency bands like 169 MHz, 433 MHz, 868 MHz (Europe) and 915 MHz (North America). LoRa enables long-range transmissions (more than 10 km in rural areas) with low power consumption. The technology is presented in two parts: **LoRa**, the **physical layer** and **LoRaWAN** (Long Range Wide Area Network), the **upper layers**.
 
 ## LoRa PHY
@@ -17,6 +16,10 @@ Since LoRa defines the lower physical layer, the upper networking layers were la
 
 LoRaWAN defines the communication protocol and system architecture for the network, while the LoRa physical layer enables the long-range communication link. LoRaWAN is also responsible for managing the communication frequencies, data rate, and power for all devices.
 
+## About DevEUIs
+
+LoRa devices have a unique identifier (DevEUI) that is assigned to the device by the chip manufacturer. This identifier is used to uniquely identify the device on the network.
+
 ## How LoRaWAN™ works
 
 Topology of a LoRaWAN network consists of several elements.
@@ -26,11 +29,14 @@ Topology of a LoRaWAN network consists of several elements.
 * **Network Server:** The LoRa Network Server acts to eliminate duplicate packets, manages security and data rates.
 * **Application Server:** Application Servers manage payload security and performs analysis to utilize sensor data. Cayenne operates as an Application Server.
 
-## About DevEUIs
 
-LoRa devices have a unique identifier (DevEUI) that is assigned to the device by the chip manufacturer. This identifier is used to uniquely identify the device on the network.
+LoRaWAN end nodes cannot communicate between each other. All communication goes to the gateway and the App Server.
 
-## Architecture
+End device#1 -┐
+End device#2 -┼- Gateway
+End device#n -┘
+
+## Typical Architecture
 
 ![LoRaWAN architecture](https://www.loraserver.io/img/architecture.png)
 
@@ -49,14 +55,6 @@ To receive the application payload sent by one of your devices, you need to inte
 
 **In a summary:**  
 Devices in the network are asynchronous and transmit when they have data available to send. Data transmitted by an end-node device is received by multiple **gateways**, which forward the data packets to a **centralized network server**. The network server filters duplicate packets, performs security checks, and manages the network. Data is then forwarded to **application servers**.
-
-## Topology
-
-LoRaWAN devices cannot communicate between each other. All communication goes to the gateway and the App Server.
-
-End device#1 -┐
-End device#2 -┼- Gateway
-End device#n -┘
 
 ## LoRaWAN Classes
 
