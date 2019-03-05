@@ -7,20 +7,22 @@ import Team from "../team/models/Team";
 import * as teamDao from "../team/team-dao";
 import {config} from "../config";
 import {normalizeHexString} from "../utils";
+import GpsLocationPacketDecoder from "../gpslocation/models/gpsLocationPacketDecoder";
 
-export const handleRxMessage = async (topic: string, message: Buffer) => {
-    // Check Join Request Packets
-    let joinRequestPacketDecoder = new JoinRequestPacketDecoder(topic, message);
-    if (joinRequestPacketDecoder.isSupported()) {
-        let decoded = joinRequestPacketDecoder.decode();
-        logger.info("Join Request Received: " + JSON.stringify(decoded));
+export const handleAppRxMessage = async (topic: string, message: Buffer) => {
+
+    // Check GpsLocationPacket
+    let gpsLocationPacketDecoder = new GpsLocationPacketDecoder(topic, message);
+    if (gpsLocationPacketDecoder.isSupported()) {
+        let decoded = gpsLocationPacketDecoder.decode();
+        logger.info("GpsLocation Received: " + JSON.stringify(decoded));
         // Ignore mock device messages
         if (normalizeHexString(decoded.devEUI) === normalizeHexString(config.mockDevice.devEUI)) {
             return;
         }
-        let success = await updateProgressWithDevEUI(progressService.validateJoinRequestSent, decoded.devEUI);
+        let success = await updateProgressWithDevEUI(progressService.validateGpsLocationReceived, decoded.devEUI);
         if (success) {
-            logger.info(`Join request sent successfully for device ${decoded.devEUI}`);
+            logger.info(`GpsLocation sent successfully for device ${decoded.devEUI}`);
         }
     }
 };

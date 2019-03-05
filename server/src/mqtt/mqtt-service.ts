@@ -1,12 +1,14 @@
 import mqtt, {MqttClient} from 'mqtt';
 import Logger from '../log/logger';
 import * as mqttRxHandler from './mqtt-rx-handler';
+import * as mqttAppRxHandler from './mqtt-application-rx-handler';
 import * as mqttLogHandler from './mqtt-log-handler';
 import * as mqttJoinRequestMockService from './mqtt-joinrequest-mock-service';
 import * as winston from "winston";
 import {config} from "../config";
 
 const GATEWAY_RX_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
+const GATEWAY_APP_RX_TOPIC_REGEX = new RegExp("^application/[0-9]*/device/([0-9a-fA-F]+)/rx$");
 const GATEWAY_STATS_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
 const LOG_TOPIC_REGEX = new RegExp("^\\$SYS\\/broker\\/log\\/(\\w+)\\/?(\\w*)$");
 const logger = Logger.child({service: "mqtt-service"});
@@ -15,7 +17,7 @@ let client: MqttClient;
 let sentBytes: number = 0;
 
 export const init = () => {
-    client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: config.mockClient.clientId});
+    client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: config.mockClient.clientId + Math.random()});
     client.on('connect', () => {
         client.subscribe("#", (err) => {
             logger.info("Subscribed to #");
@@ -41,6 +43,8 @@ const onMessage = (topic: string, message: Buffer) => {
         handleGatewayStatsMessage(topic, message);
     } else if (LOG_TOPIC_REGEX.test(topic)) {
         handleLogMessage(topic, message);
+    }else if (GATEWAY_APP_RX_TOPIC_REGEX.test(topic)){
+        handleAppRxMessage(topic, message);
     }
 };
 
@@ -56,6 +60,13 @@ const handleGatewayRxMessage = (topic: string, message: Buffer) => {
     logger.debug("Gateway Rx Message received");
     sentBytes += message.length;
     mqttRxHandler.handleRxMessage(topic, message);
+};
+
+
+const handleAppRxMessage = (topic: string, message: Buffer) => {
+    logger.debug("Application Rx Message received");
+    sentBytes += message.length;
+    mqttAppRxHandler.handleAppRxMessage(topic, message);
 };
 
 const handleLogMessage = (topic: string, message: Buffer) => {
