@@ -195,12 +195,15 @@ The number of retransmissions (and their timing) for the same message where an a
 * If a data frame carries a payload, FRMPayload must be encrypted before the message integrity code (MIC) is calculated.
 * The encryption scheme used is based on the generic algorithm described in *IEEE 802.15.4/2006 Annex B* [IEEE802154] using AES with a key length of 128 bits.
 * The key K used depends on the FPort of the data message:
+
   FPort  | K
   -------|--------
   0      | NwkSkey
   1..255 | AppSKey
+  
 * pld = **FRMPayload**
 * sequence of Blocks *A_i* for i = 1..k with k = ceil(len(pld) / 16)
+
   bytes | 1    | 4        | 1   | 4       | 4    | 1    | 1
   ------|------|----------|-----|---------|------|------|--
   *A_i* | 0x01 | 4 X 0x00 | Dir | DevAddr | FCnt | 0x00 | i
@@ -208,6 +211,7 @@ The number of retransmissions (and their timing) for the same message where an a
   - blocks *A_i* are encrypted to get a sequence S of blocks *S_i*:
     *S_i = aes128_encrypt(K, A_i) for i = 1..k*
     *S = S_1 | S_2 | .. | S_k*
+    
 * Encryption and decryption of the payload is done by truncating
   *(pld | pad_16 ) xor S*
   to the first len(pld) octets.
@@ -222,6 +226,7 @@ https://www.thethingsnetwork.org/forum/t/questions-about-aes128-encryption-of-a-
 * The MIC is calculated as follows [RFC4493]:
   *cmac = aes128_cmac(NwkSKey, *B_0* | msg)*
   *MIC = cmac[0..3]*
+  
   bytes | 1    | 4        | 1   | 4       | 4    | 1    | 1
   ------|------|----------|-----|---------|------|------|---------
   *B_0* | 0x49 | 4 X 0x00 | Dir | DevAddr | FCnt | 0x00 | len(msg)
