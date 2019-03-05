@@ -656,18 +656,3 @@ transport protocols (e.g. HTTP [3] with REST [4]) by supporting the Content-Type
 defined in [1]. 
 ```
    IPSO Smart Objects Guideline - Starter Pack - Version 1.0 ©2014 IPSO Alliance
-
-
-The following section provides information extracted from the IPSO Smart Objects specifications.  It includes all of the Data Types (object ID) that can be used with Cayenne LPP. **Therefore, the current implementation is limited to the data types listed in the [Data Types section](#lora-cayenne-low-power-payload-data-types).**
-
-#### Starter Pack Data Types
-
-For full specification, see <a href="http://www.ipso-alliance.org/so-starter-pack/" target="_blank">http://www.ipso-alliance.org/so-starter-pack/</a>.
-
-<p style="text-align:center"><br/><img src="http://cloudfront-mydevices-wordpress.s3.amazonaws.com/wp-content/uploads/20170118152251/Cayenne-LPP-Starter-Pack-Data-Types.png" width="660" height="851" alt="IPSO Starter Pack Data Types"><br/><br/></p>
-
-#### Expansion Pack Data Types
-
-For full specification, see  <a href="http://www.ipso-alliance.org/so-expansion-pack/" target="_blank">http://www.ipso-alliance.org/so-expansion-pack/</a>.
-
-<p style="text-align:center"><br/><img src="http://cloudfront-mydevices-wordpress.s3.amazonaws.com/wp-content/uploads/20170118152253/Cayenne-LPP-Expansion-Pack-Data-Types.png" width="660" height="1051" alt="IPSO Expansion Pack Data Types"><br/><br/></p>
