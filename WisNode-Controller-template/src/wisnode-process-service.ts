@@ -59,11 +59,11 @@ function processReturnFromDevice(data: string) {
         console.log(ProcessStep[currentStep]);
         processNextStep();
 
-    } else if (rescueService.isJoinRequestAcceptResponse(data)) {
+    } else if (isJoinRequestAcceptResponse(data)) {
         wisnodeSerialcomServiceEventEmitter.emit("server-response-raw",
             "Congrats! you're connected to loraServer");
         wisnodeSerialcomServiceEventEmitter.emit("allow-send-location");
-    } else if (rescueService.isGpsLocationReceiptConfirmation(data)) {
+    } else if (isGpsLocationReceiptConfirmation(data)) {
         wisnodeSerialcomServiceEventEmitter.emit("server-response-raw",
             "GPS Location has been successfully sent. Congrats! HELP IS ON ITS WAY !!");
     }
@@ -96,6 +96,14 @@ export function sendCommand(cmd: string) {
 export function sendPayload(payload: InternalDeviceSend) {
     const cmd = "at+send=" + payload.type + "," + payload.port + "," + payload.data;
     sendCommand(cmd);
+}
+
+export function isJoinRequestAcceptResponse(response: string) {
+    return response === "at+recv=3,0,0";
+}
+
+export function isGpsLocationReceiptConfirmation(response: string) {
+    return response === "at+recv=2,0,0";
 }
 
 export interface InterfaceGpsLocation {
