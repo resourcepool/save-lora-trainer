@@ -2,10 +2,10 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process
 
-import * as wisnodeService from "./wisnode-process-service";
+import * as wisnodeService from "./node-process-service";
 import {
-    wisnodeSerialcomServiceEventEmitter,
-} from "./wisnode-process-service";
+    serialServiceEventEmitter,
+} from "./node-process-service";
 
 
 const displayText = document.getElementById("wisnode-serial");
@@ -24,23 +24,23 @@ function displayResponseRaw(data: string) {
     addLineToDisplay("Raw Response : " + data);
 }
 
-wisnodeSerialcomServiceEventEmitter.on("cmd-sent", (msg) => {
+serialServiceEventEmitter.on("cmd-sent", (msg: string) => {
     addLineToDisplay(msg);
 });
-wisnodeSerialcomServiceEventEmitter.on("dev-response-raw", (data) => {
+serialServiceEventEmitter.on("dev-response-raw", (data: string) => {
     displayResponseRaw(data);
 });
 
-wisnodeSerialcomServiceEventEmitter.on("server-response-raw", (data) => {
+serialServiceEventEmitter.on("server-response-raw", (data: string) => {
     displayResponseRaw(data);
 });
 
-wisnodeSerialcomServiceEventEmitter.on("allow-send-location",
+serialServiceEventEmitter.on("allow-send-location",
     () => {
         (document.getElementById("send_location") as HTMLInputElement).disabled = false;
     });
 
-wisnodeSerialcomServiceEventEmitter.on("reset", () => {
+serialServiceEventEmitter.on("reset", () => {
     displayText.textContent = "";
     (document.getElementById("send_location") as HTMLInputElement).disabled = true;
 });

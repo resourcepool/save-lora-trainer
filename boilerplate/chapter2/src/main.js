@@ -1,7 +1,7 @@
-// import * as path from "path";
-const Path = require('path')
+const Path = require('path');
+const { app, BrowserWindow } = require('electron');
+
 let mainWindow;
-const { app, BrowserWindow } = require('electron')
 
 function createWindow() {
   // Create the browser window.

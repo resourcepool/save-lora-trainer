@@ -59,7 +59,7 @@ const deviceNwkKeyExists = async (devEUI) => {
   try {
     const response = await client.get(`/devices/${devEUI}/keys`);
     logger.debug("Response received", response.data);
-    return response;
+    return !!response;
   } catch (e) {
     if (e.response.status === 404) {
       return false;

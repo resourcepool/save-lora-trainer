@@ -39,7 +39,6 @@ export const validateGpsLocationReceived = async (team: Team): Promise<boolean> 
     return await validateStep(team, GEEK_IN_DANGER_STEP_GPS_LOCATION_SENT)
 };
 
-
 export const validateDeviceCreated = async (team: Team): Promise<boolean> => {
     return await validateStep(team, HACKER_STEP_CREATE_DEVICE);
 };
