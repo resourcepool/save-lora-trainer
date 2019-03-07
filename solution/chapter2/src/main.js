@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
-import * as path from "path";
-let mainWindow: Electron.BrowserWindow;
+// import * as path from "path";
+const Path = require('path')
+let mainWindow;
+const { app, BrowserWindow } = require('electron')
 
 function createWindow() {
   // Create the browser window.
@@ -10,7 +11,7 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  mainWindow.loadFile(Path.join(__dirname, "../index.html"));
   mainWindow.setMenuBarVisibility(false)
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

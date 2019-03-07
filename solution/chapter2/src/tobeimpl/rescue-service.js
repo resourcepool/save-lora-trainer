@@ -1,6 +1,5 @@
 import {config} from "./config";
 import {
-    InterfaceGpsLocation, InternalDeviceSend,
     sendCommand, sendPayload,
     wisnodeSerialcomServiceEventEmitter,
 } from "../wisnode-process-service";
@@ -32,29 +31,29 @@ export function sendJoinRequest() {
 }
 
 // TODO STEP 1.3
-export function isJoinRequestAcceptResponse(response: string) {
+export function isJoinRequestAcceptResponse(response) {
     return response === "at+recv=3,0,0";
 }
 
 // TODO STEP 2
-export function sendGpsLocation(gpsLocation: InterfaceGpsLocation) {
+export function sendGpsLocation(gpsLocation) {
 
     const gpsData = convertGpsLocationToPayloadData(gpsLocation);
     sendPayload({type: 0, port: 1, data: gpsData});
 }
 
 // TODO STEP 2
-export function isGpsLocationReceiptConfirmation(response: string) {
+export function isGpsLocationReceiptConfirmation(response) {
     return response === "at+recv=2,0,0";
 }
 
-function convertGpsLocationToPayloadData(gpsLocation: InterfaceGpsLocation): string {
+function convertGpsLocationToPayloadData(gpsLocation) {
 
     return "01" + "88" + gpsCoordAsHexa(gpsLocation.latitude)
         + gpsCoordAsHexa(gpsLocation.longitude) + gpsLocation.altitudeInCm.toString(16).padStart(6, "0");
 }
 
-export function gpsCoordAsHexa(coord: number): string {
+export function gpsCoordAsHexa(coord) {
     const rawData = Math.trunc(round_number(coord, 4) * 10000);
 
     let longitudeAsDec = rawData;
@@ -65,7 +64,7 @@ export function gpsCoordAsHexa(coord: number): string {
 }
 
 
-function round_number(num: number, dec: number): number {
+function round_number(num, dec) {
     return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 }
 

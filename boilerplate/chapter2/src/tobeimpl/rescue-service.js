@@ -1,19 +1,19 @@
 import {config} from "./config";
 import {
-    InterfaceGpsLocation, InternalDeviceSend,
     sendCommand, sendPayload,
     wisnodeSerialcomServiceEventEmitter,
 } from "../wisnode-process-service";
 
+
 export function setModeLoraWan() {
     // TODO STEP 1.1
-    //sendCommand("CHANGEME");
-    wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "set Lorawan Mode");
+    // sendCommand(CHANGEME);
+    wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "set mode to 0");
 }
 
 export function setAppEui() {
     // TODO STEP 1.2
-    //sendCommand("CHANGEME");
+    // sendCommand(CHANGEME);
     wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "set app_eui");
 }
 
@@ -29,8 +29,9 @@ export function sendJoinRequest() {
     wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "initiate join request");
 }
 
-export function sendGpsLocation(gpsLocation: InterfaceGpsLocation) {
+export function sendGpsLocation(gpsLocation) {
     // TODO STEP 3
-    // you can keep using sendCommand(cmd: string) function, or the more specific sendPayload(payload: InternalDeviceSend) one
+    //sendCommand("CHANGEME");
+    wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "send location");
 }
 
