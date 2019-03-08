@@ -11,6 +11,7 @@ class WisnodeSerialcomServiceEventEmitter extends EventEmitter {
 }
 exports.wisnodeSerialcomServiceEventEmitter = new WisnodeSerialcomServiceEventEmitter();
 var ProcessStep;
+
 (function (ProcessStep) {
     ProcessStep[ProcessStep["IDLE"] = 0] = "IDLE";
     ProcessStep[ProcessStep["SETTING_MODE"] = 1] = "SETTING_MODE";

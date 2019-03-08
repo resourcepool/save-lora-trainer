@@ -4,43 +4,43 @@
 
 import * as wisnodeService from "./node-process-service";
 import {
-    serialServiceEventEmitter,
+    serialEventEmitter,
 } from "./node-process-service";
 
 
 const displayText = document.getElementById("wisnode-serial");
 
-function addLineToDisplay(value: string) {
+function addLineToDisplay(value) {
     displayText.textContent += "\r\n" + value;
     displayText.scrollTop = displayText.scrollHeight;
 }
 
-function displayCmdSent(msg: string, cmd: string) {
+function displayCmdSent(msg, cmd) {
     addLineToDisplay(msg);
     addLineToDisplay("Command : " + cmd);
 }
 
-function displayResponseRaw(data: string) {
+function displayResponseRaw(data) {
     addLineToDisplay("Raw Response : " + data);
 }
 
-serialServiceEventEmitter.on("cmd-sent", (msg: string) => {
+serialEventEmitter.on("cmd-sent", (msg) => {
     addLineToDisplay(msg);
 });
-serialServiceEventEmitter.on("dev-response-raw", (data: string) => {
+serialEventEmitter.on("dev-response-raw", (data) => {
     displayResponseRaw(data);
 });
 
-serialServiceEventEmitter.on("server-response-raw", (data: string) => {
+serialEventEmitter.on("server-response-raw", (data) => {
     displayResponseRaw(data);
 });
 
-serialServiceEventEmitter.on("allow-send-location",
+serialEventEmitter.on("allow-send-location",
     () => {
         (document.getElementById("send_location") as HTMLInputElement).disabled = false;
     });
 
-serialServiceEventEmitter.on("reset", () => {
+serialEventEmitter.on("reset", () => {
     displayText.textContent = "";
     (document.getElementById("send_location") as HTMLInputElement).disabled = true;
 });
