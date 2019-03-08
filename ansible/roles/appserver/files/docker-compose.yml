@@ -6,8 +6,8 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: lora
+      MYSQL_ROOT_PASSWORD: root # FIXME
+      MYSQL_DATABASE: lora # FIXME
     volumes:
       - /etc/appserver/db/init:/docker-entrypoint-initdb.d
       - /opt/appserver/db:/var/lib/mysql

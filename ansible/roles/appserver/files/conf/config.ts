@@ -1,11 +1,11 @@
 export const config = {
     // DB Config
     host: 'db',
-    user: 'root',
-    dbPassword: 'root',
-    database: 'lora',
+    user: 'root', // FIXME
+    dbPassword: 'root', // FIXME
+    database: 'lora', // FIXME
     // API config
-    apiPassword: 'loradmin',
+    publicSecret: 'loradmin', // FIXME
     // LoraAppServer config
     loRaServer: {
         baseUrl: 'https://loraas.save-lora.takima.io/api',

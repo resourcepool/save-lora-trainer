@@ -1,0 +1,5 @@
+- hosts: appserver
+  roles:
+    - role: deploy_appserver
+      become: yes
+      service_name: "appserver"

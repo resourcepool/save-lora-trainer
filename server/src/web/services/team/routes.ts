@@ -3,7 +3,7 @@ import {addTeamAction, getTeamProgressAction, getAllTeamProgressAction} from './
 
 export default [
   {
-    path: "/api/v1/teams/add",
+    path: "/api/public/teams/add",
     method: "post",
     handler: [
       checkTeamParams,
@@ -11,7 +11,7 @@ export default [
     ]
   },
   {
-    path: "/api/v1/teams/client/:clientId/progress",
+    path: "/api/public/teams/client/:clientId/progress",
     method: "get",
     handler: [
       checkClientIdPathVariable,
@@ -19,7 +19,7 @@ export default [
     ]
   },
   {
-    path: "/api/v1/teams/progress",
+    path: "/api/public/teams/progress",
     method: "get",
     handler: [
       getAllTeamProgressAction,

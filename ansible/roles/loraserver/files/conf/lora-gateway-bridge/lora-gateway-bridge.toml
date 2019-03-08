@@ -2,6 +2,6 @@
 # configuration example and documentation.
 
 [backend.mqtt]
-server="tcp://mosquitto:8883"
+server="ssl://broker.save-lora.takima.io:8883"
 username=""
 password=""

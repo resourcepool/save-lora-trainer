@@ -7,7 +7,7 @@ import {
 
 export default [
   {
-    path: "/api/v1/challenges/joinrequestsupported/client/:clientId",
+    path: "/api/public/challenges/joinrequestsupported/client/:clientId",
     method: "get",
     handler: [
       checkClientIdPathVariable,
@@ -15,7 +15,7 @@ export default [
     ]
   },
   {
-    path: "/api/v1/challenges/joinrequestsupported/:id",
+    path: "/api/public/challenges/joinrequestsupported/:id",
     method: "post",
     handler: [
       checkNumberIdPathVariable,
@@ -23,7 +23,7 @@ export default [
     ]
   },
   {
-    path: "/api/v1/challenges/joinrequestdecode/client/:clientId",
+    path: "/api/public/challenges/joinrequestdecode/client/:clientId",
     method: "get",
     handler: [
       checkClientIdPathVariable,
@@ -31,7 +31,7 @@ export default [
     ]
   },
   {
-    path: "/api/v1/challenges/joinrequestdecode/:id",
+    path: "/api/public/challenges/joinrequestdecode/:id",
     method: "post",
     handler: [
       checkNumberIdPathVariable,

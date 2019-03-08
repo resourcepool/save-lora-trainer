@@ -1,0 +1,7 @@
+---
+- name: Reload Service
+  become: yes
+  service:
+    name: "{{service_name}}"
+    state: reloaded
+    enabled: yes

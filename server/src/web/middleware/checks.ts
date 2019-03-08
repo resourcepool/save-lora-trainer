@@ -80,7 +80,7 @@ export const checkPassword = (
 ) => {
     if (!req.body.password) {
         throw new HTTP400Error('Missing password parameter');
-    } else if (req.body.password !== config.apiPassword) {
+    } else if (req.body.password !== config.publicSecret) {
         throw new HTTP401Error('Not authorized');
     } else {
         next();

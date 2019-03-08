@@ -2,10 +2,11 @@ export const config = {
     // DB Config
     host: 'localhost',
     user: 'root',
-    dbPassword: 'root',
-    database: 'lora',
+    dbPassword: 'root', // FIXME
+    database: 'lora', // FIXME
     // API config
-    apiPassword: 'loradmin',
+    proxySecret: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.0Zx2AjfAxh9uCOAfZc1vU8NYAL9f2jbarjcLG4_G9ck
+    publicSecret: 'Not so secret... Or is it?', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.C7S62jkn05WNwMZ6dRRrIGPOxMVwOPl3rRuQ1Y4-rTg
     // LoraAppServer config
     loRaServer: {
         baseUrl: "https://loraas.save-lora.takima.io/api",

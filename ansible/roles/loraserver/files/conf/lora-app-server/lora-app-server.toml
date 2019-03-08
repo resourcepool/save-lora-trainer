@@ -8,7 +8,7 @@ dsn="postgres://loraserver_as:loraserver_as@postgresql/loraserver_as?sslmode=dis
 url="redis://redis:6379"
 
 [application_server.integration.mqtt]
-server="tcp://mosquitto:8883"
+server="ssl://broker.save-lora.takima.io:8883"
 
 [application_server.api]
 public_host="appserver:8001"
@@ -16,3 +16,4 @@ public_host="appserver:8001"
 [application_server.external_api]
 bind="0.0.0.0:8080"
 jwt_secret="7OqhtveFlyyZHTQvxuqtaEtbaywhqxoF5oFu6yQaHyA="
+# FIXME

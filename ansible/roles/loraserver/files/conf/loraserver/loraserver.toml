@@ -72,8 +72,10 @@ enabled_uplink_channels=[]
 # max_dr=5
 
 [network_server.gateway.backend.mqtt]
-server="tcp://mosquitto:8883"
+server="ssl://broker.save-lora.takima.io:8883"
+# FIXME
 username=""
+# FIXME
 password=""
 
 [join_server.default]
