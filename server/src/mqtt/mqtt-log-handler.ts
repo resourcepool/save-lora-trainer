@@ -15,7 +15,7 @@ export const handleOtherLogMessage = async (topic: string, message: Buffer) => {
         let match: RegExpExecArray = MOSQUITTO_CLIENT_CONNECTION_REGEX.exec(msgStr)!;
         let clientId: string = match[1];
         // Ignore mock client messages
-        if (clientId.startsWith(config.mockClient.clientId)) {
+        if (clientId.startsWith(config.mqttClient.clientId)) {
             return;
         }
         let success = await updateProgressWithClientId(progressService.validateMQTTConnect, clientId);
@@ -34,7 +34,7 @@ export const handleSubscriptionLogMessage = async (message: Buffer) => {
     let clientId = match[1];
     let topicSubscribed = match[2];
     // Ignore mock client messages
-    if (clientId.startsWith(config.mockClient.clientId)) {
+    if (clientId.startsWith(config.mqttClient.clientId)) {
         return;
     }
     let success = await updateProgressWithClientId(progressService.validateMQTTSubscription, clientId);

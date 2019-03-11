@@ -38,6 +38,8 @@ services:
     image: eclipse-mosquitto
     volumes:
       - /etc/loraserver/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - /etc/loraserver/conf/mosquitto.passwd:/mosquitto/config/mosquitto.passwd:ro
+      - /etc/loraserver/conf/mosquitto.acl:/mosquitto/config/mosquitto.acl:ro
       - /opt/loraserver/broker/data:/mosquitto/data
       - /opt/loraserver/broker/log:/mosquitto/log
       - /etc/letsencrypt/archive/loras.save-lora.takima.io:/etc/letsencrypt/archive/loras.save-lora.takima.io

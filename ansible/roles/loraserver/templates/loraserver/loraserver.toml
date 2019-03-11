@@ -73,9 +73,9 @@ enabled_uplink_channels=[]
 
 # BEGIN MQTT Client config
 [network_server.gateway.backend.mqtt]
-server="ssl://broker.save-lora.resourcepool.io:8883"
-username="admin"
-password="PndxCFsgXLW72tFwQ1yvZHyvTWcTOMMd"
+server="{{ mqtt_broker_host }}"
+username="{{ mqtt_admin_user }}"
+password="{{ mqtt_admin_password }}"
 # END MQTT Client config
 
 [join_server.default]

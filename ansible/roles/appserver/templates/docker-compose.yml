@@ -17,12 +17,12 @@ services:
     ports:
       - 3333:8080
   appserver:
-    image: resourcepool/save-lora-appserver
+    image: {{ save_lora_api_image }}
     ports:
-      - 8080:8080
+      - 8080:3333
     volumes:
       - /etc/appserver/conf/config.ts:/server/src/config.ts:ro
   website:
-    image: resourcepool/save-lora-website
+    image: {{ save_lora_web_image }}
     ports:
       - 3000:80

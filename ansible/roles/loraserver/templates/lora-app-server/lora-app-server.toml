@@ -9,9 +9,9 @@ url="redis://redis:6379"
 
 # BEGIN MQTT Client config
 [application_server.integration.mqtt]
-server="ssl://broker.save-lora.resourcepool.io:8883"
-username="admin"
-password="PndxCFsgXLW72tFwQ1yvZHyvTWcTOMMd"
+server="{{ mqtt_broker_host }}"
+username="{{ mqtt_admin_user }}"
+password="{{ mqtt_admin_password }}"
 # END MQTT Client config
 
 [application_server.api]
@@ -20,5 +20,5 @@ public_host="appserver:8001"
 [application_server.external_api]
 bind="0.0.0.0:8080"
 # BEGIN SECRET
-jwt_secret="7OqhtveFlyyZHTQvxuqtaEtbaywhqxoF5oFu6yQaHyA="
+jwt_secret="{{ loraserver_api_secret }}"
 # END SECRET

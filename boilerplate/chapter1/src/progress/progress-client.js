@@ -1,5 +1,5 @@
 const Logger = require('../log/logger');
-const conf = require('../conf/conf');
+const conf = require('../conf');
 const axios = require('axios');
 
 const authHeader = "Client-Authorization";

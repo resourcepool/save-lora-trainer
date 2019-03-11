@@ -4,10 +4,10 @@ export const config = {
     user: 'root',
     dbPassword: 'root', // FIXME
     database: 'lora', // FIXME
-    // API config
+    // BEGIN SAVELORA Client config
     proxySecret: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.0Zx2AjfAxh9uCOAfZc1vU8NYAL9f2jbarjcLG4_G9ck
     publicSecret: 'Not so secret... Or is it?', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.C7S62jkn05WNwMZ6dRRrIGPOxMVwOPl3rRuQ1Y4-rTg
-    // LoraAppServer config
+    // END SAVELORA Client config
     loRaServer: {
         baseUrl: "https://loraas.save-lora.takima.io/api",
         authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.GVAd8NMkAZ3axU2flBJ9PbNY_R45tbu-VLLaxWAGwWI",
@@ -21,7 +21,12 @@ export const config = {
         devEUI: "13:37:00:00:FF:FF:FF:FF",
         appKey: "2E:A2:9C:4F:54:15:A0:0C:CA:4A:CE:B3:F2:B2:44:69"
     },
-    mockClient: {
-        clientId: 'gotham-watchdog'
-    }
+    // BEGIN MQTT Client config
+	mqttClient: {
+		clientId: 'gotham-watchdog',
+		host: 'mqtts://broker.save-lora.resourcepool.io:8883',
+		username: 'admin',
+		password: 'PndxCFsgXLW72tFwQ1yvZHyvTWcTOMMd'
+	},
+    // END MQTT Client config
 };

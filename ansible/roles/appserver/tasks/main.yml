@@ -11,10 +11,14 @@
   become: yes
   copy: src=conf dest=/etc/appserver
 
+- name: Copy server config template
+  template: src=config.ts dest=/etc/appserver/conf/config.ts
+  become: yes
+
 # Docker-compose file
 - name: Copy docker-compose file
+  template: src=docker-compose.yml dest=/opt/appserver/docker-compose.yml
   become: yes
-  copy: src=docker-compose.yml dest=/opt/appserver/docker-compose.yml
 
 - name: Copy service
   become: yes

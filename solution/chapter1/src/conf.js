@@ -12,6 +12,14 @@ const CHANGEME = {
 };
 
 module.exports = {
+  // BEGIN MQTT Client config
+	mqtt: {
+		host: 'mqtts://broker.save-lora.resourcepool.io:8883',
+		username: 'gotham',
+		password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$'
+	},
+  // END MQTT Client config
+  // BEGIN SAVELORA Client config
   loRaServer: {
     baseUrl: 'http://localhost:8080/api',
     authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.GVAd8NMkAZ3axU2flBJ9PbNY_R45tbu-VLLaxWAGwWI',
@@ -21,5 +29,6 @@ module.exports = {
   progressClient: {
     baseUrl: 'http://localhost:3333',
   },
+  // END SAVELORA Client config
   user: CHANGEME
 };

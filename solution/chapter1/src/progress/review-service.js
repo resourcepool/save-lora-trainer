@@ -6,7 +6,7 @@
  * @type {string}
  */
 const Logger = require('../log/logger');
-const conf = require('../conf/conf');
+const conf = require('../conf');
 const client = require('./progress-client');
 const JoinRequestPacketDecoder = require('../decoder/JoinRequestPacketDecoder');
 const pg = require('./Progress');

@@ -1,0 +1,5 @@
+user {{ mqtt_public_user }}
+topic read gateway/#
+user {{ mqtt_admin_user }}
+topic read $SYS/#
+topic readwrite #

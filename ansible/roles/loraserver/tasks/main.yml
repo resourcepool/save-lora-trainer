@@ -28,6 +28,27 @@
   become: yes
   copy: src=conf dest=/etc/loraserver
 
+- name: Copy mosquitto conf
+  template: src=mosquitto.conf dest=/etc/loraserver/conf/mosquitto.conf
+  become: yes
+
+- name: Copy mosquitto ACL
+  template: src=mosquitto.acl dest=/etc/loraserver/conf/mosquitto.acl
+  become: yes
+
+- name: Copy lora-app-server config template
+  template: src=lora-app-server/lora-app-server.toml dest=/etc/loraserver/conf/lora-app-server/lora-app-server.toml
+  become: yes
+
+- name: Copy lora-gateway-bridge config template
+  template: src=lora-gateway-bridge/lora-gateway-bridge.toml dest=/etc/loraserver/conf/lora-gateway-bridge/lora-gateway-bridge.toml
+  become: yes
+
+- name: Copy loraserver config template
+  template: src=loraserver/loraserver.toml dest=/etc/loraserver/conf/loraserver/loraserver.toml
+  become: yes
+
+
 # Docker-compose file
 - name: Copy docker-compose file
   become: yes

@@ -10,5 +10,5 @@ COPY ./src /server/src
 
 RUN npm install
 
-EXPOSE 3000
+EXPOSE 3333
 CMD [ "npm", "start" ]

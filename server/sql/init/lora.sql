@@ -59,6 +59,13 @@ CREATE TABLE `challenge` (
 
 
 --
+-- Structure de la table `game_date`
+--
+CREATE TABLE game_date (
+  game_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Index pour les tables exportées
 --
 
@@ -97,7 +104,7 @@ ALTER TABLE `device`
 --
 ALTER TABLE `team`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-  
+
 --
 -- AUTO_INCREMENT pour la table `team`
 --

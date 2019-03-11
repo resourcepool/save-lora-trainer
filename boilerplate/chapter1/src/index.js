@@ -1,7 +1,7 @@
 const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
-const conf = require('./conf/conf');
+const conf = require('./conf');
 const reviewService = require('./progress/review-service');
 
 const Logger = require('./log/logger');

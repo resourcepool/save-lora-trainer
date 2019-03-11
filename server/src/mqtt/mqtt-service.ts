@@ -17,7 +17,11 @@ let client: MqttClient;
 let sentBytes: number = 0;
 
 export const init = () => {
-    client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: config.mockClient.clientId + Math.random()});
+    client = mqtt.connect(config.mqttClient.host, {
+        clientId: config.mqttClient.clientId + Math.floor(Math.random() * 1000),
+        username: config.mqttClient.username,
+        password: config.mqttClient.password
+    });
     client.on('connect', () => {
         client.subscribe("#", (err) => {
             logger.info("Subscribed to #");
