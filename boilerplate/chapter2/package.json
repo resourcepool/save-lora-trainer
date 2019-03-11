@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "install": "sass ./style.scss ./style.css && electron-rebuild",
+    "install": "sass ./style.scss ./style.css",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "start": "npm run build && electron ./dist/main.js"
   },
