@@ -1,12 +1,18 @@
 import {checkClientIdPathVariable, checkTeamParams} from '../../middleware/checks';
-import {addTeamAction, getTeamProgressAction, getAllTeamProgressAction, getTeamAction} from './team-controller';
+import {
+  addTeamAction,
+  getTeamProgressAction,
+  getAllTeamProgressAction,
+  getTeamAction,
+  getTeamPrototypeAction
+} from './team-controller';
 
 export default [
   {
     path: "/api/public/teams/client/:clientId",
     method: "get",
     handler: [
-      checkTeamParams,
+      checkClientIdPathVariable,
       getTeamAction,
     ]
   },
@@ -24,6 +30,13 @@ export default [
     handler: [
       checkClientIdPathVariable,
       getTeamProgressAction,
+    ]
+  },
+  {
+    path: "/api/public/teams/prototype",
+    method: "get",
+    handler: [
+      getTeamPrototypeAction,
     ]
   },
   {
