@@ -1,7 +1,15 @@
 import {checkClientIdPathVariable, checkTeamParams} from '../../middleware/checks';
-import {addTeamAction, getTeamProgressAction, getAllTeamProgressAction} from './team-controller';
+import {addTeamAction, getTeamProgressAction, getAllTeamProgressAction, getTeamAction} from './team-controller';
 
 export default [
+  {
+    path: "/api/public/teams/client/:clientId",
+    method: "get",
+    handler: [
+      checkTeamParams,
+      getTeamAction,
+    ]
+  },
   {
     path: "/api/public/teams/add",
     method: "post",

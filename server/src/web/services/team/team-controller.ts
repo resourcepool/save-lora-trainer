@@ -22,6 +22,14 @@ export const addTeamAction = async (req: Request, res: Response, next: NextFunct
     return res.status(204).send(team);
 };
 
+export const getTeamAction = async (req: Request, res: Response, next: NextFunction) => {
+    const team = await findByClientId(req.params.clientId);
+    if (!team) {
+        return res.status(404).send("Team not found");
+    }
+    return res.status(200).send(team);
+};
+
 export const getTeamProgressAction = async (req: Request, res: Response, next: NextFunction) => {
     const team = await findByClientId(req.params.clientId);
     if (!team) {
