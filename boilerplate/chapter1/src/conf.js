@@ -5,10 +5,7 @@
  */
 const CHANGEME = {
   clientId: 'hacker-1234',
-  appEUI: '42:42:42:42:42:42:42:42',
-  nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
-  deviceEUI: '13:37:00:00:FF:FF:FF:00',
-  progressApiKey: 'jaimelespates'
+  deviceEUI: '13:37:00:00:FF:FF:FF:00'
 };
 
 module.exports = {
@@ -22,14 +19,17 @@ module.exports = {
   // BEGIN SAVELORA Client config
   loRaServer: {
     baseUrl: 'https://api.save-lora.takima.io/api/proxy',
-    authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.0Zx2AjfAxh9uCOAfZc1vU8NYAL9f2jbarjcLG4_G9ck',
+    authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.lMVZyGRwiq0LK4INzYIQj0wST0qMsImXG-9-qg1j8CU',
     rak811DevProfileId: '1d99a006-e617-4fb3-9ffe-a71567ee36a7',
     loRaApplicationId: 1,
   },
   progressClient: {
     baseUrl: 'https://api.save-lora.takima.io/api/public',
-    authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.C7S62jkn05WNwMZ6dRRrIGPOxMVwOPl3rRuQ1Y4-rTg'
+    authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.zxlPEx7FzRwd5BclXEN2foAYXqzhUEPmmlNZJ4nk9u0'
   },
   // END SAVELORA Client config
-  user: CHANGEME
+  user: {
+	  appEUI: '42:42:42:42:42:42:42:42',
+    nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
+    ...CHANGEME}
 };

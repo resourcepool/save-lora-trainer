@@ -7,7 +7,7 @@ const logger = Logger.child({service: 'progress-client'});
 
 const client = axios.create({
   baseURL: conf.progressClient.baseUrl,
-  headers: {[authHeader]: "Bearer " + conf.user.progressApiKey}
+  headers: {[authHeader]: "Bearer " + conf.progressClient.authToken}
 });
 
 const logError = (e) => {
