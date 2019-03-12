@@ -4,11 +4,8 @@
  * @type {{}}
  */
 const CHANGEME = {
-  clientId: 'teamlolo',
-  appEUI: '42:42:42:42:42:42:42:42',
-  nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
-  deviceEUI: '13:37:00:00:FF:FF:FF:00',
-  progressApiKey: 'jaimelespates'
+  clientId: 'hacker-1234',
+  deviceEUI: '13:37:00:00:FF:FF:FF:00'
 };
 
 module.exports = {
@@ -31,5 +28,8 @@ module.exports = {
     authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.zxlPEx7FzRwd5BclXEN2foAYXqzhUEPmmlNZJ4nk9u0'
   },
   // END SAVELORA Client config
-  user: CHANGEME
+  user: {
+    appEUI: '42:42:42:42:42:42:42:42',
+    nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
+    ...CHANGEME}
 };

@@ -1,10 +1,10 @@
 const EventEmitter = require("events");
 const SerialPort = require("serialport");
-const config_1 = require("./tobeimpl/config");
+const conf = require("./conf");
 const rescueService = require("./tobeimpl/rescue-service");
 const Readline = SerialPort.parsers.Readline;
 const parser = new Readline({ delimiter: "\r\n" });
-const port = new SerialPort(config_1.config.tty, { baudRate: 115200 });
+const port = new SerialPort(conf.config.tty, { baudRate: 115200 });
 port.pipe(parser);
 parser.on("data", processReturnFromDevice);
 class WisnodeSerialcomServiceEventEmitter extends EventEmitter {
@@ -33,9 +33,9 @@ async function initConnect() {
 exports.initConnect = initConnect;
 function sendLocation() {
     rescueService.sendGpsLocation({
-        latitude: config_1.config.latitude,
-        longitude: config_1.config.longitude,
-        altitudeInCm: config_1.config.altitudeAsCm,
+        latitude: conf.config.latitude,
+        longitude: conf.config.longitude,
+        altitudeInCm: conf.config.altitudeAsCm,
     });
 }
 exports.sendLocation = sendLocation;

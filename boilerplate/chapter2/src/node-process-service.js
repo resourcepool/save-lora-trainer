@@ -1,6 +1,6 @@
 const EventEmitter = require("events");
 const SerialPort = require("serialport");
-const conf = require("./tobeimpl/config");
+const conf = require("./conf");
 
 const rescueService = require("./tobeimpl/rescue-service");
 

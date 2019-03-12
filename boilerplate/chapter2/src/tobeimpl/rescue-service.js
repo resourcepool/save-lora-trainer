@@ -1,4 +1,5 @@
-import {config} from "./config";
+import conf from "../conf";
+
 import {
     sendCommand, sendPayload,
     serialServiceEventEmitter,

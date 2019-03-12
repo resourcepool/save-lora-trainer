@@ -2,45 +2,45 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process
 
-import * as wisnodeService from "./wisnode-process-service";
+import * as wisnodeService from "./node-process-service";
 import {
-    wisnodeSerialcomServiceEventEmitter,
-} from "./wisnode-process-service";
+    serialEventEmitter,
+} from "./node-process-service";
 
 
 const displayText = document.getElementById("wisnode-serial");
 
-function addLineToDisplay(value: string) {
+function addLineToDisplay(value) {
     displayText.textContent += "\r\n" + value;
     displayText.scrollTop = displayText.scrollHeight;
 }
 
-function displayCmdSent(msg: string, cmd: string) {
+function displayCmdSent(msg, cmd) {
     addLineToDisplay(msg);
     addLineToDisplay("Command : " + cmd);
 }
 
-function displayResponseRaw(data: string) {
+function displayResponseRaw(data) {
     addLineToDisplay("Raw Response : " + data);
 }
 
-wisnodeSerialcomServiceEventEmitter.on("cmd-sent", (msg) => {
+serialEventEmitter.on("cmd-sent", (msg) => {
     addLineToDisplay(msg);
 });
-wisnodeSerialcomServiceEventEmitter.on("dev-response-raw", (data) => {
+serialEventEmitter.on("dev-response-raw", (data) => {
     displayResponseRaw(data);
 });
 
-wisnodeSerialcomServiceEventEmitter.on("server-response-raw", (data) => {
+serialEventEmitter.on("server-response-raw", (data) => {
     displayResponseRaw(data);
 });
 
-wisnodeSerialcomServiceEventEmitter.on("allow-send-location",
+serialEventEmitter.on("allow-send-location",
     () => {
         (document.getElementById("send_location") as HTMLInputElement).disabled = false;
     });
 
-wisnodeSerialcomServiceEventEmitter.on("reset", () => {
+serialEventEmitter.on("reset", () => {
     displayText.textContent = "";
     (document.getElementById("send_location") as HTMLInputElement).disabled = true;
 });

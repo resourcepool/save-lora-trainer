@@ -1,4 +1,5 @@
-import {config} from "./config";
+const conf = require("../conf");
+
 import {
     sendCommand, sendPayload,
     wisnodeSerialcomServiceEventEmitter,
@@ -12,14 +13,14 @@ export function setModeLoraWan() {
 
 // TODO STEP 1.2
 export function setAppEui() {
-    const cmd = "at+set_config=app_eui:" + config.app_eui;
+    const cmd = "at+set_config=app_eui:" + conf.devEUI;
     sendCommand(cmd);
     wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "set app_eui");
 }
 
 // TODO STEP 1.2
 export function setAppKey() {
-    const cmd = "at+set_config=app_key:" + config.app_key;
+    const cmd = "at+set_config=app_key:" + conf.appKey;
     sendCommand(cmd);
     wisnodeSerialcomServiceEventEmitter.emit("cmd-sent", "set app_key");
 }
