@@ -18,6 +18,9 @@ save_lora_api_public_secret: "Not so secret... Or is it?"
 save_lora_api_public_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.zxlPEx7FzRwd5BclXEN2foAYXqzhUEPmmlNZJ4nk9u0"
 save_lora_api_proxy_secret: "IAmTheGodOfGothamAndThisPasswordIsSeri0u$"
 save_lora_api_proxy_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.lMVZyGRwiq0LK4INzYIQj0wST0qMsImXG-9-qg1j8CU"
+save_lora_api_admin_secret: "xf3xbW5U3AgQwnRRbmEjj15ULfUVrr2jztB31HKP8vv5z3bZXRH2FK4fQ711gHdsqq"
+save_lora_api_admin_username: "admin"
+save_lora_api_admin_password: "password"
 
 # Save Lora WebServer Configuration
 save_lora_web_host: "www.save-lora.takima.io"

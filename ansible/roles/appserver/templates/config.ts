@@ -1,13 +1,23 @@
 export const config = {
     // DB Config
-    host: "db",
-    user: "root", // FIXME
-    dbPassword: "root", // FIXME
-    database: "lora", // FIXME
-    // API config
+    db: {
+        host: 'localhost',
+        user: 'root',
+        password: 'root', // FIXME
+        database: 'lora', // FIXME
+    },
+    team: {
+        targetBBox: [2.10, 48.76, 2.60, 48.94], // [W,S,E,N]
+        devEUIPrefix: "13:37:00:00"
+    },
+    admin: {
+        username: "{{ save_lora_api_admin_username }}",
+        password: "{{ save_lora_api_admin_password }}"
+    },
     // BEGIN SAVELORA Client config
     proxySecret: "{{ save_lora_api_proxy_secret }}",
     publicSecret: "{{ save_lora_api_public_secret }}",
+    adminSecret: "{{ save_lora_api_admin_secret }}",
     // LoraAppServer config
     loRaServer: {
         baseUrl: "https://{{ loraserver_host }}/api",

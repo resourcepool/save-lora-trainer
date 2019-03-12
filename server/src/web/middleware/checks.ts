@@ -3,6 +3,7 @@ import { HTTP400Error, HTTP401Error } from '../utils/http-errors';
 import { isValidTeam } from '../validators/team.validator';
 import {isValidHexString, isValidWord, isValidNumber} from '../validators/common.validator';
 import { config } from '../../config';
+import expressJwt from "express-jwt";
 
 export const checkTeamParams = (
     req: Request,
@@ -73,16 +74,6 @@ export const checkIdParams = (
     }
 };
 
-export const checkPassword = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    if (!req.body.password) {
-        throw new HTTP400Error('Missing password parameter');
-    } else if (req.body.password !== config.publicSecret) {
-        throw new HTTP401Error('Not authorized');
-    } else {
-        next();
-    }
-};
+export const authProxyJwtHandler = expressJwt({secret: config.proxySecret});
+export const authPublicJwtHandler = expressJwt({secret: config.publicSecret});
+export const authAdminJwtHandler = expressJwt({secret: config.adminSecret});
