@@ -10,7 +10,7 @@ mqtt_broker_host_forclient: "mqtts://broker.save-lora.takima.io:8883"
 mqtt_public_user: "gotham"
 mqtt_public_password: "IAmTheGodOfGothamAndThisPasswordIsSeri0u$"
 mqtt_admin_user: "admin"
-mqtt_admin_password: "HyrvBWKPBRkAdhZmdhOETshhQXC4bcSM"
+mqtt_admin_password: "Vn6EhyMYlXhuw0BaOmJNqC8v56qn2tQy"
 
 # Save Lora AppServer Configuration
 save_lora_api_host: "api.save-lora.takima.io"
@@ -18,17 +18,23 @@ save_lora_api_public_secret: "Not so secret... Or is it?"
 save_lora_api_public_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.zxlPEx7FzRwd5BclXEN2foAYXqzhUEPmmlNZJ4nk9u0"
 save_lora_api_proxy_secret: "IAmTheGodOfGothamAndThisPasswordIsSeri0u$"
 save_lora_api_proxy_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.lMVZyGRwiq0LK4INzYIQj0wST0qMsImXG-9-qg1j8CU"
-save_lora_api_admin_secret: "xf3xbW5U3AgQwnRRbmEjj15ULfUVrr2jztB31HKP8vv5z3bZXRH2FK4fQ711gHdsqq"
+save_lora_api_admin_secret: "U6XXNIWkS7kA4iy3t8P5miDbcLWxRAGLDAuyoMnDaGihFSq6IwMnnHOFsLmgXpXv"
 save_lora_api_admin_username: "admin"
 save_lora_api_admin_password: "password"
+
+# Save Lora AppServer DB Configuration
+save_lora_db_host: "localhost"
+save_lora_db_database: "lora"
+save_lora_db_username: "root"
+save_lora_db_password: "root"
 
 # Save Lora WebServer Configuration
 save_lora_web_host: "www.save-lora.takima.io"
 
 # LoraServer Configuration
 loraserver_host: "loras.save-lora.takima.io"
-loraserver_api_secret: "90K4fQ711gHxf3xbW5U3AgQwnRRbmEjj15ULfUVrr2jztB31HKP8vv5z3bZXRH2F"
-loraserver_api_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.ZQbxBsjGgIenfxRGzQ6mOGMZ4dnIvIfwlZwXX9CisXI"
+loraserver_api_secret: "32udC9xiXmqB1kUbfqRg9F96m0C5jE0UdX1hFhhshQav2evcUEo2poeHK23e7mUP"
+loraserver_api_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.VuYo5Db61tbEgat_Lfr3rjKOgvW4x8__FD70vKJ5aZs"
 loraserver_jwt_user: "root"
 loraserver_device_profile_id: "1d99a006-e617-4fb3-9ffe-a71567ee36a7"
 loraserver_application_id: 1

@@ -1,10 +1,10 @@
 export const config = {
     // DB Config
     db: {
-        host: 'localhost',
-        user: 'root',
-        password: 'root', // FIXME
-        database: 'lora', // FIXME
+        host: '{{ save_lora_db_host }}',
+        user: '{{ save_lora_db_username }}',
+        password: '{{ save_lora_db_password }}',
+        database: '{{ save_lora_db_database }}',
     },
     team: {
         targetBBox: [2.10, 48.76, 2.60, 48.94], // [W,S,E,N]
