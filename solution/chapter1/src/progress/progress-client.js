@@ -2,12 +2,12 @@ const Logger = require('../log/logger');
 const conf = require('../conf');
 const axios = require('axios');
 
-const authHeader = "Client-Authorization";
+const authHeader = "Authorization";
 const logger = Logger.child({service: 'progress-client'});
 
 const client = axios.create({
   baseURL: conf.progressClient.baseUrl,
-  headers: {[authHeader]: "Api-Key " + conf.user.progressApiKey}
+  headers: {[authHeader]: "Bearer " + conf.progressClient.authToken}
 });
 
 const logError = (e) => {
@@ -29,7 +29,7 @@ const logError = (e) => {
  */
 const getProgress = async () => {
   try {
-    const response = await client.get(`/api/v1/teams/client/${conf.user.clientId}/progress`);
+    const response = await client.get(`/teams/client/${conf.user.clientId}/progress`);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {
@@ -43,7 +43,7 @@ const getProgress = async () => {
  */
 const requestJoinRequestSupportedChallenge = async () => {
   try {
-    const response = await client.get(`/api/v1/challenges/joinrequestsupported/client/${conf.user.clientId}`);
+    const response = await client.get(`/challenges/joinrequestsupported/client/${conf.user.clientId}`);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {
@@ -59,7 +59,7 @@ const requestJoinRequestSupportedChallenge = async () => {
  */
 const submitJoinRequestSupportedChallenge = async (result) => {
   try {
-    const response = await client.post(`/api/v1/challenges/joinrequestsupported/${result.challengeId}`, result);
+    const response = await client.post(`/challenges/joinrequestsupported/${result.challengeId}`, result);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {
@@ -74,7 +74,7 @@ const submitJoinRequestSupportedChallenge = async (result) => {
  */
 const requestJoinRequestDecodeChallenge = async () => {
   try {
-    const response = await client.get(`/api/v1/challenges/joinrequestdecode/client/${conf.user.clientId}`);
+    const response = await client.get(`/challenges/joinrequestdecode/client/${conf.user.clientId}`);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {
@@ -89,7 +89,7 @@ const requestJoinRequestDecodeChallenge = async () => {
  */
 const submitJoinRequestDecodeChallenge = async (result) => {
   try {
-    const response = await client.post(`/api/v1/challenges/joinrequestdecode/${result.challengeId}`, result);
+    const response = await client.post(`/challenges/joinrequestdecode/${result.challengeId}`, result);
     logger.debug("Response received", response.data);
     return response.data;
   } catch (e) {

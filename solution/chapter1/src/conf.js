@@ -4,30 +4,31 @@
  * @type {{}}
  */
 const CHANGEME = {
-  clientId: 'hacker-1234',
+  clientId: 'teamlolo',
   appEUI: '42:42:42:42:42:42:42:42',
   nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
-  deviceEUI: '13:37:00:00:00:00:00:01',
+  deviceEUI: '13:37:00:00:FF:FF:FF:00',
   progressApiKey: 'jaimelespates'
 };
 
 module.exports = {
   // BEGIN MQTT Client config
-	mqtt: {
-		host: 'mqtts://broker.save-lora.resourcepool.io:8883',
-		username: 'gotham',
-		password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$'
-	},
+  mqtt: {
+    host: 'mqtts://broker.save-lora.takima.io:8883',
+    username: 'gotham',
+    password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$'
+  },
   // END MQTT Client config
   // BEGIN SAVELORA Client config
   loRaServer: {
-    baseUrl: 'http://localhost:8080/api',
-    authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.GVAd8NMkAZ3axU2flBJ9PbNY_R45tbu-VLLaxWAGwWI',
+    baseUrl: 'https://api.save-lora.takima.io/api/proxy',
+    authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.lMVZyGRwiq0LK4INzYIQj0wST0qMsImXG-9-qg1j8CU',
     rak811DevProfileId: '1d99a006-e617-4fb3-9ffe-a71567ee36a7',
     loRaApplicationId: 1,
   },
   progressClient: {
-    baseUrl: 'http://localhost:3333',
+    baseUrl: 'https://api.save-lora.takima.io/api/public',
+    authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.zxlPEx7FzRwd5BclXEN2foAYXqzhUEPmmlNZJ4nk9u0'
   },
   // END SAVELORA Client config
   user: CHANGEME

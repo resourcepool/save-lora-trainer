@@ -9,7 +9,7 @@ const Logger = require('../log/logger');
 const conf = require('../conf');
 const axios = require('axios');
 
-const authHeader = "Grpc-Metadata-Authorization";
+const authHeader = "Authorization";
 const logger = Logger.child({service: 'api'});
 
 

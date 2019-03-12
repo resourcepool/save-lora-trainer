@@ -2,12 +2,12 @@ const Logger = require('../log/logger');
 const conf = require('../conf');
 const axios = require('axios');
 
-const authHeader = "Client-Authorization";
+const authHeader = "Authorization";
 const logger = Logger.child({service: 'progress-client'});
 
 const client = axios.create({
   baseURL: conf.progressClient.baseUrl,
-  headers: {[authHeader]: "Api-Key " + conf.user.progressApiKey}
+  headers: {[authHeader]: "Bearer " + conf.user.progressApiKey}
 });
 
 const logError = (e) => {

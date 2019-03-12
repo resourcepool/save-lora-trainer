@@ -21,7 +21,7 @@ let client;
 let init = () => {
 
   reviewService.init();
-  client = mqtt.connect('mqtt://5.135.162.148:1883', {clientId: conf.user.clientId});
+  client = mqtt.connect(conf.mqtt.host, {clientId: conf.user.clientId, username: conf.mqtt.username, password: conf.mqtt.password});
   client.on('connect', () => {
     logger.info("Connected to broker!");
     client.subscribe("#");
@@ -47,6 +47,7 @@ let onMessage = async (topic, message) => {
   if (!msgDecoder.isSupported()) {
     return;
   }
+  return;
 
   logger.debug("Join Request identified");
   let decodedJoinRequest = msgDecoder.decode();
