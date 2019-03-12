@@ -43,6 +43,7 @@ CREATE TABLE `team` (
   `clientId` varchar(50) NOT NULL,
   `devEUI` varchar(50) DEFAULT NULL,
   `progress` json DEFAULT NULL
+  `secretLocation` json DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

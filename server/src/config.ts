@@ -1,9 +1,15 @@
 export const config = {
     // DB Config
-    host: 'localhost',
-    user: 'root',
-    dbPassword: 'root', // FIXME
-    database: 'lora', // FIXME
+    db: {
+        host: 'localhost',
+        user: 'root',
+        password: 'root', // FIXME
+        database: 'lora', // FIXME
+    },
+    team: {
+        targetBBox: [2.10, 48.76, 2.60, 48.94], // [W,S,E,N]
+        devEUIPrefix: "13:37:00:00"
+    },
     // BEGIN SAVELORA Client config
     proxySecret: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.0Zx2AjfAxh9uCOAfZc1vU8NYAL9f2jbarjcLG4_G9ck
     publicSecret: 'Not so secret... Or is it?', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.C7S62jkn05WNwMZ6dRRrIGPOxMVwOPl3rRuQ1Y4-rTg
@@ -22,11 +28,11 @@ export const config = {
         appKey: "2E:A2:9C:4F:54:15:A0:0C:CA:4A:CE:B3:F2:B2:44:69"
     },
     // BEGIN MQTT Client config
-	mqttClient: {
-		clientId: 'gotham-watchdog',
-		host: 'mqtts://broker.save-lora.resourcepool.io:8883',
-		username: 'admin',
-		password: 'PndxCFsgXLW72tFwQ1yvZHyvTWcTOMMd'
-	},
+    mqttClient: {
+        clientId: 'gotham-watchdog',
+        host: 'mqtts://broker.save-lora.resourcepool.io:8883',
+        username: 'admin',
+        password: 'PndxCFsgXLW72tFwQ1yvZHyvTWcTOMMd'
+    },
     // END MQTT Client config
 };
