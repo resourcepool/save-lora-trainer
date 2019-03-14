@@ -11,6 +11,7 @@ const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 
 const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
+const validMockAppEUI = utils.hexStringToBytes(conf.user.mockAppEUI);
 const deviceEUI = utils.hexStringToBytes(conf.user.deviceEUI);
 const deviceNetworkKey = utils.normalizeHexString(conf.user.nwkKey);
 
@@ -77,7 +78,7 @@ let onMessage = async (topic, message) => {
  * @returns {boolean}
  */
 let isValidAppEUI = (msgAppEUI) => {
-  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI);
+  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI) || utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validMockAppEUI);
 };
 
 /**

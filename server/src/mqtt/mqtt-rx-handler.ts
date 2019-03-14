@@ -15,7 +15,7 @@ export const handleRxMessage = async (topic: string, message: Buffer) => {
         let decoded = joinRequestPacketDecoder.decode();
         logger.info("Join Request Received: " + JSON.stringify(decoded));
         // Ignore mock device messages
-        if (normalizeHexString(decoded.devEUI) === normalizeHexString(config.mockDevice.devEUI)) {
+        if (normalizeHexString(decoded.appEUI) === normalizeHexString(config.mockDevice.appEUI)) {
             return;
         }
         let success = await updateProgressWithDevEUI(progressService.validateJoinRequestSent, decoded.devEUI);

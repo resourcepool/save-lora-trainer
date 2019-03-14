@@ -16,10 +16,6 @@ export const handleAppRxMessage = async (topic: string, message: Buffer) => {
     if (gpsLocationPacketDecoder.isSupported()) {
         let decoded = gpsLocationPacketDecoder.decode();
         logger.info("GpsLocation Received: " + JSON.stringify(decoded));
-        // Ignore mock device messages
-        if (normalizeHexString(decoded.devEUI) === normalizeHexString(config.mockDevice.devEUI)) {
-            return;
-        }
         let success = await updateProgressWithDevEUI(progressService.validateGpsLocationReceived, decoded.devEUI, {lat: decoded.latitude, lng: decoded.longitude});
         if (success) {
             logger.info(`GpsLocation sent successfully for device ${decoded.devEUI}`);

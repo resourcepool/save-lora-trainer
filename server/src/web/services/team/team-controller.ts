@@ -7,7 +7,7 @@ import {config} from '../../../config';
 const randomLocation = (): {lat: number, lng: number} => {
     let lngRange = config.team.targetBBox[2] - config.team.targetBBox[0];
     let latRange = config.team.targetBBox[3] - config.team.targetBBox[1];
-    return {lng: config.team.targetBBox[0] + (lngRange * (Math.floor(Math.random() * 1000) / 1000)), lat: config.team.targetBBox[1] + (latRange * (Math.floor(Math.random() * 1000) / 1000))};
+    return {lng: config.team.targetBBox[0] + (Math.floor(lngRange * Math.random() * 1000) / 1000), lat: config.team.targetBBox[1] + (Math.floor(latRange * Math.random() * 1000) / 1000)};
 };
 
 export const getTeamPrototypeAction = async(req: Request, res: Response, next: NextFunction) => {

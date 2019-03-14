@@ -30,6 +30,7 @@ module.exports = {
   // END SAVELORA Client config
   user: {
 	  appEUI: '42:42:42:42:42:42:42:42',
+    mockAppEUI: '00:00:00:00:00:00:00:00',
     nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
     ...CHANGEME
 	}

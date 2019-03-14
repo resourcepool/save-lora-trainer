@@ -28,9 +28,8 @@ export const config = {
     },
     // Mock device config
     mockDevice: {
-        appEUI: "42:42:42:42:42:42:42:42",
-        devEUI: "13:37:00:00:FF:FF:FF:FF",
-        appKey: "2E:A2:9C:4F:54:15:A0:0C:CA:4A:CE:B3:F2:B2:44:69"
+        appEUI: "00:00:00:00:00:00:00:00",
+        appKey: "00:00:00:00:00:00:00:00:FF:FF:FF:FF:FF:FF:FF:FF"
     },
     // BEGIN MQTT Client config
     mqttClient: {
