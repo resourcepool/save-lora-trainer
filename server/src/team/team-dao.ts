@@ -98,6 +98,17 @@ export const updateProgress = async (team: Team): Promise<boolean> => {
     return true;
 };
 
+export const deleteAll = async (): Promise<boolean> => {
+    const con = await dbInstance();
+    let res;
+    try {
+        res = await con.query(`DELETE FROM team`);
+    } finally {
+        con.end();
+    }
+    return res.affectedRows > 0;
+};
+
 export const deleteTeam = async (id: number): Promise<boolean> => {
     const con = await dbInstance();
     let res;

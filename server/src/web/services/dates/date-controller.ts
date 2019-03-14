@@ -1,8 +1,8 @@
 import { NextFunction, Response, Request } from 'express';
-import { getDate, setDate } from './date-dao';
+import { getStartDate, startGame } from '../../../game/game-dao';
 
 export const getDateAction = async (req: Request, res: Response, next: NextFunction) => {
-    const date = await getDate();
+    const date = await getStartDate();
     if (!date) {
         return res.status(200).send(null);
     }
@@ -11,6 +11,6 @@ export const getDateAction = async (req: Request, res: Response, next: NextFunct
 
 export const setDateAction = async (req: Request, res: Response, next: NextFunction) => {
     const date: Date = new Date();
-    const persistedDate = await setDate(date);
+    const persistedDate = await startGame(date);
     return res.status(200).send(persistedDate);
 };

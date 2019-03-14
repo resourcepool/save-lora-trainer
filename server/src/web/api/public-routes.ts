@@ -23,7 +23,7 @@ import {
 export default [
     {
         path: "/api/public/authenticate",
-        method: "get",
+        method: "post",
         handler: [
             authPublicJwtHandler,
             authenticate,

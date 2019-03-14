@@ -10,9 +10,9 @@ export const checkTeamParams = (
     res: Response,
     next: NextFunction
 ) => {
-    if (!req.body.name || !req.body.clientId || !req.body.devEUI) {
+    if (!req.body.name || !req.body.clientId || !req.body.devEUISuffix) {
         throw new HTTP400Error('Missing parameter(s) of a team');
-    } else if (!isValidTeam(req.body.name, req.body.clientId, req.body.devEUI)) {
+    } else if (!isValidTeam(req.body.name, req.body.clientId, req.body.devEUISuffix)) {
         throw new HTTP400Error('Invalid parameters');
     } else {
         next();

@@ -13,7 +13,7 @@ const randomLocation = (): {lat: number, lng: number} => {
 export const getTeamPrototypeAction = async(req: Request, res: Response, next: NextFunction) => {
     return res.status(200).send({
         devEUIPrefix: config.team.devEUIPrefix
-    })
+    });
 };
 
 export const addTeamAction = async (req: Request, res: Response, next: NextFunction) => {

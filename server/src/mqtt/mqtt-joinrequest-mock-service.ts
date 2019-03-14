@@ -4,6 +4,7 @@ import * as mqttService from './mqtt-service';
 import Timeout = NodeJS.Timeout;
 import {config} from "../config";
 import * as teamDao from "../team/team-dao";
+import {HACKER_STEP_CREATE_DEVICE} from "../progress/models/Progress";
 const GATEWAY_STATS_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
 const logger = Logger.child({service: "mqtt-joinrequest-mock-service"});
 

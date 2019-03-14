@@ -43,3 +43,15 @@ export const deleteOne = async (id: number): Promise<boolean> => {
     }
     return res.affectedRows > 0;
 };
+
+
+export const deleteAll = async (): Promise<boolean> => {
+    const con = await dbInstance();
+    let res;
+    try {
+        res = await con.query(`DELETE FROM challenge`);
+    } finally {
+        con.end();
+    }
+    return res.affectedRows > 0;
+};

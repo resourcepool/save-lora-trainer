@@ -8,3 +8,8 @@ export const authenticate = async(req: Request, res: Response, next: NextFunctio
     }
     return res.status(200).send(userNToken);
 };
+
+export const resetAction = async(req: Request, res: Response, next: NextFunction) => {
+    await adminService.resetGame();
+    return res.status(200).send("OK");
+};
