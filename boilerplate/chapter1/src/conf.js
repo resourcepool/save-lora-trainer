@@ -5,7 +5,7 @@
  */
 const CHANGEME = {
   clientId: 'hacker-1234',
-  deviceEUI: '13:37:00:00:FF:FF:FF:00'
+  deviceEUI: '13:37:00:00:FF:FF:FF:FF'
 };
 
 module.exports = {

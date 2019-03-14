@@ -3,7 +3,7 @@ import Logger from '../log/logger';
 import * as mqttService from './mqtt-service';
 import Timeout = NodeJS.Timeout;
 import {config} from "../config";
-
+import * as teamDao from "../team/team-dao";
 const GATEWAY_STATS_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
 const logger = Logger.child({service: "mqtt-joinrequest-mock-service"});
 
@@ -31,12 +31,19 @@ export const init = (topic: string) => {
     joinRequestDummy();
 };
 
-const joinRequestDummy = () => {
+const joinRequestDummy = async () => {
     logger.debug("Sending mock Join Request");
-    mqttService.publish(targetTopic!, JoinRequestBuilder.builder()
-        .appEUI(config.mockDevice.appEUI)
-        .appKey(config.mockDevice.appKey)
-        .devEUI(config.mockDevice.devEUI)
-        .devNOnce(++retries)
-        .build(targetGatewayMac!));
+    let teams = await teamDao.findAll();
+    if (!teams) {
+        return;
+    }
+    teams!.forEach(t => {
+        mqttService.publish(targetTopic!, JoinRequestBuilder.builder()
+            .appEUI(config.mockDevice.appEUI)
+            .appKey(config.mockDevice.appKey)
+            .devEUI(t.devEUI!)
+            .devNOnce(++retries)
+            .build(targetGatewayMac!));
+    });
+
 };

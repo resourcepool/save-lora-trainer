@@ -1,6 +1,5 @@
 import Team from './models/Team';
 import { dbInstance } from '../web/utils/db-config';
-import {HTTP404Error} from "../web/utils/http-errors";
 import {normalizeHexString} from "../utils";
 
 
