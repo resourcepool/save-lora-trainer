@@ -74,7 +74,8 @@ export const addTeam = async (team: Team): Promise<Team> => {
             name: team.name,
             clientId: team.clientId,
             devEUI: normalizeHexString(team.devEUI!),
-            progress: JSON.stringify(team.progress)
+            progress: JSON.stringify(team.progress),
+            secretLocation: team.secretLocation
         };
         res = await con.query('INSERT INTO team SET ?', dto);
     } finally {
