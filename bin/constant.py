@@ -17,8 +17,9 @@ SAVE_LORA_API_PROXY_SECRET = "IAmTheGodOfGothamAndThisPasswordIsSeri0u$"
 SAVE_LORA_API_ADMIN_USERNAME = "admin"
 SAVE_LORA_API_ADMIN_PASSWORD = "password"
 SAVE_LORA_DB_HOST = "localhost"
-SAVE_LORA_DB_USERNAME = "root"
-SAVE_LORA_DB_PASSWORD = "root"
+SAVE_LORA_DB_USERNAME = "lorauser"
+SAVE_LORA_DB_PASSWORD = "lorapassword"
+SAVE_LORA_DB_ROOT_PASSWORD = "root"
 SAVE_LORA_DB_DATABASE = "lora"
 
 # LoraServer

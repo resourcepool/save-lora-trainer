@@ -6,7 +6,9 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: {{ save_lora_db_password }}
+      MYSQL_ROOT_PASSWORD: {{ save_lora_db_root_password }}
+      MYSQL_USER: {{ save_lora_db_username }}
+      MYSQL_PASSWORD: {{ save_lora_db_password }}
       MYSQL_DATABASE: {{ save_lora_db_database }}
     volumes:
       - /etc/appserver/db/init:/docker-entrypoint-initdb.d

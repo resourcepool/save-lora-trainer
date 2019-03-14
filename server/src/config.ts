@@ -15,13 +15,13 @@ export const config = {
         password: "password"
     },
     // BEGIN SAVELORA Client config
-    proxySecret: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.0Zx2AjfAxh9uCOAfZc1vU8NYAL9f2jbarjcLG4_G9ck
-    publicSecret: 'Not so secret... Or is it?', // JWT <=> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDEiLCJuYW1lIjoiUHVibGljIElkaW90IiwiaWF0IjoxNTQ2Mjk3MjAwfQ.C7S62jkn05WNwMZ6dRRrIGPOxMVwOPl3rRuQ1Y4-rTg
-    adminSecret: "xf3xbW5U3AgQwnRRbmEjj15ULfUVrr2jztB31HKP8vv5z3bZXRH2FK4fQ711gHdsqq",
+    proxySecret: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$',
+    publicSecret: 'Not so secret... Or is it?',
+    adminSecret: "U9KXC8INT4uQKbOPRc7Gm9rVpbH9BsRtyteQqZ7etKJFu7JJBA9qIeW5ZXwJoN40",
     // END SAVELORA Client config
     loRaServer: {
         baseUrl: "https://loraas.save-lora.takima.io/api",
-        authToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.ZQbxBsjGgIenfxRGzQ6mOGMZ4dnIvIfwlZwXX9CisXI",
+        authToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.8zglscHAcCa_pZw-0k1sP0vn_FcwnshbTzWBfaaGjCM",
         rak811DevProfileId: "1d99a006-e617-4fb3-9ffe-a71567ee36a7",
         loRaApplicationId: 1,
         targetNwkKey: "42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42"
@@ -37,7 +37,7 @@ export const config = {
         clientId: 'gotham-watchdog',
         host: 'mqtts://broker.save-lora.takima.io:8883',
         username: 'admin',
-        password: 'HyrvBWKPBRkAdhZmdhOETshhQXC4bcSM'
+        password: '1qKbLaPmLnhCAAlC7Tde3VLiWrMfLrah'
     },
     // END MQTT Client config
 };

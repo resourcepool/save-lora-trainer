@@ -49,3 +49,4 @@ def setup(groupvars):
     groupvars.append("save_lora_db_database: \"" + constant.SAVE_LORA_DB_DATABASE + "\"")
     groupvars.append("save_lora_db_username: \"" + constant.SAVE_LORA_DB_USERNAME + "\"")
     groupvars.append("save_lora_db_password: \"" + constant.SAVE_LORA_DB_PASSWORD + "\"")
+    groupvars.append("save_lora_db_root_password: \"" + constant.SAVE_LORA_DB_ROOT_PASSWORD + "\"")
