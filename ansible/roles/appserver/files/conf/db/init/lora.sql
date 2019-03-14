@@ -60,10 +60,10 @@ CREATE TABLE `challenge` (
 
 
 --
--- Structure de la table `game_date`
+-- Structure de la table `game`
 --
-CREATE TABLE game_date (
-  game_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE game (
+  `startDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
