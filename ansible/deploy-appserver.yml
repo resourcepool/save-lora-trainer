@@ -1,5 +1,5 @@
 - hosts: appserver
   roles:
-    - role: deploy_appserver
+    - role: service-reload
       become: yes
       service_name: "appserver"

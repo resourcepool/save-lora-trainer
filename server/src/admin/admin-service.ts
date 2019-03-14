@@ -1,7 +1,7 @@
 import {config} from '../config';
 const jwt = require('jsonwebtoken');
 const teamDao = require('../team/team-dao');
-const dateDao = require('../date/date-dao');
+const gameDao = require('../game/game-dao');
 const challengeDao = require('../challenge/challenge-dao');
 
 export const authenticate = (username: string, password: string) => {
@@ -14,5 +14,5 @@ export const authenticate = (username: string, password: string) => {
 export const resetGame = async () => {
     await teamDao.deleteAll();
     await challengeDao.deleteAll();
-    await dateDao.deleteAll();
+    await gameDao.deleteAll();
 };
