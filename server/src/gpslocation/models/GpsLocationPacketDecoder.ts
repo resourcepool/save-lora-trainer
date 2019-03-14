@@ -1,5 +1,4 @@
-import * as utils from '../../utils';
-import GpsLocationPacket from "./gpsLocationPacket";
+import GpsLocationPacket from "./GpsLocationPacket";
 
 export default class GpsLocationPacketDecoder {
 
@@ -22,7 +21,7 @@ export default class GpsLocationPacketDecoder {
 
     /**
      * @returns {boolean}
-     * true if the message is indeed a join-request packet
+     * true if the message contains a GpsLocation
      * false otherwise
      */
     isSupported(): boolean {
@@ -31,18 +30,19 @@ export default class GpsLocationPacketDecoder {
     }
 
     /**
-     * @returns {JoinRequestPacket}
+     * @returns {GpsLocationPacket}
      * Example:
      * {
-     *   mic: [25, 31, 12, 39],
-     *   appEui: [66, 66, 66, 66, 66, 66, 66, 66], <=> 42:42:42:42:42:42:42:42
-     *   devEui: [0D, 25, 00, 00, AC, 1F, C2, 0A] <=> 13:37:00:00:
+     *   devEUI: string;
+     *   latitude: number;
+     *   longitude: number;
+     *   altitude: number;
      * }
      */
     decode(): GpsLocationPacket {
 
         // @ts-ignore
-         return new GpsLocationPacket(this.msg.devEUI,this.msg.object.gpsLocation[1]);
+         return new GpsLocationPacket(this.msg.devEUI, this.msg.object.gpsLocation[1]);
     }
 
 }

@@ -7,7 +7,7 @@ import Team from "../team/models/Team";
 import * as teamDao from "../team/team-dao";
 import {config} from "../config";
 import {normalizeHexString} from "../utils";
-import GpsLocationPacketDecoder from "../gpslocation/models/gpsLocationPacketDecoder";
+import GpsLocationPacketDecoder from "../gpslocation/models/GpsLocationPacketDecoder";
 
 export const handleAppRxMessage = async (topic: string, message: Buffer) => {
 
@@ -20,17 +20,21 @@ export const handleAppRxMessage = async (topic: string, message: Buffer) => {
         if (normalizeHexString(decoded.devEUI) === normalizeHexString(config.mockDevice.devEUI)) {
             return;
         }
-        let success = await updateProgressWithDevEUI(progressService.validateGpsLocationReceived, decoded.devEUI);
+        let success = await updateProgressWithDevEUI(progressService.validateGpsLocationReceived, decoded.devEUI, {lat: decoded.latitude, lng: decoded.longitude});
         if (success) {
             logger.info(`GpsLocation sent successfully for device ${decoded.devEUI}`);
         }
     }
 };
 
-const updateProgressWithDevEUI = async (func: (team: Team) => Promise<boolean>, devEUI: string): Promise<boolean> => {
+const updateProgressWithDevEUI = async (func: (team: Team) => Promise<boolean>, devEUI: string, location: {lat: number, lng: number}): Promise<boolean> => {
     let team = await teamDao.findByDevEUI(devEUI);
     if (!team) {
         logger.warn(`Failed to retrieve team for: ${devEUI}`);
+        return false;
+    }
+    if (team.secretLocation!.lat !== location.lat || team.secretLocation!.lng !== location.lng) {
+        logger.warn(`Device location was not right: ${devEUI}, got (${location.lng}, ${location.lat}), expected (${team.secretLocation!.lng}, ${team.secretLocation!.lat})`);
         return false;
     }
     let result = await func(team);
