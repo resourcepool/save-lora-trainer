@@ -13,19 +13,6 @@ const ProcessStep = {
 
 let currentStep = ProcessStep.IDLE;
 
-const initConnect = async () => {
-    console.log("init connection");
-    currentStep = ProcessStep.IDLE;
-    serialComService.sendCommand("at+reset=0");
-    await delay(500);
-    currentStep = ProcessStep.SETTING_MODE;
-    processNextStep();
-};
-
-const delay = async (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
 serialComService.serialEventEmitter.on("data-from-device", (data) => {
     if (data === "OK") {
         currentStep += 1;
@@ -39,8 +26,20 @@ serialComService.serialEventEmitter.on("data-from-device", (data) => {
     }
 });
 
+const initConnect = async () => {
+    console.log("init connection");
+    currentStep = ProcessStep.IDLE;
+    serialComService.sendCommand("at+reset=0");
+    await delay(500);
+    currentStep = ProcessStep.SETTING_MODE;
+    processNextStep();
+};
 
-function processNextStep() {
+const delay = async (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+const processNextStep = () => {
     switch (currentStep) {
         case ProcessStep.SETTING_MODE:
             rescueService.setModeLoraWan();
@@ -55,7 +54,7 @@ function processNextStep() {
             rescueService.sendJoinRequest();
             break;
     }
-}
+};
 
 const isJoinRequestAcceptResponse = (response) => {
     return response === "at+recv=3,0,0";

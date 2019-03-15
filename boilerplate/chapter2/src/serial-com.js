@@ -2,7 +2,6 @@ const EventEmitter = require("events");
 const SerialPort = require("serialport");
 const conf = require("./conf");
 
-
 const Readline = SerialPort.parsers.Readline;
 const parser = new Readline({delimiter: "\r\n"});
 const port = new SerialPort(conf.tty, {baudRate: 115200});

@@ -8,13 +8,13 @@ const setModeLoraWan = () => {
 };
 const setAppEui = () => {
     // TODO STEP 1.2
-    const app_eui = conf.app_eui;
+    const appEUI = conf.appEUI;
     // serialComService.sendCommand(CHANGEME);
     serialComService.serialEventEmitter.emit("cmd-sent", "set app_eui");
 };
 const setAppKey = () => {
     // TODO STEP 1.2
-    const app_key = conf.app_key;
+    const appKey = conf.appKey;
     // serialComService.sendCommand(CHANGEME);
     serialComService.serialEventEmitter.emit("cmd-sent", "set app_key");
 };
