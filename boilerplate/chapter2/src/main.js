@@ -1,7 +1,7 @@
-const Path = require('path');
-const { app, BrowserWindow } = require('electron');
-
+// import * as path from "path";
+const Path = require('path')
 let mainWindow;
+const { app, BrowserWindow } = require('electron')
 
 function createWindow() {
   // Create the browser window.
@@ -12,7 +12,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadFile(Path.join(__dirname, "../index.html"));
-  mainWindow.setMenuBarVisibility(false);
+  mainWindow.setMenuBarVisibility(false)
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
