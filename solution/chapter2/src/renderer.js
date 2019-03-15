@@ -1,4 +1,6 @@
 const wisnodeService = require("./wisnode-process-service");
+const rescueService = require("./tobeimpl/rescue-service");
+const serialComService = require("./serial-com");
 const displayText = document.getElementById("wisnode-serial");
 function addLineToDisplay(value) {
     displayText.textContent += "\r\n" + value;
@@ -11,19 +13,19 @@ function displayCmdSent(msg, cmd) {
 function displayResponseRaw(data) {
     addLineToDisplay("Raw Response : " + data);
 }
-wisnodeService.serialEventEmitter.on("cmd-sent", (msg) => {
+serialComService.serialEventEmitter.on("cmd-sent", (msg) => {
     addLineToDisplay(msg);
 });
-wisnodeService.serialEventEmitter.on("dev-response-raw", (data) => {
+serialComService.serialEventEmitter.on("dev-response-raw", (data) => {
     displayResponseRaw(data);
 });
-wisnodeService.serialEventEmitter.on("server-response-raw", (data) => {
+serialComService.serialEventEmitter.on("server-response-raw", (data) => {
     displayResponseRaw(data);
 });
-wisnodeService.serialEventEmitter.on("allow-send-location", () => {
+serialComService.serialEventEmitter.on("allow-send-location", () => {
     document.getElementById("send_location").disabled = false;
 });
-wisnodeService.serialEventEmitter.on("reset", () => {
+serialComService.serialEventEmitter.on("reset", () => {
     displayText.textContent = "";
     document.getElementById("send_location").disabled = true;
 });
@@ -31,5 +33,5 @@ function fireCustomCmd() {
     wisnodeService.fireCustomCmd(document.getElementById("custom-cmd").value);
 }
 document.getElementById("connect").addEventListener("click", wisnodeService.initConnect);
-document.getElementById("send_location").addEventListener("click", wisnodeService.sendLocation);
+document.getElementById("send_location").addEventListener("click", rescueService.sendGpsLocation);
 document.getElementById("fire-custom-cmd").addEventListener("click", fireCustomCmd);
