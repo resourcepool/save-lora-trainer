@@ -1,10 +1,11 @@
 const config_1 = require("../conf");
-const wisnodeProcessService = require("../wisnode-process-service");
+const wisnodeProcessService = require("../wisnode-process-service.js");
+
 // TODO STEP 1.1
-function setModeLoraWan() {
+const setModeLoraWan = () => {
     wisnodeProcessService.sendCommand("at+mode=0");
     wisnodeProcessService.serialEventEmitter.emit("cmd-sent", "set mode to 0");
-}
+};
 // TODO STEP 1.2
 function setAppEui() {
     const cmd = "at+set_config=app_eui:" + config_1.config.app_eui;
@@ -22,18 +23,10 @@ function sendJoinRequest() {
     wisnodeProcessService.sendCommand("at+join=otaa");
     wisnodeProcessService.serialEventEmitter.emit("cmd-sent", "initiate join request");
 }
-// TODO STEP 1.3
-function isJoinRequestAcceptResponse(response) {
-    return response === "at+recv=3,0,0";
-}
 // TODO STEP 2
 function sendGpsLocation(gpsLocation) {
     const gpsData = convertGpsLocationToPayloadData(gpsLocation);
     wisnodeProcessService.sendPayload({ type: 0, port: 1, data: gpsData });
-}
-// TODO STEP 2
-function isGpsLocationReceiptConfirmation(response) {
-    return response === "at+recv=2,0,0";
 }
 function convertGpsLocationToPayloadData(gpsLocation) {
     return "01" + "88" + gpsCoordAsHexa(gpsLocation.latitude)

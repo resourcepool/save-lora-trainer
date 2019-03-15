@@ -49,20 +49,20 @@ const delay = async (ms) => {
 
 function processReturnFromDevice(data) {
     if (data === "Welcome to RAK811") {
-        exports.serialEventEmitter.emit("reset");
-        exports.serialEventEmitter.emit("server-response-raw", "resetting...");
+        serialEventEmitter.emit("reset");
+        serialEventEmitter.emit("server-response-raw", "resetting...");
     }
     console.log(data);
-    exports.serialEventEmitter.emit("server-response-raw", data);
+    serialEventEmitter.emit("server-response-raw", data);
     if (data === "OK") {
         currentStep += 1;
         console.log(ProcessStep[currentStep]);
         processNextStep();
     } else if (isJoinRequestAcceptResponse(data)) {
-        exports.serialEventEmitter.emit("server-response-raw", "Congrats! you're connected to loraServer");
-        exports.serialEventEmitter.emit("allow-send-location");
+        serialEventEmitter.emit("server-response-raw", "Congrats! you're connected to loraServer");
+        serialEventEmitter.emit("allow-send-location");
     } else if (isGpsLocationReceiptConfirmation(data)) {
-        exports.serialEventEmitter.emit("server-response-raw", "GPS Location has been successfully sent. Congrats! HELP IS ON ITS WAY !!");
+        serialEventEmitter.emit("server-response-raw", "GPS Location has been successfully sent. Congrats! HELP IS ON ITS WAY !!");
     }
 }
 
@@ -86,7 +86,7 @@ function processNextStep() {
 const sendCommand = (cmd) => {
     const cmdCompleted = cmd + "\r\n";
     port.write(cmdCompleted);
-    exports.serialEventEmitter.emit("cmd-sent", cmd);
+    serialEventEmitter.emit("cmd-sent", cmd);
 };
 
 const sendPayload = (payload) => {
@@ -94,17 +94,13 @@ const sendPayload = (payload) => {
     sendCommand(cmd);
 };
 
-const ComSendType = {
-    TYPE_UNCONFIRMED: 0,
-    TYPE_CONFIRMED: 1
-};
 
 const fireCustomCmd = (value) => {
     currentStep = ProcessStep.CUSTOM;
     if (value.startsWith("at+")) {
         sendCommand(value);
     } else {
-        exports.serialEventEmitter.emit("cmd-sent", "invalid AT command...");
+        serialEventEmitter.emit("cmd-sent", "invalid AT command...");
     }
 };
 
@@ -119,7 +115,6 @@ const isGpsLocationReceiptConfirmation = (response) => {
 
 module.exports = {
     serialEventEmitter,
-    ComSendType,
     initConnect,
     fireCustomCmd,
     sendPayload,
