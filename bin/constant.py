@@ -34,3 +34,6 @@ SAVE_LORA_WEB_HOST = "www.save-lora.takima.io"
 # Docker
 SAVE_LORA_API_IMAGE = "resourcepool/save-lora-appserver"
 SAVE_LORA_WEB_IMAGE = "resourcepool/save-lora-website"
+
+# Client Git Repo
+GIT_REPO = "https://github.com/resourcepool/save-lora.git"

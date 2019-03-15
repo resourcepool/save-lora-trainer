@@ -15,7 +15,7 @@ The only thing you need to do is make sure people know you're trapped in...
 Three days go on, and you manage to receive a couple texts from your friend just before your phone goes off.  
 Here is what it says:
 
-![Phone screenshot](/assets/trinity.png)
+![Phone screenshot](assets/trinity.png)
 
 Bingo! You remember buying a Small LoRa sensor years ago, and your laptop still has some battery.
 
