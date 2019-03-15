@@ -1,34 +1,19 @@
-# Save-LoRa
+# Save-LoRa Trainer
 
-## Game Briefing
+This workshop is aimed at introducing people to IoT networking (via LoRaWAN 0G) through a "humanitarian-hacking" use-case.
 
-Let's make it quick.
+The game briefing and details are in the `guide/` folder.
 
-You were chilling in your geek cave, and something happened outside.  
-Earthquake, Zombie apocalypse, Nuclear attack? You don't know, and who cares?? Focus!  
-    
-You are trapped in your basement, the door is jammed, the internet is down, your phone doesn't get any signal and no one knows you're here.  
-So really, what happened is the least of your worries right now.  
+## Requirements
 
-The only thing you need to do is make sure people know you're trapped in...  
+This game requires : 
+ * Two public production servers with domain-names
+ * One Github repository for players
+ * RAK811 Wisnode LoRa Nodes (as much as you have players)
 
-Three days go on, and you manage to receive a couple texts from your friend just before your phone goes off.  
-Here is what it says:
+## Deploy
 
-![Phone screenshot](/assets/trinity.png)
-
-Bingo! You remember buying a Small LoRa sensor years ago, and your laptop still has some battery.
-
-Can you make a way through the LoRaWAN protocol, connect to a network, and emit your location?
-
-Well, let's hope the answer is yes, because your survival depends on it.
-
-
-## Chapter 1: Hacking Gotham City's LoRa Network
-
-[Chapter one steps are available here](ch1-rescue-hacker.md)
-
-
-## Chapter 2: Getting around the LoRa node and sending location
-
-[Chapter two steps are available here](ch2-geek-victim.md)
+To deploy the game :
+ 1. Change all constants in bin/constants.py
+ 2. Run `python3 bin/setup.py`
+ 3. Run playbook `ansible/site.yml` to setup your production servers
