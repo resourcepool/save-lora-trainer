@@ -1,4 +1,9 @@
 # Geek Victim
+## Windows setup
+
+before anything else, if you are using windows OS, please run this command from an elevated PowerShell, CMD.exe (run as Administrator), or git bash (as administrator):
+`npm install --global --production windows-build-tools`
+then reboot your computer...
 
 ## Briefing
 
@@ -47,3 +52,4 @@ Once you are connected to a loraserver, you have only one command to send. But t
 You guess that the loraserver uses CayenneLPP protocol to communicate, since it is widely used for data transfer and... GPS Location transfer.  
 
 But sadly, you forgot to download a library implementing this protocol, and now that the internet is down... You will have to implement it on your own.  
+

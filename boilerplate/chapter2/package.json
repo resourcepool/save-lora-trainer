@@ -4,18 +4,16 @@
   "description": "A minimal Electron application to control wisnode",
   "main": "main.js",
   "scripts": {
-    "install": "sass ./style.scss ./style.css",
+    "install": "sass ./style.scss ./style.css & electron-rebuild -f -w serialport",
     "start": "electron ./src/main.js"
   },
+  "repository": "https://github.com/electron/electron-quick-start",
   "dependencies": {
-    "serialport": "^7.1.4",
-    "@types/serialport": "^7.0.1",
-    "electron": "^4.0.4",
-    "electron-rebuild": "^1.8.4",
-    "tslint": "^5.12.1",
-    "typescript": "^2.8.3"
+    "serialport": "^7.1.4"
   },
   "devDependencies": {
+    "electron": "^4.0.4",
+    "electron-rebuild": "^1.8.4",
     "sass": "^1.17.2"
   }
 }
