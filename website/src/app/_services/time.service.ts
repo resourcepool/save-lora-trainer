@@ -36,6 +36,12 @@ export class TimeService {
         });
     }
 
+    resetTime(): Promise<string> {
+        this.timeCached = null;
+        const httpOptions = this.httpConfig.getAdminHeaders();
+        return this.http.post<string>(`${environment.apiAdminUrl}/game/date/reset`, null, httpOptions).toPromise();
+    }
+
     resetGame(): Promise<string> {
         this.timeCached = null;
         const httpOptions = this.httpConfig.getAdminHeaders();

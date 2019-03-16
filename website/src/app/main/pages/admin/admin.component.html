@@ -23,7 +23,8 @@
                     <span class="start-date">{{ startDate | date:'HH:mm:ss' }}</span>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-raised-button color="accent" (click)="startGame()">Start game</button>
+                    <button mat-raised-button color="primary" (click)="startGame()">Start game</button>
+                    <button mat-raised-button color="warn" (click)="resetDate()">Reset date</button>
                     <button mat-raised-button color="warn" (click)="resetGame()">Reset game</button>
                 </mat-card-actions>
             </mat-card>

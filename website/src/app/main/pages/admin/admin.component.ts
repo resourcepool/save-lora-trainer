@@ -45,15 +45,27 @@ export class AdminComponent implements OnInit {
         this.timeService.setTime().then(() => this.updateTime());
     }
 
+    resetDate(): void {
+        this.timeService.resetGame().then(() => {
+                this.startDate = null;
+                this.snackBar.open('Date reset successfully done!', null, {
+                    duration: 3000,
+                });
+            },
+            (err) => {
+                console.log(err);
+            });
+    }
+
     resetGame(): void {
-     this.timeService.resetGame().then(() => {
-             this.startDate = null;
-             this.snackBar.open('Game reset successfully done!', null, {
-                 duration: 3000,
-             });
-        },
-         (err) => {
-            console.log(err);
-        });
+         this.timeService.resetGame().then(() => {
+                 this.startDate = null;
+                 this.snackBar.open('Game reset successfully done!', null, {
+                     duration: 3000,
+                 });
+            },
+             (err) => {
+                console.log(err);
+         });
     }
 }
