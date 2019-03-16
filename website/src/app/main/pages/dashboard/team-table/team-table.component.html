@@ -1,0 +1,65 @@
+<h1 class="h1">Teams Ranking</h1>
+
+<mat-table [dataSource]="teams" matSort class="mat-elevation-z2">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="chapter-title">
+        Team
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span class="team-name">{{element.name}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Rescue Hacker Column -->
+  <ng-container matColumnDef="hackerSteps">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="chapter-title">
+        Chapter 1 : Rescue Hacker
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <team-progress
+                class="team-progress"
+                [progress]="element.progress.hackerSteps"
+                [clientId]="element.clientId"
+                category="hackerSteps">
+        </team-progress>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Geek Victim Column -->
+  <ng-container matColumnDef="geekInDangerSteps">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="chapter-title">
+        Chapter 2 : Geek In Danger
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <team-progress
+                class="team-progress"
+                [progress]="element.progress.geekInDangerSteps"
+                [clientId]="element.clientId"
+                category="geekInDangerSteps">
+        </team-progress>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Scores Column -->
+  <ng-container matColumnDef="scores">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="chapter-title">
+        Score
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span class="score">{{ element.score }}</span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['name', 'hackerSteps', 'geekInDangerSteps', 'scores']"></mat-header-row>
+  <mat-row class="background-row" *matRowDef="let row; columns: ['name', 'hackerSteps', 'geekInDangerSteps', 'scores'];"></mat-row>
+</mat-table>

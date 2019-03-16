@@ -1,0 +1,10 @@
+
+<div *ngFor="let step of progress" class="challenge">
+  <span class="challenge_icon" [ngClass]="{'validated mat-elevation-z3': step.validated }"
+        [matTooltip]="step.tag"
+        matTooltipPosition="above"
+        matTooltipClass="tooltip-challenge">
+    <mat-icon>done_outline</mat-icon>
+  </span>
+  <mat-icon class="chevron-right">chevron_right</mat-icon>
+</div>

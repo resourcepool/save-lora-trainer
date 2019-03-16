@@ -1,0 +1,42 @@
+.challenge {
+  display: inline-block;
+
+  .tooltip-challenge {
+    background: #333333;
+  }
+
+  .challenge_icon {
+    margin: 15px 5px;
+    color: white;
+    background: #444444;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    &.validated {
+      background: #2E7D32;
+
+      mat-icon {
+        color: #FFFFFF;
+      }
+    }
+
+    mat-icon {
+      line-height: 40px;
+      margin-left: 8px;
+      color: #666666;
+    }
+
+  }
+
+  .chevron-right {
+    color: #999999;
+  }
+
+  &:last-child {
+    .chevron-right {
+      display: none;
+    }
+  }
+}

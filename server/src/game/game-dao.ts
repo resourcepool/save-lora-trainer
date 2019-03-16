@@ -4,7 +4,7 @@ export const getStartDate = async (): Promise<Date|null> => {
     const con = await dbInstance();
     let rows;
     try {
-        rows = await con.query(`SELECT * FROM game LIMIT 1`);
+        rows = await con.query(`SELECT MAX(startDate) as startDate FROM game`);
     } finally {
         con.end();
     }
