@@ -59,7 +59,7 @@ const solveJoinRequestSupportedChallenge = async () => {
   try {
     challenge.content.messages.forEach(message => {
       let packetDecoder = new JoinRequestPacketDecoder(message.topic, message.message);
-      result.content.messages.push({supported: packetDecoder.isSupported()});
+      result.content.messages.push({supported: !!packetDecoder.isSupported()});
     });
   } catch (e) {
     if (!result.errors) {

@@ -38,8 +38,8 @@ export const createDevice = async (device: DeviceDescriptor): Promise<any> => {
         logger.debug("Response received", response.data);
         return response.data;
     } catch (e) {
-        logger.error("Error occured during call to http api", e.response.data);
-        throw e;
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
     }
 };
 
@@ -54,8 +54,11 @@ export const deviceNwkKeyExists = async (devEUI: string): Promise<any> => {
         logger.debug("Response received", response.data);
         return response.data;
     } catch (e) {
-        logger.error("Error occured during call to http api", e.response.data);
-        throw e;
+        if (e.response.status === 404) {
+            return null;
+        }
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
     }
 };
 
@@ -76,22 +79,25 @@ export const updateDeviceNwkKey = async (devEUI: string, nwkKey: string): Promis
         logger.debug("Response received", response.data);
         return response;
     } catch (e) {
-        logger.error("Error occured during call to http api", e);
-        throw e;
+        logger.error("Error occured during call to http api ", e.response.data);
+        return;
     }
 };
 
 /**
  * Returns the list of registered devices and their content
  */
-export const getRegisteredDevices = async (): Promise<RegisteredDevices> => {
+export const getRegisteredDevices = async (): Promise<RegisteredDevices|null> => {
     try {
         const response = await client.get<RegisteredDevices>(`/devices?applicationID=${config.loRaServer.loRaApplicationId}&limit=1000`);
         logger.debug("Response received", response.data);
         return response.data;
     } catch (e) {
-        logger.error("Error occured during call to http api", e.response.data);
-        throw e;
+        if (e.response.status === 404) {
+            return null;
+        }
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
     }
 };
 
@@ -100,13 +106,16 @@ export const getRegisteredDevices = async (): Promise<RegisteredDevices> => {
  * @param devEUI {string} hex string
  * @returns {Promise<*>}
  */
-export const getKeys = async (devEUI: string): Promise<DeviceKeys> => {
+export const getKeys = async (devEUI: string): Promise<DeviceKeys|null> => {
     try {
         const response = await client.get<{deviceKeys: DeviceKeys}>(`/devices/${devEUI}/keys`);
         logger.debug("Response received", response.data);
         return response.data.deviceKeys;
     } catch (e) {
-        logger.error("Error occured during call to http api", e);
-        throw e;
+        if (e.response.status === 404) {
+            return null;
+        }
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
     }
 };

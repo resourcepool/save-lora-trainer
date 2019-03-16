@@ -1,5 +1,6 @@
 import * as utils from '../../utils';
 import {aesCmac} from 'node-aes-cmac';
+
 import {randomRxInfo} from '../join-request-helper';
 
 export default class JoinRequestBuilder {
@@ -45,7 +46,7 @@ export default class JoinRequestBuilder {
         let cmac: string = aesCmac(appKeyBuffer, phyPayloadBuffer);
         return utils.hexStringToBytes(cmac).subarray(0, 4);
     }
-    
+
     build(gatewayMAC: string): string {
         let phyPayload = new Uint8Array(23);
         let joinRequestPayload = new Uint8Array(19);

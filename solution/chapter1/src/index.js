@@ -2,31 +2,40 @@ const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
 const conf = require('./conf');
-const Logger = require('./log/logger');
 const reviewService = require('./progress/review-service');
+
+const Logger = require('./log/logger');
+
 const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
 
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 
 const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
+const validMockAppEUI = utils.hexStringToBytes(conf.user.mockAppEUI);
 const deviceEUI = utils.hexStringToBytes(conf.user.deviceEUI);
 const deviceNetworkKey = utils.normalizeHexString(conf.user.nwkKey);
 
 const logger = Logger.child({service: 'index'});
 let client;
 
-/**
- * Step 1
- */
 let init = () => {
-
   reviewService.init();
-  client = mqtt.connect(conf.mqtt.host, {clientId: conf.user.clientId, username: conf.mqtt.username, password: conf.mqtt.password});
+  // TODO Step 1: Connect to the city's remote MQTT Broker
+  // Using the provided MQTT client, connect to the remote MQTT broker (cf README.md)
+  // Don't forget to manually set your clientId, otherwise your step wont be validated!
+  // Those idiots forgot to put any security on it... Noobs!
+  // MQTT Client documentation => https://github.com/mqttjs/MQTT.js
+  // You want to listen to all incoming messages... Did I hear the word "Wildcard"?
+  client = mqtt.connect(conf.mqtt.host, {username: conf.mqtt.username, password: conf.mqtt.password, clientId: conf.user.clientId});
   client.on('connect', () => {
-    logger.info("Connected to broker!");
-    client.subscribe("#");
+    client.subscribe('#', (err) => {
+      if (err) {
+        process.exit(1);
+      }
+    });
   });
   client.on("message", onMessage);
+
 };
 
 /**
@@ -47,7 +56,6 @@ let onMessage = async (topic, message) => {
   if (!msgDecoder.isSupported()) {
     return;
   }
-  return;
 
   logger.debug("Join Request identified");
   let decodedJoinRequest = msgDecoder.decode();
@@ -64,25 +72,21 @@ let onMessage = async (topic, message) => {
     // and your sysadmin needs to whitelist your computer's mac address).
     // Therefore we want to interact with the LoraServer API.
     // Thanks to your awesome friend John Doe, you already have a async-client available in api/api.js
-    try {
-      if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
-        await api.createDevice({
-          devEUI: decodedJoinRequest.devEUI,
-          applicationID: conf.loRaServer.loRaApplicationId,
-          deviceProfileID: conf.loRaServer.rak811DevProfileId,
-          name: "Test",
-          description: "Test description"
-        });
-      }
-      if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
-        // TODO Step 3.2: set the device Network key (NwkKey).
-        await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
-      }
-      logger.debug("Device registered successfully");
-    } catch (e) {
-      logger.error("Error occured during device registration:");
-      logger.error(e);
+    if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
+      // TODO Step 3.1: register your friend's device remotely.
+      await api.createDevice({
+        devEUI: decodedJoinRequest.devEUI,
+        applicationID: conf.loRaServer.loRaApplicationId,
+        deviceProfileID: conf.loRaServer.rak811DevProfileId,
+        name: conf.user.clientId,
+        description: '4242'
+      });
     }
+    if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
+      // TODO Step 3.2: set the device Network key (NwkKey).
+      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, utils.normalizeHexString(conf.user.nwkKey));
+    }
+    logger.debug("Device registered successfully");
   }
 };
 
@@ -92,7 +96,7 @@ let onMessage = async (topic, message) => {
  * @returns {boolean}
  */
 let isValidAppEUI = (msgAppEUI) => {
-  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI);
+  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI) || utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validMockAppEUI);
 };
 
 /**

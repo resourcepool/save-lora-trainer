@@ -21,12 +21,14 @@ def setup(groupvars):
     savelorapublicjwt = jwt.encode({
           "sub": "001",
           "name": "Public Idiot",
-          "iat": 1546297200
+          "iat": 1546297200,
+          "exp": 2147483647
         }, constant.SAVE_LORA_API_PUBLIC_SECRET, algorithm='HS256').decode('utf-8')
     saveloraproxyjwt = jwt.encode({
           "sub": "007",
           "name": "Trinity",
-          "iat": 1546297200
+          "iat": 1546297200,
+          "exp": 2147483647
         }, constant.SAVE_LORA_API_PROXY_SECRET, algorithm='HS256').decode('utf-8')
     saveloraadminsecret = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(64))
     print("Save LoRa Public Server JWT is " + savelorapublicjwt)

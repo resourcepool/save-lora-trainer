@@ -4,17 +4,17 @@
  * @type {{}}
  */
 const CHANGEME = {
-  clientId: 'hacker-1234',
-  deviceEUI: '13:37:00:00:FF:FF:FF:00'
+  clientId: 'takigeeks',
+  deviceEUI: '13:37:00:00:00:00:00:01'
 };
 
 module.exports = {
   // BEGIN MQTT Client config
-  mqtt: {
-    host: 'mqtts://broker.save-lora.takima.io:8883',
-    username: 'gotham',
-    password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$'
-  },
+	mqtt: {
+		host: 'mqtts://broker.save-lora.takima.io:8883',
+		username: 'gotham',
+		password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$'
+	},
   // END MQTT Client config
   // BEGIN SAVELORA Client config
   loRaServer: {
@@ -29,7 +29,9 @@ module.exports = {
   },
   // END SAVELORA Client config
   user: {
-    appEUI: '42:42:42:42:42:42:42:42',
+	  appEUI: '42:42:42:42:42:42:42:42',
+    mockAppEUI: '00:00:00:00:00:00:00:00',
     nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
-    ...CHANGEME}
+    ...CHANGEME
+	}
 };

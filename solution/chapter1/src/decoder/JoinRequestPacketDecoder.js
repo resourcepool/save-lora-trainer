@@ -1,7 +1,7 @@
 const utils = require('../utils');
 
 class JoinRequestPacketDecoder {
-  
+
   constructor(topic, msg) {
     this.topic = topic;
     try {
@@ -9,7 +9,7 @@ class JoinRequestPacketDecoder {
     } catch (e) {
       // Someone sent a weird payload. Not supposed to happen.
     }
-    
+
     if (this.msg && this.msg.phyPayload) {
       this.payload = Buffer.from(this.msg.phyPayload, 'base64');
     }
@@ -21,16 +21,10 @@ class JoinRequestPacketDecoder {
    * false otherwise
    */
   isSupported() {
-    if (!this.payload) {
-      return false;
-    }
-    if (this.payload.length < 5) {
-      return false;
-    }
-    let prefix = this.payload.readInt8(0);
-    return prefix === 0x00;
+    // TODO Step 2.1
+    return this.payload && this.payload.readInt8(0) === 0x00;
   }
-  
+
   /**
    * @returns {{mic: {string}, appEUI: {string}, devNOnce: {number}, devEUI: {string}}}
    * Example:
@@ -47,6 +41,7 @@ class JoinRequestPacketDecoder {
       devNOnce: null,
       mic: null
     };
+    // TODO Step 2.2
     request.appEUI = utils.bytesToHexString(this.payload.slice(1, 9).reverse());
     request.devEUI = utils.bytesToHexString(this.payload.slice(9, 17).reverse());
     request.devNOnce = this.payload.slice(17, 19).readUInt16LE(0);

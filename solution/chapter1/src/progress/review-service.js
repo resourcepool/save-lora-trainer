@@ -48,18 +48,18 @@ const solveJoinRequestSupportedChallenge = async () => {
   // Request challenge from progress client
   const challenge = await client.requestJoinRequestSupportedChallenge();
   logger.debug(`Challenge ${challenge.id} received`);
-  
+
   // Solve challenge
   let result = {
     challengeId: challenge.id,
     errors: undefined,
     content: {messages: []}
   };
-  
+
   try {
     challenge.content.messages.forEach(message => {
       let packetDecoder = new JoinRequestPacketDecoder(message.topic, message.message);
-      result.content.messages.push({supported: packetDecoder.isSupported()});
+      result.content.messages.push({supported: !!packetDecoder.isSupported()});
     });
   } catch (e) {
     if (!result.errors) {
@@ -67,7 +67,7 @@ const solveJoinRequestSupportedChallenge = async () => {
     }
     result.errors.push(e);
   }
-  
+
   // Submit challenge result
   await client.submitJoinRequestSupportedChallenge(result);
 };

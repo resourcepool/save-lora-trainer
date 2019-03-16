@@ -1,5 +1,4 @@
 FROM node:slim
-
 WORKDIR /server
 
 COPY ./package.json /server/
@@ -10,5 +9,7 @@ COPY ./src /server/src
 
 RUN npm install
 
+ENV NODE_ENV=production
+
 EXPOSE 3333
-CMD [ "npm", "start" ]
+CMD [ "npm", "start"]

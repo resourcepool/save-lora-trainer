@@ -7,6 +7,7 @@
  */
 const Logger = require('../log/logger');
 const conf = require('../conf');
+const utils = require("../utils");
 const axios = require('axios');
 
 const authHeader = "Authorization";
@@ -20,14 +21,14 @@ const client = axios.create({
 
 const deviceExists = async (devEUI) => {
   try {
-    const response = await client.get(`/devices/${devEUI}`);
+    const response = await client.get(`/devices/${utils.normalizeHexString(devEUI)}`);
     logger.debug("Response received", response.data);
     return response;
   } catch (e) {
     if (e.response.status === 404) {
       return false;
     }
-    logger.error("Error occured during call to http api", e);
+    logger.error("Error occured during call to http api", e.message);
     throw e;
   }
 };
@@ -49,22 +50,25 @@ const createDevice = async (device) => {
     logger.debug("Response received", response.data);
     return response;
   } catch (e) {
-    logger.error("Error occured during call to http api", e);
+    logger.error("Error occured during call to http api", e.message);
     throw e;
   }
 };
 
-
+/**
+ * @param devEUI string
+ * @returns {Promise<boolean>}
+ */
 const deviceNwkKeyExists = async (devEUI) => {
   try {
-    const response = await client.get(`/devices/${devEUI}/keys`);
+    const response = await client.get(`/devices/${utils.normalizeHexString(devEUI)}/keys`);
     logger.debug("Response received", response.data);
     return !!response;
   } catch (e) {
     if (e.response.status === 404) {
       return false;
     }
-    logger.error("Error occured during call to http api", e);
+    logger.error("Error occured during call to http api", e.message);
     throw e;
   }
 };
@@ -72,47 +76,51 @@ const deviceNwkKeyExists = async (devEUI) => {
 
 /**
  *
- * @param devEUI {string} hex string
- * @param nwkKey {string} hex string
+ * @param devEUI string
+ * (hex string)
+ * @param nwkKey string
+ * (hex string)
  * @returns {Promise<*>}
  */
 const updateDeviceNwkKey = async (devEUI, nwkKey) => {
   try {
-    const response = await client.put(`/devices/${devEUI}/keys`, {
+    const response = await client.put(`/devices/${utils.normalizeHexString(devEUI)}/keys`, {
       deviceKeys: {
-        devEUI: devEUI,
-        nwkKey: nwkKey
+        devEUI: utils.normalizeHexString(devEUI),
+        nwkKey: utils.normalizeHexString(nwkKey)
       }
     });
     logger.debug("Response received", response.data);
     return response;
   } catch (e) {
-    logger.error("Error occured during call to http api", e);
+    logger.error("Error occured during call to http api", e.message);
     throw e;
   }
 };
 
 /**
  *
- * @param devEUI {string} hex string
- * @param nwkKey {string} hex string
+ * @param devEUI string
+ * (hex string)
+ * @param nwkKey string
+ * (hex string)
  * @returns {Promise<*>}
  */
 const setDeviceNwkKey = async (devEUI, nwkKey) => {
   try {
-    const response = await client.post(`/devices/${devEUI}/keys`, {
+    const response = await client.post(`/devices/${utils.normalizeHexString(devEUI)}/keys`, {
       deviceKeys: {
-        devEUI: devEUI,
-        nwkKey: nwkKey
+        devEUI: utils.normalizeHexString(devEUI),
+        nwkKey: utils.normalizeHexString(nwkKey)
       }
     });
     logger.debug("Response received", response.data);
     return response;
   } catch (e) {
     if (e.response.status === 409) {
-      return await updateDeviceNwkKey(devEUI, nwkKey);
+      return await updateDeviceNwkKey(utils.normalizeHexString(devEUI), utils.normalizeHexString(nwkKey));
     }
-    logger.error("Error occured during call to http api", e);
+    logger.error("Error occured during call to http api", e.message);
     throw e;
   }
 };

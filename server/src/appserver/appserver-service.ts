@@ -31,6 +31,9 @@ export const init = () => {
 const checkDevices = async () => {
     logger.debug("Checking devices");
     let devices = await appServerClient.getRegisteredDevices();
+    if (!devices) {
+        return;
+    }
     if (parseInt(devices.totalCount!) > 0) {
         for (let d of devices.result!) {
             let team = await teamDao.findByDevEUI(normalizeHexString(d.devEUI!));
@@ -54,7 +57,7 @@ const updateDeviceProgress = async (team: Team, d: DeviceDescriptor): Promise<bo
         }
     }
     let deviceKeys = await appServerClient.getKeys(d.devEUI!);
-    if (!deviceKeys.nwkKey || normalizeHexString(deviceKeys.nwkKey!) !== normalizeHexString(config.loRaServer.targetNwkKey)) {
+    if (!deviceKeys || !deviceKeys.nwkKey || normalizeHexString(deviceKeys.nwkKey!) !== normalizeHexString(config.loRaServer.targetNwkKey)) {
         return true;
     }
     // Device keys match the target. We can validate this step
