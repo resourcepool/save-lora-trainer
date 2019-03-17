@@ -5,7 +5,7 @@
  * Good luck!
  * @type {string}
  */
-const Logger = require('../log/logger');
+const Logger = require('../noedit/log/logger');
 const conf = require('../conf');
 const utils = require("../utils");
 const axios = require('axios');

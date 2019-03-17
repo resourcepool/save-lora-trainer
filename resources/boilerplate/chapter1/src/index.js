@@ -2,9 +2,9 @@ const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
 const conf = require('./conf');
-const reviewService = require('./progress/review-service');
+const reviewService = require('./noedit/progress/review-service');
 
-const Logger = require('./log/logger');
+const Logger = require('./noedit/log/logger');
 
 const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
 

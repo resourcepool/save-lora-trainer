@@ -19,7 +19,7 @@ Here is what it says:
 
 Bingo! You remember buying a Small LoRa sensor years ago, and your laptop still has some battery.
 
-Can you make a way through the LoRaWAN protocol, connect to a network, and emit your location?
+Can you make your way through the LoRaWAN protocol, connect to a network, and emit your location?
 
 Well, let's hope the answer is yes, because your survival depends on it.
 

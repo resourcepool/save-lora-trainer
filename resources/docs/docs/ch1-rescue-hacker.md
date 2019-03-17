@@ -35,6 +35,9 @@ Your mission, if you accept it, will be to **tap into** the **MQTT broker** and 
  * **Step 2**: decode a join-request
  * **Step 3**: if the join-request has the right identifier (that only you and your friends know), make it join the network. 
 
+A template has been provided, you are supposed to implement functions containing a `//TODO`.  
+ The package `noedit` is used internally and... not meant to be edited.  
+The file `api.js` is a helper which you can read and use. You should not edit its content.
 
 ### Step 1 - Connecting to the MQTT Broker
 The MQTT broker is exposed on FIXME `5.135.162.148:1883`. 
