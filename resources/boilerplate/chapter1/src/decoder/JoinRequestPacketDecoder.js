@@ -22,6 +22,8 @@ class JoinRequestPacketDecoder {
    */
   isSupported() {
     // TODO Step 2.1
+    //hint: be careful, you are scanning all mesages from MQTT Broker, some of them do not have a phyPayload. this.payload is then undefined.
+    // a message without payload is obviously not a joinRequest.
     return false;
   }
   
