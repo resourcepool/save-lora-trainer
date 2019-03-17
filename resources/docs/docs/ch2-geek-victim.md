@@ -8,7 +8,7 @@ You have just a few % of battery left.
 The LoRa node you found is used for something else, you will have to connect it to your computer, connect it to a remote LoRa Network, and send your location.  
 That's it. It's THAT simple!
  
-### Step 1 - setup your LoRa Device
+## Step 1 - setup your LoRa Device
 
 Years ago, when you were still a student, you built a cool Location sending app along with a Serial terminal.
 Let's reuse this as a codebase. 
@@ -39,14 +39,14 @@ Warning: Only implement Step 1 methods, which are : `setModeLoraWan()`, `setAppE
 
 Good luck.
 
-### Step 2 - Connect to the remote LoRa Network
+## Step 2 - Connect to the remote LoRa Network
 
 Your settings are ready. Now implement the method `sendJoinRequest()`
 
 Last but not least, you have to actually send the joinRequest in OTAA mode. And wait.  
 If you get an answer, you need to be sure it's a JoinRequest Success answer so you can unlock the step 2.  
 
-### Step 3 - Send your location
+## Step 3 - Send your location
 
 Almost done. Your device was registered on the LoRa Network.
 The only thing left to do is to send your location. 

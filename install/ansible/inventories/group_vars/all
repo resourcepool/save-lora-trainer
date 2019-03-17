@@ -23,7 +23,7 @@ save_lora_api_admin_username: "admin"
 save_lora_api_admin_password: "password"
 
 # Save Lora AppServer DB Configuration
-save_lora_db_host: "localhost"
+save_lora_db_host: "db"
 save_lora_db_database: "lora"
 save_lora_db_username: "lorauser"
 save_lora_db_password: "lorapassword"

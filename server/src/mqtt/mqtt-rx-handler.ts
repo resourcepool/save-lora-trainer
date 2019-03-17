@@ -9,6 +9,7 @@ import {config} from "../config";
 import {normalizeHexString} from "../utils";
 
 export const handleRxMessage = async (topic: string, message: Buffer) => {
+    logger.info("Will handle Rx Message");
     // Check Join Request Packets
     let joinRequestPacketDecoder = new JoinRequestPacketDecoder(topic, message);
     if (joinRequestPacketDecoder.isSupported()) {
@@ -16,12 +17,15 @@ export const handleRxMessage = async (topic: string, message: Buffer) => {
         logger.info("Join Request Received: " + JSON.stringify(decoded));
         // Ignore mock device messages
         if (normalizeHexString(decoded.appEUI) === normalizeHexString(config.mockDevice.appEUI)) {
+            logger.debug("Join Request was a mock. Will bypass");
             return;
         }
         let success = await updateProgressWithDevEUI(progressService.validateJoinRequestSent, decoded.devEUI);
         if (success) {
             logger.info(`Join request sent successfully for device ${decoded.devEUI}`);
         }
+    } else {
+        logger.debug("The Message is not a join request. Will be ignored");
     }
 };
 

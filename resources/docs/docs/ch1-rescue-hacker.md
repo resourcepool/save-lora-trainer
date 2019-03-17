@@ -39,13 +39,13 @@ A template has been provided, you are supposed to implement functions containing
  The package `noedit` is used internally and... not meant to be edited.  
 The file `api.js` is a helper which you can read and use. You should not edit its content.
 
-### Step 1 - Connecting to the MQTT Broker
-The MQTT broker is exposed on FIXME `5.135.162.148:1883`. 
-MQTT is a typical async message protocol used for IoT. 
+## Step 1 - Connecting to the Broker
+The MQTT broker is exposed on a public URL, and you have found managed to get an access to it after hacking the email account of the sysadmin. All the credentials are in the conf.js file.  
+MQTT is a typical async message protocol particularly used for IoT. 
 To subscribe to all topics, you may have to use a **wildcard**...  
 We have provided a MQTT client, you might find the useful doc here: [https://github.com/mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js)
 
-### Step 2 - Decoding a Join Request
+## Step 2 - Decoding a Join Request
 
 Now that you are receiving all the messages of all the gateways, you start noticing that there are multiple types of messages and structures.
 Some of them are encrypted, some other are not.  
@@ -89,7 +89,7 @@ The PhyPayload binary protocol stores information in... Little-Endian... [https:
 To make your life easier, we have implemented a sequence of tests to validate this.  
 Just run `npm test` and it should give you a head start
 
-### Step 3 - Activating the device
+## Step 3 - Activating the device
 Now that we know how to decode a Device JoinRequest, we need to implement the necessary steps to activation in the Gotham-IoT server.  
 
 The OTAA concept is very simple:  

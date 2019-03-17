@@ -1,7 +1,7 @@
 import constant
 import tempfile
 import shutil
-import os
+import subprocess
 from git import Repo
 
 tmpdir = tempfile.mkdtemp(suffix='player')
@@ -12,8 +12,7 @@ def init_with_resources():
     shutil.copytree("../../resources/boilerplate", repodir, ignore=shutil.ignore_patterns("node_modules"))
     shutil.copytree("../../resources/course", repodir + "/course")
 
-
-def commit_and_push_force():
+def commit_and_push_force_master():
     repo = Repo.init(repodir)
     origin = repo.create_remote('origin', constant.GIT_REPO)
     assert origin.exists()
@@ -21,11 +20,9 @@ def commit_and_push_force():
     repo.git.commit(message="Initial Commit")
     repo.git.push("-f", "origin", "master")
 
-
 def clone_from_remote():
     repo = Repo.clone_from(constant.GIT_REPO, repodir)
     assert repo.__class__ is Repo
-
 
 def deploy_solution(chapter, step):
     print("Copying solution from " + chapter + " / " + step)
@@ -34,3 +31,25 @@ def deploy_solution(chapter, step):
     repo.git.add("--all")
     repo.git.commit(message="Added solution for " + chapter + " - " + step)
     repo.git.push("origin", "master")
+
+def init_with_docs():
+    print("Building docs")
+    return_code = subprocess.call("cd ../../resources/docs && mkdocs build", shell=True)
+    if (return_code != 0):
+        exit(1)
+    print("Copying resources to " + repodir)
+    shutil.copytree("../../resources/docs/site", repodir)
+
+def commit_and_push_force_ghpages():
+    repo = Repo.init(repodir)
+    origin = repo.create_remote('origin', constant.GIT_REPO)
+    assert origin.exists()
+    repo.git.add("--all")
+    repo.git.commit(message="Initial Commit")
+    repo.git.push("-f", "origin", "master:gh-pages")
+
+def clear():
+    global tmpdir
+    global repodir
+    tmpdir = tempfile.mkdtemp(suffix='player')
+    repodir = tmpdir + "/repo"

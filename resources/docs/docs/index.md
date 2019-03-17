@@ -1,7 +1,5 @@
 # Save-LoRa
 
-## Game Briefing
-
 Let's make it quick.
 
 You were chilling in your geek cave, and something happened outside.  
@@ -24,11 +22,11 @@ Can you make your way through the LoRaWAN protocol, connect to a network, and em
 Well, let's hope the answer is yes, because your survival depends on it.
 
 
-## Hack Gotham City's LoRa Network
+**Hack Gotham City's LoRa Network**
 
 [Chapter one steps are available here](ch1-rescue-hacker.md)
 
 
-## Get around LoRa & send location
+**Get around LoRa & send location**
 
 [Chapter two steps are available here](ch2-geek-victim.md)

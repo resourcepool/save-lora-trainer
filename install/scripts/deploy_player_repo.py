@@ -3,4 +3,7 @@ from gh import playerrepo
 import os
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 playerrepo.init_with_resources()
-playerrepo.commit_and_push_force()
+playerrepo.commit_and_push_force_master()
+playerrepo.clear()
+playerrepo.init_with_docs()
+playerrepo.commit_and_push_force_ghpages()

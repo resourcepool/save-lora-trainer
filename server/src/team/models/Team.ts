@@ -18,7 +18,7 @@ export default class Team {
         devEUI: string,
         clientId: string,
         progress: string;
-        secretLocation: {lat: number, lng: number};
+        secretLocation: string;
     }): Team {
         let t = new Team();
         t.id = dto.id;
@@ -26,7 +26,7 @@ export default class Team {
         t.devEUI = dto.devEUI;
         t.clientId = dto.clientId;
         t.progress = JSON.parse(dto.progress);
-        t.secretLocation = dto.secretLocation;
+        t.secretLocation = JSON.parse(dto.secretLocation);
         return t;
     }
 }

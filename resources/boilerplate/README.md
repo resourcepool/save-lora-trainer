@@ -17,6 +17,6 @@ Before you start, please read the following lines carefully.
 
 ## Game guide
 
-The game step-by-step guide is available here: [https://resourcepool.github.io/save-lora](https://resourcepool.github.io/save-lora)
+The game step-by-step guide is available here: [https://resourcepool.github.io/save-lora/index.html](https://resourcepool.github.io/save-lora/index.html)
 
 That's it! See you soon!
