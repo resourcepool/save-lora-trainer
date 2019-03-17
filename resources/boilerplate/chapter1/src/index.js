@@ -63,6 +63,9 @@ let onMessage = async (topic, message) => {
     // Therefore we want to interact with the LoraServer API.
     // Thanks to your awesome Anonymous friend, you already have a async-client available in api/api.js
     if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
+
+      //TODO ajouter des conseils sur les valeurs à utiliser
+
       // TODO Step 3.1: register your friend's device remotely.
     }
     if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
