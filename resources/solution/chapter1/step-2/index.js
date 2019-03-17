@@ -20,12 +20,6 @@ let client;
 
 let init = () => {
   reviewService.init();
-  // TODO Step 1: Connect to the city's remote MQTT Broker
-  // Using the provided MQTT client, connect to the remote MQTT broker (cf README.md)
-  // Don't forget to manually set your clientId, otherwise your step wont be validated!
-  // Those idiots forgot to put any security on it... Noobs!
-  // MQTT Client documentation => https://github.com/mqttjs/MQTT.js
-  // You want to listen to all incoming messages... Did I hear the word "Wildcard"?
   client = mqtt.connect(conf.mqtt.host, {username: conf.mqtt.username, password: conf.mqtt.password, clientId: conf.user.clientId});
   client.on('connect', () => {
     client.subscribe('#', (err) => {
@@ -35,7 +29,6 @@ let init = () => {
     });
   });
   client.on("message", onMessage);
-
 };
 
 /**
@@ -47,11 +40,7 @@ let onMessage = async (topic, message) => {
   if (!gatewayRxTopicRegex.test(topic)) {
     return;
   }
-  // TODO Step 2:
-  // We are only interested in the join request packets.
-  // Problem is: those packets are encoded... Therefore we need to use a decoder.
-  // You need to implement the PacketDecoder code of course!
-  // How? RTFM => README.md
+
   let msgDecoder = new JoinRequestPacketDecoder(topic, message);
   if (!msgDecoder.isSupported()) {
     return;
@@ -71,20 +60,12 @@ let onMessage = async (topic, message) => {
     // (It's like a new computer trying to go join a nazily-secured enterprise network
     // and your sysadmin needs to whitelist your computer's mac address).
     // Therefore we want to interact with the LoraServer API.
-    // Thanks to your awesome friend John Doe, you already have a async-client available in api/api.js
+    // Thanks to your awesome Anonymous friend, you already have a async-client available in api/api.js
     if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
       // TODO Step 3.1: register your friend's device remotely.
-      await api.createDevice({
-        devEUI: decodedJoinRequest.devEUI,
-        applicationID: conf.loRaServer.loRaApplicationId,
-        deviceProfileID: conf.loRaServer.rak811DevProfileId,
-        name: conf.user.clientId,
-        description: '4242'
-      });
     }
     if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
       // TODO Step 3.2: set the device Network key (NwkKey).
-      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, utils.normalizeHexString(conf.user.nwkKey));
     }
     logger.debug("Device registered successfully");
   }

@@ -4,7 +4,7 @@
   "description": "MQTT client which monitors and registers LoRa devices in the Save Lora hack game",
   "scripts": {
     "start": "node ./src/index.js",
-    "test": "jest src"
+    "test": "./node_modules/jest/bin/jest.js src"
   },
   "author": "Resourcepool",
   "license": "Apache-2.0",

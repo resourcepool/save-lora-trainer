@@ -58,7 +58,7 @@ A JoinRequest contains:
 The good thing about JoinRequests is that they are **not** Encrypted.  
 That means we can easily decode them from the MQTT broker packets!  
 
-To understand how to spot a Join Request, you need to read the binary protocol used to encode the payload. You should read your LoRaWAN 101 course... [Here's a link if you don't have it](/course/lorawan-101-course.md).
+To understand how to spot a Join Request, you need to read the binary protocol used to encode the payload. You should read your LoRaWAN 101 course... [Here's a link if you don't have it](/resources/course/lorawan-101-course.md).
 
 **How to spot a JoinRequest:**  
   A join request can be recognized by the following:

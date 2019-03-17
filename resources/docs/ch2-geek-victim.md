@@ -20,7 +20,7 @@ OTAA requires three parameters :
  * an AppEUI (this one needs to be changed)
  * an AppKey (this one needs to be changed)
 
-All Modems are controlled using what we call AT Commands. Fortunately, you also had printed the [documentation of your LoRa Node device](/course/lora-node-guide.pdf)!
+All Modems are controlled using what we call AT Commands. Fortunately, you also had printed the [documentation of your LoRa Node device](/resources/course/lora-node-guide.pdf)!
 
 Remember what Trinity said in her text: She wants you to change all settings to "42".
 

@@ -4,7 +4,7 @@
  * @type {{}}
  */
 const CHANGEME = {
-  clientId: 'hacker-1234',
+  clientId: 'change-me',
   deviceEUI: '13:37:00:00:FF:FF:FF:FF'
 };
 
