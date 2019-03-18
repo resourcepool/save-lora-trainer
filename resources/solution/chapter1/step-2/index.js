@@ -1,4 +1,4 @@
-const api = require('./api/api');
+onst api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
 const conf = require('./conf');
