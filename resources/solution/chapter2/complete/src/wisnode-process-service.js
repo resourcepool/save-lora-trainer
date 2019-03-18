@@ -57,6 +57,10 @@ function processNextStep() {
     }
 }
 
+const debug = () => {
+    serialComService.debug();
+};
+
 const isJoinRequestAcceptResponse = (response) => {
     return response === "at+recv=3,0,0";
 };
@@ -75,5 +79,6 @@ const fireCustomCmd = (value) => {
 };
 module.exports = {
     initConnect,
-    fireCustomCmd
+    fireCustomCmd,
+    debug
 };
