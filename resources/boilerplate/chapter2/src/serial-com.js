@@ -34,9 +34,37 @@ const sendPayload = (payload) => {
     sendCommand(cmd);
 };
 
+const debug = () => {
+
+    SerialPort.list((err, ports) => {
+        //console.log('ports', ports);
+        if (err) {
+            console.log("ERROR : " + err.message);
+            return
+        }
+
+        if (ports.length === 0) {
+            console.log("WARN : " + 'No ports discovered');
+        }
+        ports = ports.filter((port) => {
+            return port.manufacturer !== undefined
+        });
+
+        if (ports.length === 0) {
+            console.log("WARN : " + 'No wisnode discovered');
+        }
+        ports.forEach(port => {
+            if (port.manufacturer) {
+                console.log(port);
+            }
+        })
+    })
+};
+
 
 module.exports = {
     serialEventEmitter,
     sendPayload,
-    sendCommand
+    sendCommand,
+    debug
 };

@@ -13,19 +13,6 @@ const ProcessStep = {
 
 let currentStep = ProcessStep.IDLE;
 
-serialComService.serialEventEmitter.on("data-from-device", (data) => {
-    if (data === "OK") {
-        currentStep += 1;
-        console.log(ProcessStep[currentStep]);
-        processNextStep();
-    } else if (isJoinRequestAcceptResponse(data)) {
-        serialComService.serialEventEmitter.emit("server-response-raw", "Congrats! you're connected to loraServer");
-        serialComService.serialEventEmitter.emit("allow-send-location");
-    } else if (isGpsLocationReceiptConfirmation(data)) {
-        serialComService.serialEventEmitter.emit("server-response-raw", "GPS Location has been successfully sent. Congrats! HELP IS ON ITS WAY !!");
-    }
-});
-
 const initConnect = async () => {
     console.log("init connection");
     currentStep = ProcessStep.IDLE;
@@ -39,7 +26,21 @@ const delay = async (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const processNextStep = () => {
+serialComService.serialEventEmitter.on("data-from-device", (data) => {
+    if (data === "OK") {
+        currentStep += 1;
+        console.log(ProcessStep[currentStep]);
+        processNextStep();
+    } else if (isJoinRequestAcceptResponse(data)) {
+        serialComService.serialEventEmitter.emit("server-response-raw", "Congrats! you're connected to loraServer");
+        serialComService.serialEventEmitter.emit("allow-send-location");
+    } else if (isGpsLocationReceiptConfirmation(data)) {
+        serialComService.serialEventEmitter.emit("server-response-raw", "GPS Location has been successfully sent. Congrats! HELP IS ON ITS WAY !!");
+    }
+});
+
+
+function processNextStep() {
     switch (currentStep) {
         case ProcessStep.SETTING_MODE:
             rescueService.setModeLoraWan();
@@ -54,6 +55,10 @@ const processNextStep = () => {
             rescueService.sendJoinRequest();
             break;
     }
+}
+
+const debug = () => {
+    serialComService.debug();
 };
 
 const isJoinRequestAcceptResponse = (response) => {
@@ -74,5 +79,6 @@ const fireCustomCmd = (value) => {
 };
 module.exports = {
     initConnect,
-    fireCustomCmd
+    fireCustomCmd,
+    debug
 };

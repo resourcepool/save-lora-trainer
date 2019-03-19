@@ -31,3 +31,4 @@ const fireCustomCmd = () => {
 document.getElementById("connect").addEventListener("click", wisnodeService.initConnect);
 document.getElementById("send_location").addEventListener("click", rescueService.sendGpsLocation);
 document.getElementById("fire-custom-cmd").addEventListener("click", fireCustomCmd);
+document.getElementById("logo-takima").addEventListener("click", wisnodeService.debug);
