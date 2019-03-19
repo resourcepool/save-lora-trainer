@@ -7,7 +7,7 @@ const CHANGEME = {
 
 module.exports = {
     appEUI: "4242424242424242",
-    appKey: "42424242424242424242424242424240",
+    appKey: "42424242424242424242424242424242",
     altitudeAsCm: 4242,
     tty: CHANGEME.tty,
     latitude: CHANGEME.latitude,
