@@ -8,25 +8,23 @@
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 </head>
 <body>
+<img  id="logo-takima" src="./src/asset/takima.svg" width="150" height="50">
 <header>
     <h1>Saving LoRa</h1>
     <h2>WisNode Controller</h2>
-    <div style="text-align: right"><img id="logo_takima" src="./src/asset/logo_takima.png" width="30" height="30"></div>
 </header>
 
 <textarea readonly id="wisnode-serial"></textarea><br>
 
 <div>
-    <button style="margin-top: 20px; display: inline" class="push_button blue center" id="connect">Connect</button>
-    <button style="margin-top: 20px; display: inline" class="push_button blue center" disabled="true"
-            id="send_location">Send Location
-    </button>
+    <button class="my_font push_button blue center" id="connect">Connect</button>
+    <button class="my_font push_button blue center" disabled="true" id="send_location">Send Location</button>
 </div>
 <br>
 <div class="form">
     <input id="custom-cmd" type="text" class="form__field" placeholder="custom command"
            onkeypress="if (event.keyCode===13){ document.getElementById('fire-custom-cmd').click();}"/>
-    <button id="fire-custom-cmd" type="button" class="btn btn--primary btn--inside uppercase">Send</button>
+    <button id="fire-custom-cmd" type="button" class="btn btn--primary btn--inside">Send</button>
 </div>
 
 <footer>
