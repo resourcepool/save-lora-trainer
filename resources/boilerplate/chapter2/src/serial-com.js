@@ -12,6 +12,13 @@ parser.on("data", processReturnFromDevice);
 
 const serialEventEmitter = new EventEmitter();
 
+port.on('error', function(err) {
+    serialEventEmitter.emit("cmd-sent", err.message);
+    serialEventEmitter.emit("cmd-sent",  "check if your wisnode is connected to the computer, and check configurated port (currently : " + conf.tty + ").");
+    serialEventEmitter.emit("cmd-sent",  "in case of emergency, open the console, and use takima...");
+    console.log('Error: ', err.message)
+});
+
 function processReturnFromDevice(data) {
     if (data === "Welcome to RAK811") {
         serialEventEmitter.emit("reset");

@@ -2,7 +2,6 @@ const EventEmitter = require("events");
 const SerialPort = require("serialport");
 const conf = require("./conf");
 
-
 const Readline = SerialPort.parsers.Readline;
 const parser = new Readline({delimiter: "\r\n"});
 const port = new SerialPort(conf.tty, {baudRate: 115200});
@@ -12,6 +11,13 @@ port.pipe(parser);
 parser.on("data", processReturnFromDevice);
 
 const serialEventEmitter = new EventEmitter();
+
+port.on('error', function(err) {
+    serialEventEmitter.emit("cmd-sent", err.message);
+    serialEventEmitter.emit("cmd-sent",  "check if your wisnode is connected to the computer, and check configurated port (currently : " + conf.tty + ").");
+    serialEventEmitter.emit("cmd-sent",  "in case of emergency, open the console, and use takima...");
+    console.log('Error: ', err.message)
+});
 
 function processReturnFromDevice(data) {
     if (data === "Welcome to RAK811") {
