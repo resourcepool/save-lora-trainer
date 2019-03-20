@@ -10,7 +10,6 @@ import {
     HACKER_STEP_CREATE_DEVICE,
     HACKER_STEP_SET_DEVICE_NWK_KEY,
     GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
-    GEEK_IN_DANGER_STEP_PING_MESSAGE_SENT,
     GEEK_IN_DANGER_STEP_GPS_LOCATION_SENT
 } from "./models/Progress";
 
@@ -28,10 +27,6 @@ const validateStep = async (team: Team, tag: string): Promise<boolean> => {
 
 export const validateJoinRequestSent = async (team: Team): Promise<boolean> => {
     return await validateStep(team, GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT);
-};
-
-export const validatePingMessageSent = async (team: Team): Promise<boolean> => {
-    return await validateStep(team, GEEK_IN_DANGER_STEP_PING_MESSAGE_SENT);
 };
 
 export const validateGpsLocationReceived = async (team: Team): Promise<boolean> => {

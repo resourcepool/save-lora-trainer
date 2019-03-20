@@ -11,6 +11,8 @@ import axios from 'axios';
 import {RegisteredDevices} from "./models/RegisteredDevices";
 import {DeviceKeys} from "./models/DeviceKeys";
 import {DeviceDescriptor} from "./models/DeviceDescriptor";
+import {ApplicationDescriptor} from "./models/ApplicationDescriptor";
+
 
 const authHeader = "Grpc-Metadata-Authorization";
 const logger = Logger.child({service: 'api'});
@@ -119,3 +121,58 @@ export const getKeys = async (devEUI: string): Promise<DeviceKeys|null> => {
         return null;
     }
 };
+
+
+/**
+ * @param app: {
+ *    description: {string},
+ *    id: {string},
+ *    name: {string},
+ *    organizationID: {string},
+ *    payloadCodec: {string},
+ *    payloadDecoderScript: {string},
+ *    payloadEncoderScript: {string},
+ *    serviceProfileID: {string}
+ *  }
+ * @returns {Promise<*>}
+ */
+export const createApplication = async (app: ApplicationDescriptor): Promise<any> => {
+    try {
+        const response = await client.post<any>(`/applications`, {application: app});
+        logger.debug("Response received", response.data);
+        return response.data;
+    } catch (e) {
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
+    }
+};
+
+
+
+/**
+ * @param applicationId: {string}
+ *
+ * @returns {Promise<*>}
+ */
+export const deleteApplication = async (applicationId: string): Promise<any> => {
+    try {
+        const response = await client.delete(`/applications/${applicationId}`);
+        logger.debug("Response received", response.data);
+        return response.data;
+    } catch (e) {
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
+    }
+};
+
+export const deleteDevice = async (d: DeviceDescriptor): Promise<any> => {
+    try {
+        const response = await client.delete(`/devices/${d.devEUI}`);
+        logger.debug("Response received", response.data);
+        return response.data;
+    } catch (e) {
+        logger.error("Error occured during call to http api ", e.response.data);
+        return null;
+    }
+}
+

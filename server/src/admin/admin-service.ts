@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const teamDao = require('../team/team-dao');
 const gameDao = require('../game/game-dao');
 const challengeDao = require('../challenge/challenge-dao');
+const appServerService = require('../appserver/appserver-service');
 
 export const authenticate = (username: string, password: string) => {
     if (config.admin.username === username && config.admin.password === password) {
@@ -15,4 +16,5 @@ export const resetGame = async () => {
     await teamDao.deleteAll();
     await challengeDao.deleteAll();
     await gameDao.deleteAll();
+    await appServerService.resetApplication();
 };

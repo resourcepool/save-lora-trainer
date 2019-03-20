@@ -23,7 +23,9 @@ export const config = {
         baseUrl: "https://loraas.save-lora.takima.io/api",
         authToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjAsImV4cCI6MjE0NzQ4MzY0Nywic3ViIjoidXNlciIsInVzZXJuYW1lIjoicm9vdCJ9.8zglscHAcCa_pZw-0k1sP0vn_FcwnshbTzWBfaaGjCM",
         rak811DevProfileId: "1d99a006-e617-4fb3-9ffe-a71567ee36a7",
-        loRaApplicationId: 1,
+        loRaServiceProfileId: "790bb798-d88c-45bd-9e97-0811b57e7bd0",
+        loRaOrganizationId: "1",
+        loRaApplicationId: "1",
         targetNwkKey: "42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42"
     },
     // Mock device config

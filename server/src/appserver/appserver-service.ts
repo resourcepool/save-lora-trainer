@@ -1,13 +1,14 @@
 import Logger from '../log/logger';
-import Timeout = NodeJS.Timeout;
 import * as appServerClient from './lora-appserver-client';
 import * as progressService from '../progress/progress-service';
 import * as teamDao from "../team/team-dao";
-const pg = require('../progress/models/Progress');
 import Team from "../team/models/Team";
 import {DeviceDescriptor} from "./models/DeviceDescriptor";
 import {config} from "../config";
 import {normalizeHexString} from "../utils";
+import Timeout = NodeJS.Timeout;
+
+const pg = require('../progress/models/Progress');
 const logger = Logger.child({service: 'appserver-service'});
 
 
@@ -46,8 +47,6 @@ const checkDevices = async () => {
     }
 };
 
-
-
 const updateDeviceProgress = async (team: Team, d: DeviceDescriptor): Promise<boolean> => {
     if (!team.progress.hackerSteps!.find(step => step.tag === pg.HACKER_STEP_CREATE_DEVICE)!.validated) {
         let success = await progressService.validateDeviceCreated(team);
@@ -65,6 +64,20 @@ const updateDeviceProgress = async (team: Team, d: DeviceDescriptor): Promise<bo
         let success = await progressService.validateDeviceNwkKeySet(team);
         if (!success) {
             logger.warn(`Failed to update progress for team: ${team.name}`);
+            return false;
+        }
+    }
+    return true;
+};
+
+export const resetApplication = async (): Promise<boolean> => {
+    let devices = await appServerClient.getRegisteredDevices();
+    if (!devices || !devices.result || devices.result.length === 0) {
+        return true;
+    }
+    for (let d of devices.result!) {
+        let success = await appServerClient.deleteDevice(d);
+        if (!success) {
             return false;
         }
     }

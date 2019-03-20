@@ -37,4 +37,7 @@ def setup(groupvars):
     groupvars.append("loraserver_api_jwt: \"" + loraserverjwt + "\"")
     groupvars.append("loraserver_jwt_user: \"" + constant.LORASERVER_JWT_USER + "\"")
     groupvars.append("loraserver_device_profile_id: \"" + constant.LORASERVER_DEVICE_PROFILE_ID + "\"")
-    groupvars.append("loraserver_application_id: " + constant.LORASERVER_APPLICATION_ID)
+    groupvars.append("loraserver_application_id: \"" + constant.LORASERVER_APPLICATION_ID + "\"")
+    groupvars.append("loraserver_organization_id: \"" + constant.LORASERVER_ORGANIZATION_ID + "\"")
+    groupvars.append("loraserver_service_profile_id: \"" + constant.LORASERVER_SERVICE_PROFILE_ID + "\"")
+

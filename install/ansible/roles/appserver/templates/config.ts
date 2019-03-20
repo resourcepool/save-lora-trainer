@@ -24,6 +24,8 @@ export const config = {
         authToken: "{{ loraserver_api_jwt }}",
         rak811DevProfileId: "{{ loraserver_device_profile_id }}",
         loRaApplicationId: "{{ loraserver_application_id }}",
+        loRaServiceProfileId: "{{ loraserver_service_profile_id }}",
+        loRaOrganizationId: "{{ loraserver_organization_id }}",
         targetNwkKey: "42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42"
     },
     // Mock device config
