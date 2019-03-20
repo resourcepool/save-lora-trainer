@@ -1,4 +1,4 @@
-import {setDateAction} from "../services/dates/date-controller";
+import {setDateAction, resetDateAction} from "../services/dates/date-controller";
 import {authAdminJwtHandler} from "../middleware/checks";
 import {resetAction} from "../services/admin/admin-controller";
 
@@ -9,6 +9,14 @@ export default [
     handler: [
       authAdminJwtHandler,
       setDateAction,
+    ]
+  },
+  {
+    path: "/api/admin/game/date/reset",
+    method: "post",
+    handler: [
+      authAdminJwtHandler,
+      resetDateAction,
     ]
   },
   {
