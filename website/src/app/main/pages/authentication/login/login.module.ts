@@ -5,7 +5,7 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../../../../shared/shared.module';
 
 const routes = [
     {
@@ -27,8 +27,8 @@ const routes = [
         MatInputModule,
         MatProgressSpinnerModule,
 
-        TranslateModule,
-        FuseSharedModule
+        FuseSharedModule,
+        SharedModule,
     ]
 })
 export class LoginModule

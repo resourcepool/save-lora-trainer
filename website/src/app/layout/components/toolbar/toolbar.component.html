@@ -12,16 +12,24 @@
             <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
 
             <div fxLayout="row" fxLayoutAlign="start center">
-                <a href="/">
-                    <div class="logo ml-16">
-                        <img class="logo-icon" src="assets/images/logos/takima.svg">
-                    </div>
-                </a>
+                <div class="logo ml-16" [routerLink]="'/dashboard'">
+                    <img class="logo-icon" src="assets/images/logos/takima.svg">
+                </div>
             </div>
 
         </div>
 
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
+            <div class="toolbar-separator"></div>
+
+            <button mat-button fxHide fxShow.gt-xs
+                    class="language-button"
+                    [routerLink]="'/register'">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <span class="iso text-capitalize">{{ 'team.register'| translate }}</span>
+                </div>
+            </button>
+
             <div class="toolbar-separator"></div>
 
             <button mat-button fxHide fxShow.gt-xs

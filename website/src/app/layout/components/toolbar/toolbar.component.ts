@@ -4,12 +4,16 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
+import {locale as english} from '../../i18n/en';
+import {locale as french} from '../../i18n/fr';
+
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'app/_services/authentication/authentication.service';
+import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 
 @Component({
     selector     : 'toolbar',
@@ -34,6 +38,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
+     * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {TranslateService} _translateService
@@ -41,6 +46,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      * @param {AuthenticationService} _authenticationService
      */
     constructor(
+        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private _translateService: TranslateService,
@@ -62,6 +68,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         ];
 
         this.navigation = navigation;
+        this._fuseTranslationLoaderService.loadTranslations(english, french);
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();

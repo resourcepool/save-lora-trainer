@@ -5,7 +5,6 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { RegisterComponent } from 'app/main/pages/authentication/register/register.component';
-import { TranslateModule } from '@ngx-translate/core';
 
 const routes = [
     {
@@ -20,12 +19,9 @@ const routes = [
     ],
     imports     : [
         RouterModule.forChild(routes),
+        FuseSharedModule,
 
         SharedModule,
-
-        TranslateModule,
-
-        FuseSharedModule,
     ]
 })
 export class RegisterModule
