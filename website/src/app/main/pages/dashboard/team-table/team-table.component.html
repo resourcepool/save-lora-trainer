@@ -56,7 +56,7 @@
       </div>
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <span class="score">{{ element.score }}</span>
+      <span class="score">{{ element.score | number:'1.0-0':'fr' }}</span>
     </mat-cell>
   </ng-container>
 
