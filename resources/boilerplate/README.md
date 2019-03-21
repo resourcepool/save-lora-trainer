@@ -2,7 +2,7 @@
 
 Welcome to the handson workshop **Save-LoRa**.
 
-Before you start, please read the following lines carefully.
+Before you get to the workshop, please follow the following guidelines.
 
 ## Requirements
  * Compatible with Windows 8+ / Mac OSX / Linux
@@ -17,6 +17,7 @@ Before you start, please read the following lines carefully.
 
 ## Game guide
 
-The game step-by-step guide is available here: [https://resourcepool.github.io/save-lora/index.html](https://resourcepool.github.io/save-lora/index.html)
+The game step-by-step guide will be available here as soon as the game starts:  
+[https://resourcepool.github.io/save-lora/index.html](https://resourcepool.github.io/save-lora/index.html)
 
 That's it! See you soon!

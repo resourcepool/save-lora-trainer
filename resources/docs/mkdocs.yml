@@ -4,3 +4,5 @@ nav:
   - Chapter 1: ch1-rescue-hacker.md
   - Chapter 2: ch2-geek-victim.md
   - About: about.md
+theme:
+  name: 'material'

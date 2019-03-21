@@ -11,6 +11,15 @@ This game requires :
  * One Github repository for players
  * RAK811 Wisnode LoRa Nodes (as much as you have players)
 
+
+## Software requirements
+ * python3
+ * ansible
+ * node 8+
+ * mkdocs
+ * mkdocs-material theme
+ 
+
 ## Deploy
 
 To deploy the game :
