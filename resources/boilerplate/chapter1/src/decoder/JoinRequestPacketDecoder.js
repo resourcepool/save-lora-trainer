@@ -31,9 +31,10 @@ class JoinRequestPacketDecoder {
    * @returns {{mic: {string}, appEUI: {string}, devNOnce: {number}, devEUI: {string}}}
    * Example:
    * {
-   *   mic: [25, 31, 12, 39],
-   *   appEui: [66, 66, 66, 66, 66, 66, 66, 66], <=> 42:42:42:42:42:42:42:42
-   *   devEui: [0D, 25, 00, 00, AC, 1F, C2, 0A] <=> 13:37:00:00:
+   *   mic: '25311239',
+   *   appEui: '12fa34c542ab4782'
+   *   devEui: 'ac133246f17c04b2'
+   *   devNonce: 1
    * }
    */
   decode() {
