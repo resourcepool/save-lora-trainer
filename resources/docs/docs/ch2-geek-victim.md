@@ -5,10 +5,11 @@
 Alright John. Focus.  
 You have just a few % of battery left.
   
-The LoRa node you found is used for something else, you will have to connect it to your computer, connect it to a remote LoRa Network, and send your location.  
-That's it. It's THAT simple!
+The LoRa device you found was probably used for something else than sending your location. 
+Connect it to your computer, input the correct settings to join the remote LoRa Network, and send your location.  
+That's it. It's **THAT** simple!
  
-## Step 1 - setup your LoRa Device
+## Step 1 - Setup your LoRa Device
 
 Years ago, when you were still a student, you built a cool Location sending app along with a Serial terminal.
 Let's reuse this as a codebase. 
@@ -16,7 +17,7 @@ Let's reuse this as a codebase.
 You will use OTAA (Over-The-Air Activation) and therefore must set a certain number of parameters inside your device.
 
 OTAA requires three parameters :
- * a DevEUI (this one does not need to be changed)
+ * a DevEUI (this one does **not** need to be changed)
  * an AppEUI (this one needs to be changed)
  * an AppKey (this one needs to be changed)
 

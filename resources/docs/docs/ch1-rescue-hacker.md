@@ -35,20 +35,24 @@ Your mission, if you accept it, will be to **tap into** the **MQTT broker** and 
  * **Step 2**: decode a join-request
  * **Step 3**: if the join-request has the right identifier (that only you and your friends know), make it join the network. 
 
-A template has been provided, you are supposed to implement functions containing a `//TODO`.  
- The package `noedit` is used internally and... not meant to be edited.  
+**Guidelines :**  
+We provided you with boilerplate code, you are supposed to implement all functions which contain a `//TODO`.  
+The package `noedit` is used internally and... not meant to be edited.  
 The file `api.js` is a helper which you can read and use. You should not edit its content.
 
 ## Step 1 - Connecting to the Broker
-The MQTT broker is exposed on a public URL, and you have found managed to get an access to it after hacking the email account of the sysadmin. All the credentials are in the conf.js file.  
-MQTT is a typical async message protocol particularly used for IoT. 
+The MQTT broker is exposed on a public URL, and you have managed to get an access to it after hacking the email account of the sysadmin. All the credentials are in the conf.js file.  
+MQTT is a typical messaging protocol particularly used for IoT. 
 To subscribe to all topics, you may have to use a **wildcard**...  
-We have provided a MQTT client, you might find the useful doc here: [https://github.com/mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js)
+We have provided a MQTT client, take a look at their official doc here: [https://github.com/mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js)
+
+ 1. Connect to the MQTT Broker
+ 2. Subscribe to all topics
 
 ## Step 2 - Decoding a Join Request
 
 Now that you are receiving all the messages of all the gateways, you start noticing that there are multiple types of messages and structures.
-Some of them are encrypted, some other are not.  
+Some of them are encrypted, some others are not.  
 Before they can start sharing data on a Network, the devices follow an activation process called OTAA (Over-The-Air Activation).  
 We will look into the process later. For now the only thing you need to know is the following:  
 
@@ -85,9 +89,12 @@ The Manufacturer's DevEUI (<=> MAC Address) all start with **13:37:00:00**:XX:XX
 Hint 3:  
 The PhyPayload binary protocol stores information in... Little-Endian... [https://en.wikipedia.org/wiki/Endianness](https://en.wikipedia.org/wiki/Endianness) 
 
+ 1. Implement the `JoinRequestPacketDecoder.isSupported()` method
+ 2. Implement the `JoinRequestPacketDecoder.decode()` method
+ 
 **Tests:**
-To make your life easier, we have implemented a sequence of tests to validate this.  
-Just run `npm test` and it should give you a head start
+To make your life easier, we have implemented a sequence of tests to validate these steps.  
+Just run `npm test` and it should give you a good way to see whether your implementation is right or not
 
 ## Step 3 - Activating the device
 Now that we know how to decode a Device JoinRequest, we need to implement the necessary steps to activation in the Gotham-IoT server.  
@@ -104,6 +111,6 @@ You can find more info on it here: [http://www.techplayon.com/lora-device-activa
 Your friend John Doe has already created a client allowing you to authenticate and communicate with the Gotham-IoT Server.
  
 Here is what you need to do:
- * Take the decoded packet and use DevEUI and AppEUI to check if device exists in App.
- * If device does not exist, create it
- * Change the Device NwkKey to `42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42`
+ 1. Take the decoded packet and use DevEUI and AppEUI to check if device exists in App.
+ 2. If device does not exist, create it
+ 3. Change the Device NwkKey to `42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42`

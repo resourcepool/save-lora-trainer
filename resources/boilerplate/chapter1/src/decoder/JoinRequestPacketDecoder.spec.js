@@ -34,6 +34,7 @@ const randomValidKey = () => {
 afterEach(() => {
   jest.resetModules();
 });
+
 const wrongMhdrMessage = { "rxInfo": { "mac": "abcdef0123456789", "time": "2019-02-05T11:04:36.410Z", "timeSinceGPSEpoch": "342612h4m36.410s", "timestamp": 1549364676, "frequency": 867300000, "channel": 0, "rfChain": 0, "crcStatus": 1, "codeRate": "5/5", "rssi": -102, "loRaSNR": -19, "size": 25, "dataRate": { "modulation": "LORA", "spreadFactor": 12, "bandwidth": 125 }, "board": 0, "antenna": 0 }, "phyPayload": "AUJCQkJCQkJCAP///wAANxMBAOZkdIg=" };
 const validMessage = { "rxInfo": { "mac": "c5d162329d12fb5c", "time": "2019-02-05T11:04:36.394Z", "timeSinceGPSEpoch": "342612h4m36.394s", "timestamp": 1549364676, "frequency": 867300000, "channel": 0, "rfChain": 0, "crcStatus": 1, "codeRate": "5/5", "rssi": -92, "loRaSNR": -19, "size": 25, "dataRate": { "modulation": "LORA", "spreadFactor": 12, "bandwidth": 125 }, "board": 0, "antenna": 0 }, "phyPayload": "AEvKMb6JWFv321eME8sz8kQBANapY24=" };
 const validMessageDevEUI = "44:f2:33:cb:13:8c:57:db";
@@ -46,6 +47,7 @@ const validMessage2Mic = '5ba54489';
 afterEach(() => {
   jest.resetModules();
 });
+
 test('join request invalid topic', () => {
   // Prepare conditions for the first test
   let d = new JoinRequestPacketDecoder_1.default(invalidTopic, Buffer.alloc(0));
@@ -53,17 +55,21 @@ test('join request invalid topic', () => {
   d = new JoinRequestPacketDecoder_1.default(invalidTopic2, Buffer.alloc(0));
   expect(d.isSupported()).toBeFalsy();
 });
+
 test('join request invalid payload', () => {
   // Prepare conditions for the first test
   let d = new JoinRequestPacketDecoder_1.default(validTopic, Buffer.alloc(0));
+  expect(d.isSupported()).toBeDefined();
   expect(d.isSupported()).toBeFalsy();
   d = new JoinRequestPacketDecoder_1.default(validTopic, Buffer.from("{}", 'utf8'));
+  expect(d.isSupported()).toBeDefined();
   expect(d.isSupported()).toBeFalsy();
   expect(() => new JoinRequestPacketDecoder_1.default(validTopic, Buffer.from(JSON.stringify({ phyPayload: true }), 'utf8'))).toThrow();
 });
 test('join request wrong mhdr', () => {
   // Prepare conditions for the first test
   let d = new JoinRequestPacketDecoder_1.default(validTopic, Buffer.from(JSON.stringify(wrongMhdrMessage), 'utf8'));
+  expect(d.isSupported()).toBeDefined();
   expect(d.isSupported()).toBeFalsy();
 });
 test('join request valid 1', () => {

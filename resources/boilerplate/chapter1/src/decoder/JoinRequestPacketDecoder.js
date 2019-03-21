@@ -1,7 +1,7 @@
 const utils = require('../utils');
 
 class JoinRequestPacketDecoder {
-  
+
   constructor(topic, msg) {
     this.topic = topic;
     try {
@@ -9,7 +9,7 @@ class JoinRequestPacketDecoder {
     } catch (e) {
       // Someone sent a weird payload. Not supposed to happen.
     }
-    
+
     if (this.msg && this.msg.phyPayload) {
       this.payload = Buffer.from(this.msg.phyPayload, 'base64');
     }
@@ -22,11 +22,11 @@ class JoinRequestPacketDecoder {
    */
   isSupported() {
     // TODO Step 2.1
-    //hint: be careful, you are scanning all mesages from MQTT Broker, some of them do not have a phyPayload. this.payload is then undefined.
+    // hint: be careful, you are scanning all messages from MQTT Broker, some of them do not have a phyPayload. this.payload is then undefined.
     // a message without payload is obviously not a joinRequest.
     return false;
   }
-  
+
   /**
    * @returns {{mic: {string}, appEUI: {string}, devNOnce: {number}, devEUI: {string}}}
    * Example:
