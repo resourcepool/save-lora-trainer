@@ -8,7 +8,7 @@ for port in serial.tools.list_ports.comports():
         try:
             print("Found " + port.device)
             ser = serial.Serial(port.device, 115200)  # open serial port
-            dev_eui = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(16))
+            dev_eui = '13370000' + ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(8))
             app_eui = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(16))
             app_key = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(32))
             print("Device EUI will be " + dev_eui)
@@ -22,3 +22,4 @@ for port in serial.tools.list_ports.comports():
             print("Initialized " + port.device)
         except:
             print("Cannot initialize " + port.device)
+
