@@ -5,6 +5,7 @@ export interface Team {
     clientId?: string;
     progress?: Progress;
     score?: number;
+    secretLocation?: Location;
 }
 
 export interface Progress {
@@ -16,4 +17,10 @@ export interface Step {
     validated: boolean;
     tag: string;
     timestamp?: number;
+}
+
+/** PRIVATE **/
+interface Location {
+    lat: number;
+    lng: number;
 }

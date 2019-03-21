@@ -17,7 +17,14 @@
 
         <!-- CONTENT -->
         <div class="content px-24 pt-8">
-            <team-table></team-table>
+            <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+                <mat-tab label="{{ 'leaderboard' | translate }}">
+                    <team-table></team-table>
+                </mat-tab>
+                <mat-tab label="{{ 'map' | translate }}">
+                    <team-map [resize]="displayMap"></team-map>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
     <!-- / CONTENT -->

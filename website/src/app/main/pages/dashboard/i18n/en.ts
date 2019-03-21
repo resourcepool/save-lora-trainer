@@ -1,6 +1,8 @@
 export const locale = {
     lang: 'en',
     data: {
-        'savinglora': 'Saving LoRa'
+        'savinglora': 'Saving LoRa',
+        'leaderboard': 'Leaderboard',
+        'map': 'Rescue Map',
     }
 };

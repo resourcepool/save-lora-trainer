@@ -30,7 +30,9 @@ export class TeamTableComponent implements OnInit, OnDestroy {
         )
         .subscribe(
         teams => {
+
           this.teams = this.scoringService.getLeaderboard(teams);
+          this.teamService.setTeamsProgress(teams);
         }
     );
 

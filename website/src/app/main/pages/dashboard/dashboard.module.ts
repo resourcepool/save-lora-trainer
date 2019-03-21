@@ -8,8 +8,16 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { DashboardComponent } from './dashboard.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { TeamTableComponent } from './team-table/team-table.component';
-import { MatIconModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTooltipModule } from '@angular/material';
+import {
+    MatIconModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule
+} from '@angular/material';
 import { TeamProgressComponent } from './team-table/team-progress/team-progress.component';
+import { TeamMapComponent } from './team-map/team-map.component';
 
 const routes = [
     {
@@ -23,6 +31,7 @@ const routes = [
         DashboardComponent,
         TeamTableComponent,
         TeamProgressComponent,
+        TeamMapComponent,
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -38,6 +47,7 @@ const routes = [
         MatTooltipModule,
         MatSortModule,
         MatSnackBarModule,
+        MatTabsModule,
     ],
     exports     : [
         DashboardComponent

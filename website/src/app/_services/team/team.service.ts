@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-import { Team } from '../../_models';
+import { Step, Team } from '../../_models';
 import { Observable } from 'rxjs';
 import { HttpConfigService } from '../http-config.service';
-import { catchError } from 'rxjs/operators';
+import { map, find } from 'lodash';
 
 @Injectable()
 export class TeamService {
+
+    private teamProgress: Team[] = [];
+
     constructor(private http: HttpClient,
                 private httpConfig: HttpConfigService) {
     }
@@ -30,13 +33,7 @@ export class TeamService {
     }
 
     register(team: Team): Observable<object> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + environment.apiJwt
-            })
-        };
-        return this.http.post(`${environment.apiUrl}/teams/add`, this.registerMapper(team), httpOptions);
+        return this.http.post(`${environment.apiUrl}/teams/add`, this.registerMapper(team), this.httpConfig.getHeaders());
     }
 
     update(team: Team): Observable<object> {
@@ -48,6 +45,18 @@ export class TeamService {
     }
 
     /** Utils **/
+    setTeamsProgress(teams: Team[]): void {
+        this.teamProgress = teams;
+    }
+
+    getTeamsLocation(): Team[] {
+        return map(this.teamProgress, team => {
+            const teamOK = find(team.progress.geekInDangerSteps || {}, (o: Step) => o.validated && o.tag === 'gpsLocationSent');
+            if (teamOK) {
+                return team;
+            }
+        });
+    }
 
     /** Mappers **/
     registerMapper(team: Team): object {

@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     timeElapsed: any;
     private _unsubscribeAll = new Subject();
+    displayMap = false;
 
     /**
      * Constructor
@@ -45,6 +46,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.timeElapsed = this.timeService.getTimeElapsed();
             });
+    }
+
+    handleTabChange($event) {
+        this.displayMap = $event.index === 1;
     }
 
     ngOnDestroy(): void {

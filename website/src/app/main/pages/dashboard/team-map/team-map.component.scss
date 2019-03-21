@@ -1,0 +1,9 @@
+.map {
+  width: 100%;
+  height: 600px;
+
+  .mapboxgl-popup-content {
+    text-transform: capitalize;
+    color: black !important;
+  }
+}
