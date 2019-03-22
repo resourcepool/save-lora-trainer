@@ -60,11 +60,11 @@ export class ScoringService {
 const scoringTable = {
     'brokerConnect': 1,
     'brokerSubscribe': 2,
-    'joinRequestSupported': 3,
-    'joinRequestDecode': 4,
-    'createDevice': 5,
-    'setDeviceNwkKey': 6,
-    'deviceSettingsSet': 7,
-    'joinRequestSent': 8,
-    'gpsLocationSent': 9,
+    'joinRequestSupported': 5,
+    'joinRequestDecode': 8,
+    'createDevice': 3,
+    'setDeviceNwkKey': 4,
+    'deviceSettingsSet': 5,
+    'joinRequestSent': 6,
+    'gpsLocationSent': 8,
 };
