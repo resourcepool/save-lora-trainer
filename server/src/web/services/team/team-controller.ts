@@ -3,11 +3,14 @@ import Team from '../../../team/models/Team';
 import { addTeam, findAll, findByClientId } from '../../../team/team-dao';
 import Progress from "../../../progress/models/Progress";
 import {config} from '../../../config';
+import { round } from 'lodash';
 
 const randomLocation = (): {lat: number, lng: number} => {
     let lngRange = config.team.targetBBox[2] - config.team.targetBBox[0];
     let latRange = config.team.targetBBox[3] - config.team.targetBBox[1];
-    return {lng: config.team.targetBBox[0] + (Math.floor(lngRange * Math.random() * 1000) / 1000), lat: config.team.targetBBox[1] + (Math.floor(latRange * Math.random() * 1000) / 1000)};
+    const calculatedLng = config.team.targetBBox[0] + (Math.floor(lngRange * Math.random() * 1000) / 1000);
+    const calculatedLat = config.team.targetBBox[1] + (Math.floor(latRange * Math.random() * 1000) / 1000);
+    return {lng: round(calculatedLng, 3), lat: round(calculatedLat, 3)};
 };
 
 export const getTeamPrototypeAction = async(req: Request, res: Response, next: NextFunction) => {
