@@ -8,8 +8,11 @@
                 <span class="mat-display-4 mb-0 welcome-message"
                       [@animate]="{value:'*',params:{x:'50px'}}">{{ 'savinglora' | translate }}
                 </span>
-                <span class="mat-display-3 mb-0">
+                <span *ngIf="timeElapsed" class="mat-display-3 mb-0">
                     {{ timeElapsed }}
+                </span>
+                <span *ngIf="!timeElapsed" class="mat-display-1 mb-0">
+                    {{'gamenotstarted' | translate}}
                 </span>
             </div>
         </div>

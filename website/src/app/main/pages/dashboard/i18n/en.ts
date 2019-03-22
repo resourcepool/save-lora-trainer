@@ -4,5 +4,6 @@ export const locale = {
         'savinglora': 'Saving LoRa',
         'leaderboard': 'Leaderboard',
         'map': 'Rescue Map',
+        'gamenotstarted': 'Game not started',
     }
 };
