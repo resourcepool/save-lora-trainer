@@ -2,24 +2,26 @@ const conf = require("../conf");
 const serialComService = require("../serial-com");
 
 const setModeLoraWan = () => {
+    console.debug("Setting LoRaWAN mode");
     serialComService.sendCommand("at+mode=0");
-    serialComService.serialEventEmitter.emit("cmd-sent", "set mode to 0");
+
 };
 const setAppEui = () => {
+    console.debug("Setting App EUI");
     const cmd = "at+set_config=app_eui:" + conf.appEUI;
     serialComService.sendCommand(cmd);
-    serialComService.serialEventEmitter.emit("cmd-sent", "set app_eui");
 };
 const setAppKey = () => {
+    console.debug("Setting App Key");
     const cmd = "at+set_config=app_key:" + conf.appKey;
     serialComService.sendCommand(cmd);
-    serialComService.serialEventEmitter.emit("cmd-sent", "set app_key");
 };
 const sendJoinRequest = () => {
+    console.debug("Setting Join Request");
     serialComService.sendCommand("at+join=otaa");
-    serialComService.serialEventEmitter.emit("cmd-sent", "initiate join request");
 };
 const sendGpsLocation = () => {
+    console.debug("Setting GPS Location");
     const gpsLocation = {
         latitude: conf.latitude,
         longitude:conf.longitude,

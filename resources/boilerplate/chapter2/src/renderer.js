@@ -6,17 +6,23 @@ const addLineToDisplay = (value) => {
     displayText.textContent += "\r\n" + value;
     displayText.scrollTop = displayText.scrollHeight;
 };
-const displayResponseRaw = (data) => {
-    addLineToDisplay("Raw Response : " + data);
-};
+
+serialComService.serialEventEmitter.on("write-console", (msg) => {
+    addLineToDisplay("[DEBUG] " + msg);
+});
+
+serialComService.serialEventEmitter.on("write-console-error", (msg) => {
+    addLineToDisplay("[ERROR] " + msg);
+});
+
 serialComService.serialEventEmitter.on("cmd-sent", (msg) => {
-    addLineToDisplay(msg);
+    addLineToDisplay("[TX] " + msg);
 });
 serialComService.serialEventEmitter.on("dev-response-raw", (data) => {
-    displayResponseRaw(data);
+    addLineToDisplay("[DEV] " + data);
 });
-serialComService.serialEventEmitter.on("server-response-raw", (data) => {
-    displayResponseRaw(data);
+serialComService.serialEventEmitter.on("rx", (data) => {
+    addLineToDisplay("[RX] " + data);
 });
 serialComService.serialEventEmitter.on("allow-send-location", () => {
     document.getElementById("send_location").disabled = false;
@@ -28,6 +34,36 @@ serialComService.serialEventEmitter.on("reset", () => {
 const fireCustomCmd = () => {
     wisnodeService.fireCustomCmd(document.getElementById("custom-cmd").value);
 };
+
+
+let usbConnected = false;
+
+
+const disconnectPort = async () => {
+    try {
+        await serialComService.destroy();
+    } catch (e) {
+        console.error(e);
+    }
+    document.getElementById("connect_port").innerText = "Connect USB";
+    document.getElementById("connect").disabled = true;
+};
+
+document.getElementById("connect_port").addEventListener("click", async () => {
+    usbConnected = !usbConnected;
+    if (usbConnected) {
+        try {
+            await serialComService.init();
+            document.getElementById("connect").disabled = false;
+        } catch (e) {
+            await disconnectPort();
+        }
+        document.getElementById("connect_port").innerText = "Disconnect USB";
+    } else {
+        disconnectPort();
+    }
+
+});
 document.getElementById("connect").addEventListener("click", wisnodeService.initConnect);
 document.getElementById("send_location").addEventListener("click", rescueService.sendGpsLocation);
 document.getElementById("fire-custom-cmd").addEventListener("click", fireCustomCmd);

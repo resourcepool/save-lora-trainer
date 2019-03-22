@@ -1,6 +1,6 @@
 // Here are all the params you need to change
 const CHANGEME = {
-    tty: "/dev/ttyUSB0",
+    tty: "/dev/tty.wchusbserial1420",
     latitude: 42.4242,
     longitude: -42.4242,
 };
