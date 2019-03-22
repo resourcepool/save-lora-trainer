@@ -26,7 +26,7 @@ export default class GpsLocationPacketDecoder {
      */
     isSupported(): boolean {
         // @ts-ignore
-        return (this.msg.object.gpsLocation[1]);
+        return (this.msg.object || {}).gpsLocation[1];
     }
 
     /**
