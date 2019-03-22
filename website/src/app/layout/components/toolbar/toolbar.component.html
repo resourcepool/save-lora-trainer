@@ -23,10 +23,20 @@
             <div class="toolbar-separator"></div>
 
             <button mat-button fxHide fxShow.gt-xs
+                    *ngIf="!alreadyHasTeam()"
                     class="language-button"
                     [routerLink]="'/register'">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <span class="iso text-capitalize">{{ 'team.register'| translate }}</span>
+                </div>
+            </button>
+
+            <button mat-button fxHide fxShow.gt-xs
+                    *ngIf="alreadyHasTeam()"
+                    class="language-button"
+                    [routerLink]="'/myteam'">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <span class="iso text-capitalize">{{ 'team.infos'| translate }}</span>
                 </div>
             </button>
 

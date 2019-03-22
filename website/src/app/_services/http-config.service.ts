@@ -20,7 +20,7 @@ export class HttpConfigService{
     }
 
     getAdminConfig(): HttpHeaders {
-        const accessToken = this._tokenService.getToken() || '';
+        const accessToken = this._tokenService.getToken('auth_token') || '';
         return new HttpHeaders({
             'Authorization': 'Bearer ' + accessToken
         });

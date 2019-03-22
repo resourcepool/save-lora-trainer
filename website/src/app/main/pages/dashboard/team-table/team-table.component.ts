@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { ScoringService, TeamService } from 'app/_services';
+import { ScoringService, TeamService, UserService } from 'app/_services';
 import { Team } from 'app/_models';
 import { catchError, mergeMap, takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
@@ -13,14 +13,17 @@ export class TeamTableComponent implements OnInit, OnDestroy {
 
   teams: Team[] = [];
   private _unsubscribeAll = new Subject();
+  private userClientId = '';
 
   constructor(private teamService: TeamService,
-              private scoringService: ScoringService) {
+              private scoringService: ScoringService,
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.generateLeaderboard();
     this.setInterval();
+    this.userClientId = this.userService.getClientId();
   }
 
   generateLeaderboard(): void {
@@ -30,7 +33,6 @@ export class TeamTableComponent implements OnInit, OnDestroy {
         )
         .subscribe(
         teams => {
-
           this.teams = this.scoringService.getLeaderboard(teams);
           this.teamService.setTeamsProgress(teams);
         }

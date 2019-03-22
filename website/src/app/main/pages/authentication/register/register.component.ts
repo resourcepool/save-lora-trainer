@@ -10,7 +10,7 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 import { locale as english } from '../i18n/en';
 import { locale as french } from '../i18n/fr';
 
-import { TitleService, TeamService } from '../../../../_services';
+import { TitleService, TeamService, UserService } from '../../../../_services';
 import { Router } from '@angular/router';
 import { replace, forEach, join } from 'lodash';
 
@@ -37,6 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private teamService: TeamService,
         private router: Router,
         private titleService: TitleService,
+        private userService: UserService,
     ) {
         this.translationLoader.loadTranslations(english, french);
 
@@ -53,6 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.titleService.setTitle('Register a team');
+        this.userService.hasTeam() && this.router.navigate(['/']);
         const devEUIPattern = '13:37:00:00(:[A-Fa-f0-9]{2}){4}';
 
         this.registerForm = this._formBuilder.group({
@@ -70,6 +72,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.onKeyBackspace();
             }
         });
+
 
     }
 
@@ -93,7 +96,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.teamService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
-                data => {
+                () => {
+                    this.userService.setTeam(this.registerForm.get('clientId').value);
                     this.router.navigate(['/']);
                 },
                 error => {

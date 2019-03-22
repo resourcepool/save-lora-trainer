@@ -6,8 +6,8 @@ export class TokenService {
     constructor() {
     }
 
-    getToken(): string {
-        return localStorage.getItem('auth_token');
+    getToken(token: string): string {
+        return localStorage.getItem(token);
     }
 
     setToken(key: string, value: string): void {

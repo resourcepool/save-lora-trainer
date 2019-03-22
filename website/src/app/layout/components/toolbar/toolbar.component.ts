@@ -14,6 +14,7 @@ import { navigation } from 'app/navigation/navigation';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'app/_services/authentication/authentication.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { UserService } from '../../../_services';
 
 @Component({
     selector     : 'toolbar',
@@ -52,6 +53,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
         private _router: Router,
         private _authenticationService: AuthenticationService,
+        private _userService: UserService,
     )
     {
         this.languages = [
@@ -139,5 +141,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this._authenticationService.logout();
         this._router.navigate(['/']);
         this.userLogged = false;
+    }
+
+    alreadyHasTeam() {
+        return this._userService.hasTeam();
     }
 }

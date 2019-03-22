@@ -36,7 +36,7 @@ export class AuthenticationService {
     }
 
     loggedIn(): boolean {
-        const token = this.tokenService.getToken();
+        const token = this.tokenService.getToken('auth_token');
         const helper = new JwtHelperService();
         return !helper.isTokenExpired(token);
     }
@@ -45,7 +45,7 @@ export class AuthenticationService {
         if (!this.loggedIn()) {
             return null;
         }
-        const token = this.tokenService.getToken();
+        const token = this.tokenService.getToken('auth_token');
         const helper = new JwtHelperService();
         return helper.decodeToken(token);
     }

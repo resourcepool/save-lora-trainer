@@ -1,0 +1,82 @@
+@import "src/@fuse/scss/fuse";
+
+:host {
+
+    #myteam {
+        width: 100%;
+        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
+        background-size: cover;
+
+        mat-spinner circle {
+            //stroke: mat-color(mat-palette($mat-indigo));
+            stroke: red;
+        }
+
+        #myteam-wrapper {
+            flex: 1 0 auto;
+            padding: 32px;
+
+            @include media-breakpoint('xs') {
+                padding: 16px;
+            }
+
+            #myteam-content {
+                width: 70%;
+                max-width: 700px;
+                padding: 32px;
+                background: rgba(20,20,20,0.7);
+                text-align: center;
+                @include mat-elevation(16);
+
+                @include media-breakpoint('xs') {
+                    padding: 10px;
+                    width: 100%;
+                }
+
+                .logo {
+                    width: 128px;
+                    margin: 32px auto;
+                }
+
+                .title {
+                    font-size: 20px;
+                    margin: 16px 0 32px 0;
+                }
+
+                .separator {
+                    font-size: 15px;
+                    font-weight: 600;
+                    margin: 24px auto;
+                    position: relative;
+                    overflow: hidden;
+                    width: 100px;
+                    color: rgba(0, 0, 0, 0.54);
+
+                    .text {
+                        display: inline-flex;
+                        position: relative;
+                        padding: 0 8px;
+                        z-index: 9999;
+
+                        &:before, &:after {
+                            content: '';
+                            display: block;
+                            width: 30px;
+                            position: absolute;
+                            top: 10px;
+                            border-top: 1px solid rgba(0, 0, 0, 0.12);
+                        }
+
+                        &:before {
+                            right: 100%;
+                        }
+
+                        &:after {
+                            left: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

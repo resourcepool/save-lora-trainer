@@ -11,6 +11,7 @@
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
       <span class="team-name">{{element.name}}</span>
+      <mat-icon class="star" *ngIf="element.clientId === userClientId">star</mat-icon>
     </mat-cell>
   </ng-container>
 

@@ -64,6 +64,7 @@ export class TeamMapComponent implements AfterViewInit, OnChanges {
 
     updateLocations() {
         const locations = this.teamService.getTeamsLocation();
+        console.log('LOC', locations);
         forEach(locations, (team: Team) => {
 
             const popup = new mapboxgl.Popup({closeOnClick: false, offset: [0, -40]})

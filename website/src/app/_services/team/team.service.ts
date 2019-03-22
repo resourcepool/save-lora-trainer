@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Step, Team } from '../../_models';
 import { Observable } from 'rxjs';
 import { HttpConfigService } from '../http-config.service';
-import { map, find } from 'lodash';
+import { filter, map, find } from 'lodash';
 
 @Injectable()
 export class TeamService {
@@ -28,8 +28,8 @@ export class TeamService {
         return this.http.get<Team[]>(`${environment.apiUrl}/teams/client/${clientId}/progress`, this.httpConfig.getHeaders());
     }
 
-    getById(id: number): Observable<Team> {
-        return this.http.get<Team>(`${environment.apiUrl}/teams/` + id, this.httpConfig.getHeaders());
+    getByClientId(clientId: string): Observable<Team> {
+        return this.http.get<Team>(`${environment.apiUrl}/teams/client/` + clientId, this.httpConfig.getHeaders());
     }
 
     register(team: Team): Observable<object> {
@@ -50,12 +50,13 @@ export class TeamService {
     }
 
     getTeamsLocation(): Team[] {
-        return map(this.teamProgress, team => {
-            const teamOK = find(team.progress.geekInDangerSteps || {}, (o: Step) => o.validated && o.tag === 'gpsLocationSent');
-            if (teamOK) {
-                return team;
-            }
+        return filter(this.teamProgress, team => {
+            return Boolean(find(team.progress.geekInDangerSteps || {}, (o: Step) => o.validated && o.tag === 'gpsLocationSent'));
         });
+    }
+
+    getLocalClientId() {
+        return map(this.teamProgress, 'clientId');
     }
 
     /** Mappers **/

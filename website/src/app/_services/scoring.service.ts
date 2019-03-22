@@ -66,5 +66,5 @@ const scoringTable = {
     'setDeviceNwkKey': 6,
     'deviceSettingsSet': 7,
     'joinRequestSent': 8,
-    'pingMessageSent': 9,
+    'gpsLocationSent': 9,
 };
