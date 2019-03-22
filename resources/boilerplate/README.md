@@ -8,7 +8,7 @@ Before you get to the workshop, please follow the following guidelines.
  * Compatible with Windows 8+ / Mac OSX / Linux
  * 1 USB Port available
  * Internet connection
- * Requires Node 8+
+ * Requires [Node 8+](https://nodejs.org/en/download/)
 
 ## Setup
  * Clone the current repository in your workspace
