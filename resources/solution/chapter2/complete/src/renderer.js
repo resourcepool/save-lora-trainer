@@ -44,9 +44,10 @@ const disconnectPort = async () => {
         await serialComService.destroy();
     } catch (e) {
         console.error(e);
+    } finally {
+        document.getElementById("connect_port").innerText = "Connect USB";
+        document.getElementById("connect").disabled = true;
     }
-    document.getElementById("connect_port").innerText = "Connect USB";
-    document.getElementById("connect").disabled = true;
 };
 
 document.getElementById("connect_port").addEventListener("click", async () => {
@@ -55,12 +56,12 @@ document.getElementById("connect_port").addEventListener("click", async () => {
         try {
             await serialComService.init();
             document.getElementById("connect").disabled = false;
+            document.getElementById("connect_port").innerText = "Disconnect USB";
         } catch (e) {
             await disconnectPort();
         }
-        document.getElementById("connect_port").innerText = "Disconnect USB";
     } else {
-        disconnectPort();
+        await disconnectPort();
     }
 
 });
