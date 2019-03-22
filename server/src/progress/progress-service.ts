@@ -20,6 +20,9 @@ const validateStep = async (team: Team, tag: string): Promise<boolean> => {
     if (!step){
         step = team.progress.geekInDangerSteps!.find(s => s.tag === tag)!;
     }
+    if (step.validated) {
+        return Promise.resolve(true);
+    }
     step.validated = true;
     step.timestamp = Date.now();
     return await teamDao.updateProgress(team);
