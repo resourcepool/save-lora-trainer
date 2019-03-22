@@ -22,10 +22,11 @@ let init = () => {
   reviewService.init();
   // TODO Step 1: Connect to the city's remote MQTT Broker
   // Using the provided MQTT client, connect to the remote MQTT broker (cf README.md)
-  // Don't forget to manually set your clientId, otherwise your step wont be validated!
   // Those idiots gave away their credentials so easily... Noobs!
   // MQTT Client documentation => https://github.com/mqttjs/MQTT.js
   // You want to listen to all incoming messages... Did I hear the word "Wildcard"?
+  
+  // Don't forget to manually set your clientId, otherwise your step wont be validated!
 };
 
 /**
