@@ -4,7 +4,7 @@
   "description": "MQTT client which monitors and registers LoRa devices in the Save Lora hack game",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node --inspect=4444 ./dist/index.js\"",
-    "start:dash": "tsc-watch --onSuccess \"node ./dist/web/server.js\"",
+    "start:prod": "tsc-watch --onSuccess \"node ./dist/index.js\"",
     "start:ts": "ts-node ./src/web/server.ts",
     "test": "jest"
   },

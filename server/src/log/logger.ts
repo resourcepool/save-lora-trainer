@@ -6,7 +6,7 @@ const logger = winston.createLogger({
 });
 
 logger.add(new winston.transports.Console({
-  level: 'debug',
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   format: winston.format.simple()
 }));
 
