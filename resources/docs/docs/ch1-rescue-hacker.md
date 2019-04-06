@@ -19,6 +19,9 @@ After looking around, you found
  * a restricted but insecure access to the Gotham-IoT server that manages all device-authorization / messaging of the network.
 
 
+## Before your start
+Change your configuration in **chapter1/src/conf.js** and **chapter2/src/conf.js** with the elements provided on team creation.
+
 ## Main Goal
 
 Your main goal is to allow your friend to send his Geo-Location via a LoRa packet.  
@@ -35,10 +38,14 @@ Your mission, if you accept it, will be to **tap into** the **MQTT broker** and 
  * **Step 2**: decode a join-request
  * **Step 3**: if the join-request has the right identifier (that only you and your friends know), make it join the network. 
 
-**Guidelines :**  
+**Guidelines:**  
 We provided you with boilerplate code, you are supposed to implement all functions which contain a `//TODO`.  
 The package `noedit` is used internally and... not meant to be edited.  
-The file `api.js` is a helper which you can read and use. You should not edit its content.
+The file `api.js` is a helper which you can read and use. You should not edit its content.  
+
+**Important:**  
+To **validate** your steps (and win points), your app needs to be **running**!
+Don't forget to run using **npm start**.
 
 ## Step 1 - Connecting to the Broker
 The MQTT broker is exposed on a public URL, and you have managed to get an access to it after hacking the email account of the sysadmin. All the credentials are in the conf.js file.  
@@ -49,6 +56,14 @@ We have provided a MQTT client, take a look at their official doc here: [https:/
  1. Connect to the MQTT Broker
  2. Subscribe to all topics
 
+**Important:** 
+Hint 1:  
+The modifications will be made in **chapter1/src/index.js**
+
+Hint 2:    
+To connect to the broker, don't forget to use all the parameters provided in conf.js: conf.mqtt.host, conf.mqtt.username, conf.mqtt.password, conf.mqtt.clientId
+
+
 ## Step 2 - Decoding a Join Request
 
 Now that you are receiving all the messages of all the gateways, you start noticing that there are multiple types of messages and structures.
@@ -58,48 +73,66 @@ We will look into the process later. For now the only thing you need to know is 
 
 When a device attempts to join a LoRaNetwork, it sends JoinRequests.  
 A JoinRequest contains:
+
  * its **unique ID** called Device EUI or DevEUI (<=> Mac Address)
  * a target **Application ID** (see it as a **Realm**)
  * other info (DevNOnce, MIC) that we won't worry about today...
-
+ 
 The good thing about JoinRequests is that they are **not** Encrypted.  
 That means we can easily decode them from the MQTT broker packets!  
 
 To understand how to spot a Join Request, you need to read the binary protocol used to encode the payload. You should read your LoRaWAN 101 course... [Here's a link if you don't have it](/resources/course/lorawan-101-course.md).
 
+The file you will need to modify is in **src/decoder/JoinRequestPacketDecoder.js**
+
+ 1. Implement the `JoinRequestPacketDecoder.isSupported()` method
+ 2. Implement the `JoinRequestPacketDecoder.decode()` method
+
+**Tests:**
+To make your life easier, we have implemented a sequence of tests to validate these two points.  
+Just run `npm test` and it should give you a good way to see whether your implementation of both methods is right or not.
+The test file is available in **src/decoder/JoinRequestPacketDecoder.spec.js** for reference.
+
+
+### Step 2.1 JoinRequestPacketDecoder.isSupported() ?
+
 **How to spot a JoinRequest:**  
   A join request can be recognized by the following:
- * the message has a field called "phyPayload" containing base64 encoded data 
- * the binary message of phyPayload has the following Mac Header (first byte of phyPayload): 0b00000000
+
+ * the message has a string field called "phyPayload" containing **base64 encoded data** 
+ * the binary message of phyPayload has the following Mac Header (first byte of phyPayload): **0b00000000**
+  
+### Step 2.2 JoinRequestPacketDecoder.decode() ?
   
 Now that you have found which Packets are JoinRequests, you need to extract its metadata from the binary buffer.
-
-Fill-out the **JoinRequestPacketDecoder** methods to do so.  
+  
 We are looking for the AppEUI, the DevEUI, the DevNOnce and the MIC.  
+
+Don't forget that we have already deserialized the base64 string payload into a byte buffer! 
+In the decode() method, **this.payload** refers to the ByteBuffer containing your payload.
 
 **Important:**  
 Hint 1:  
 Your friends know the **answer to life, the universe, and everything** (which is **42**, by the way!).  
-You can assume that the AppEUI will be 42:42:42:42:42:42:42:42  
+You can assume that the **AppEUI** will be **42:42:42:42:42:42:42:42**  
 
 Hint 2:  
 Your friends all bought the same LoRa Device which is from the manufacturer Unicorn Inc.  
 The Manufacturer's DevEUI (<=> MAC Address) all start with **13:37:00:00**:XX:XX:XX:XX
 
 Hint 3:  
-The PhyPayload binary protocol stores information in... Little-Endian... [https://en.wikipedia.org/wiki/Endianness](https://en.wikipedia.org/wiki/Endianness) 
+The PhyPayload binary protocol stores information in... Little-Endian... [https://en.wikipedia.org/wiki/Endianness](https://en.wikipedia.org/wiki/Endianness). Most payloads are **unsigned**. 
 
- 1. Implement the `JoinRequestPacketDecoder.isSupported()` method
- 2. Implement the `JoinRequestPacketDecoder.decode()` method
- 
-**Tests:**
-To make your life easier, we have implemented a sequence of tests to validate these steps.  
-Just run `npm test` and it should give you a good way to see whether your implementation is right or not
+Hint 4:  
+We highly advise you to take a look at the [Node Buffer documentation](https://nodejs.org/api/buffer.html).   
+It contains cool methods like **buffer.readInt8** or **buffer.readUInt8** for instance.
+
 
 ## Step 3 - Activating the device
 Now that we know how to decode a Device JoinRequest, we need to implement the necessary steps to activation in the Gotham-IoT server.  
 
-The OTAA concept is very simple:  
+The OTAA concept is very simple:
+
  * The device sends a JoinRequest containing its **unique ID** called Device EUI or DevEUI (<=> Mac Address), the **Application ID**, and other info (DevNOnce, MIC).
  * The Gotham-IoT server checks if the Application has registered the current Device.
  * If the device exists, it will send a JoinAccept response.
@@ -111,6 +144,7 @@ You can find more info on it here: [http://www.techplayon.com/lora-device-activa
 Your friend John Doe has already created a client allowing you to authenticate and communicate with the Gotham-IoT Server.
  
 Here is what you need to do:
+
  1. Take the decoded packet and use DevEUI and AppEUI to check if device exists in App.
  2. If device does not exist, create it
  3. Change the Device NwkKey to `42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42`

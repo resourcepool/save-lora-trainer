@@ -13,7 +13,8 @@ module.exports = {
 	mqtt: {
 		host: 'mqtts://broker.save-lora.takima.io:8883',
 		username: 'gotham',
-		password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$'
+		password: 'IAmTheGodOfGothamAndThisPasswordIsSeri0u$',
+    clientId: CHANGEME.clientId
 	},
   // END MQTT Client config
   // BEGIN SAVELORA Client config
@@ -32,6 +33,6 @@ module.exports = {
 	  appEUI: '42:42:42:42:42:42:42:42',
     mockAppEUI: '00:00:00:00:00:00:00:00',
     nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
-    ...CHANGEME
+    deviceEUI: CHANGEME.deviceEUI
 	}
 };

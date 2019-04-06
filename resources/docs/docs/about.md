@@ -19,5 +19,6 @@ We wanted through this workshop to reconnect you with this world.
 Takima has been supporting us and gave us company time to work on this project.
 They also provided support and coaching for the content itself and speaker-preparation.
 
+It is an awesome company, you should [look it up](https://www.takima.fr) and try to join us :)
  
 

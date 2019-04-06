@@ -20,7 +20,7 @@ let client;
 
 let init = () => {
   reviewService.init();
-  client = mqtt.connect(conf.mqtt.host, {username: conf.mqtt.username, password: conf.mqtt.password, clientId: conf.user.clientId});
+  client = mqtt.connect(conf.mqtt.host, {username: conf.mqtt.username, password: conf.mqtt.password, clientId: conf.mqtt.clientId});
   client.on('connect', () => {
     client.subscribe('#', (err) => {
       if (err) {

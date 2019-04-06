@@ -16,7 +16,8 @@ Let's reuse this as a codebase.
 
 You will use OTAA (Over-The-Air Activation) and therefore must set a certain number of parameters inside your device.
 
-OTAA requires three parameters :
+OTAA requires three parameters:
+
  * a DevEUI (this one does **not** need to be changed)
  * an AppEUI (this one needs to be changed)
  * an AppKey (this one needs to be changed)
@@ -25,7 +26,8 @@ All Modems are controlled using what we call AT Commands. Fortunately, you also 
 
 Remember what Trinity said in her text: She wants you to change all settings to "42".
 
-That means :
+That means:
+
  1. Set the LoRa Node Mode to LoRaWAN
  2. Set the AppEUI to "4242424242424242"
  3. Set the AppKey to "42424242424242424242424242424242"
