@@ -17,6 +17,7 @@ const deviceNetworkKey = utils.normalizeHexString(conf.user.nwkKey);
 
 const logger = Logger.child({service: 'index'});
 let client;
+let connectedToMqtt = false;
 
 let init = () => {
   reviewService.init();
@@ -96,3 +97,10 @@ let isRightDeviceEUI = (devEUI) => {
 };
 
 init();
+checkMqttConnection = setInterval(() => {
+  if (!connectedToMqtt) {
+    logger.info("seems you are still not connected to Mqtt Broker")
+  } else {
+    clearInterval(checkMqttConnection)
+  }
+}, 2000);
