@@ -45,7 +45,7 @@ class JoinRequestPacketDecoder {
       mic: null
     };
     // TODO Step 2.2
-    // Don't forget to look at the method utils#hexStringToBytes()
+    // Don't forget to look at the method utils#bytesToHexString()
     return request;
   }
 
