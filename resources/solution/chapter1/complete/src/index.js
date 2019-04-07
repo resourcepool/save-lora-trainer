@@ -18,20 +18,21 @@ const deviceNetworkKey = utils.normalizeHexString(conf.user.nwkKey);
 const logger = Logger.child({service: 'index'});
 let client;
 
-let connectedToMqtt = false;
-
 let init = () => {
-  reviewService.init();
-  client = mqtt.connect(conf.mqtt.host, {username: conf.mqtt.username, password: conf.mqtt.password, clientId: conf.mqtt.clientId});
-  client.on('connect', () => {
-    client.subscribe('#', (err) => {
-      if (err) {
-        process.exit(1);
-      }
+    reviewService.init();
+    client = mqtt.connect(conf.mqtt.host, {
+        username: conf.mqtt.username,
+        password: conf.mqtt.password,
+        clientId: conf.mqtt.clientId
     });
-  });
-  client.on("message", onMessage);
-
+    client.on('connect', () => {
+        client.subscribe('#', (err) => {
+            if (err) {
+                process.exit(1);
+            }
+        });
+    });
+    client.on("message", onMessage);
 };
 
 /**
@@ -40,37 +41,38 @@ let init = () => {
  * @param message
  */
 let onMessage = async (topic, message) => {
-  if (!gatewayRxTopicRegex.test(topic)) {
-    return;
-  }
-
-  let msgDecoder = new JoinRequestPacketDecoder(topic, message);
-  if (!msgDecoder.isSupported()) {
-    return;
-  }
-
-  logger.debug("Join Request identified");
-  let decodedJoinRequest = msgDecoder.decode();
-  logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
-
-  // Congratulations, you are decoding all the join requests of the LoRa network.
-  // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
-  if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
-    logger.debug("AppEUI and DevEUI are valid. Will register device");
-    if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
-      await api.createDevice({
-        devEUI: decodedJoinRequest.devEUI,
-        applicationID: conf.loRaServer.loRaApplicationId,
-        deviceProfileID: conf.loRaServer.rak811DevProfileId,
-        name: conf.user.clientId,
-        description: '4242'
-      });
+    connectedToMqtt = true;
+    if (!gatewayRxTopicRegex.test(topic)) {
+        return;
     }
-    if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
-      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
+
+    let msgDecoder = new JoinRequestPacketDecoder(topic, message);
+    if (!msgDecoder.isSupported()) {
+        return;
     }
-    logger.debug("Device registered successfully");
-  }
+
+    logger.debug("Join Request identified");
+    let decodedJoinRequest = msgDecoder.decode();
+    logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
+
+    // Congratulations, you are decoding all the join requests of the LoRa network.
+    // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
+    if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
+        logger.debug("AppEUI and DevEUI are valid. Will register device");
+        if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
+            await api.createDevice({
+                devEUI: decodedJoinRequest.devEUI,
+                applicationID: conf.loRaServer.loRaApplicationId,
+                deviceProfileID: conf.loRaServer.rak811DevProfileId,
+                name: conf.user.clientId,
+                description: '4242'
+            });
+        }
+        if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
+            await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
+        }
+        logger.debug("Device registered successfully");
+    }
 };
 
 /**
@@ -79,7 +81,7 @@ let onMessage = async (topic, message) => {
  * @returns {boolean}
  */
 let isValidAppEUI = (msgAppEUI) => {
-  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI) || utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validMockAppEUI);
+    return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI) || utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validMockAppEUI);
 };
 
 /**
@@ -89,14 +91,23 @@ let isValidAppEUI = (msgAppEUI) => {
  * @returns {boolean}
  */
 let isRightDeviceEUI = (devEUI) => {
-  return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, deviceEUI);
+    return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, deviceEUI);
 };
 
 init();
+
+let connectedToMqtt = false;
+let waiting = 0;
 checkMqttConnection = setInterval(() => {
-  if (!connectedToMqtt) {
-    logger.info("seems you are still not connected to Mqtt Broker")
-  } else {
-    clearInterval(checkMqttConnection)
-  }
-}, 2000);
+    if (!connectedToMqtt) {
+        if (waiting < 3) {
+            waiting++;
+            logger.info("waiting for messages from MQTT broker")
+        } else {
+            logger.warn("you should have received messages from MQTT broker by now, check how you connect to it")
+        }
+    } else {
+        logger.info("Congrats! you are successfully receiving messages from the MQTT Broker")
+        clearInterval(checkMqttConnection)
+    }
+}, 3000);
