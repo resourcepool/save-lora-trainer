@@ -35,5 +35,8 @@ module.exports = {
         nwkKey: '42:42:42:42:42:42:42:42:42:42:42:42:42:42:42:42',
         deviceEUI: CHANGEME.deviceEUI,
         clientId: CHANGEME.clientId
+    },
+    logger:{
+        level: 'info' // use 'verbose' for a better logging
     }
 };

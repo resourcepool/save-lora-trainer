@@ -1,7 +1,8 @@
 const winston = require('winston');
+const conf = require('../../conf');
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: conf.logger.level,
   format: winston.format.json()
 });
 

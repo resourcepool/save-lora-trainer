@@ -41,13 +41,17 @@ let init = () => {
  * @param message
  */
 let onMessage = async (topic, message) => {
-    connectedToMqtt = true;
+    if (!connectedToMqtt){
+        connectedToMqtt = true;
+        logger.log('info',"Congrats! you are successfully receiving messages from the MQTT Broker")
+    }
     if (!gatewayRxTopicRegex.test(topic)) {
         return;
     }
 
     let msgDecoder = new JoinRequestPacketDecoder(topic, message);
     if (!msgDecoder.isSupported()) {
+        logger.log('verbose', 'msg received is not a JoinRequest, according to your JoinRequestPacketDecoder#isSupported method ;)');
         return;
     }
 
@@ -58,7 +62,7 @@ let onMessage = async (topic, message) => {
     // Congratulations, you are decoding all the join requests of the LoRa network.
     // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
     if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
-        logger.debug("AppEUI and DevEUI are valid. Will register device");
+        logger.log('verbose',"AppEUI and DevEUI are valid. Will register device");
         if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
             await api.createDevice({
                 devEUI: decodedJoinRequest.devEUI,
@@ -71,7 +75,7 @@ let onMessage = async (topic, message) => {
         if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
             await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
         }
-        logger.debug("Device registered successfully");
+        logger.log('verbose',"Device registered successfully");
     }
 };
 
@@ -86,7 +90,6 @@ let isValidAppEUI = (msgAppEUI) => {
 
 /**
  * Check whether the DeviceEUI equals the team's device.
- * If you don't implement this right, you might give a head start to all your competitors!
  * @param devEUI string|Uint8Array
  * @returns {boolean}
  */
@@ -100,14 +103,13 @@ let connectedToMqtt = false;
 let waiting = 0;
 checkMqttConnection = setInterval(() => {
     if (!connectedToMqtt) {
-        if (waiting < 3) {
+        if (waiting<3){
             waiting++;
-            logger.info("waiting for messages from MQTT broker")
-        } else {
-            logger.warn("you should have received messages from MQTT broker by now, check how you connect to it")
+            logger.log('info',"waiting for messages from MQTT broker")
+        }else{
+            logger.log('warn', "you should have received messages from MQTT broker by now, check how you connect to it")
         }
     } else {
-        logger.info("Congrats! you are successfully receiving messages from the MQTT Broker")
         clearInterval(checkMqttConnection)
     }
 }, 3000);
