@@ -141,7 +141,7 @@ test('STEP 2.1 : join request correct mhdr => hint if failed: you are rejecting 
   expect(d.isSupported()).toBeTruthy();
 });
 
-test('STEP 2 : join request valid 1 => hint if failed, you are not correctly parsing the joinRequest', () => {
+test('STEP 2.2 : join request valid 1 => hint if failed, you are not correctly parsing the joinRequest', () => {
   // Prepare conditions for the first test
   let d = new JoinRequestPacketDecoder_1.default(validTopic, Buffer.from(JSON.stringify(validMessage), 'utf8'));
   expect(d.isSupported()).toBeTruthy();
@@ -152,7 +152,7 @@ test('STEP 2 : join request valid 1 => hint if failed, you are not correctly par
   expect(decoded.devNOnce).toBe(validMessageDevNonce);
   expect(decoded.mic).toBe(validMessageMic);
 });
-test('STEP 2 : join request valid 2 => hint if failed, you are not correctly parsing the joinRequest', () => {
+test('STEP 2.2 : join request valid 2 => hint if failed, you are not correctly parsing the joinRequest', () => {
   // Prepare conditions for the first test
   let d = new JoinRequestPacketDecoder_1.default(validTopic, Buffer.from(JSON.stringify(validMessage2), 'utf8'));
   expect(d.isSupported()).toBeTruthy();
