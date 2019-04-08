@@ -41,7 +41,6 @@ const decimalToHexString = (number) => {
     return number.toString(16);
 };
 const gpsCoordAsHexa = (coord) => {
-    console.log("coord = " + coord);
     const rawData = Math.trunc(round_number(coord, 4) * 10000) ;
     return decimalToHexString(rawData).slice(-6).padStart(6, "0");
 };
@@ -54,5 +53,6 @@ module.exports = {
     setAppEui,
     setAppKey,
     sendJoinRequest,
-    sendGpsLocation
+    sendGpsLocation,
+    convertGpsLocationToPayloadData
 };

@@ -26,13 +26,23 @@ const sendGpsLocation = () => {
         longitude:conf.longitude,
         altitudeInCm: conf.altitudeAsCm
     };
-    // serialComService.sendCommand(CHANGEME); Or you can use the const serialComService.sendPayload
-};
+    const type = -1; //CHANGEME
+    const port = -1; //CHANGEME
+    const gpsDataAsHexa = convertGpsLocationToPayloadData(gpsLocation);
 
+    // hint : You need to use the 3 previous variables in your command
+    // there might be a useful function in serialComService, about sending payload...
+
+    // serialComService.sendCommand(CHANGEME);
+};
+const convertGpsLocationToPayloadData = (gpsLocation) => {
+    return "IMPLEMENT_ME";
+};
 module.exports = {
     setModeLoraWan,
     setAppEui,
     setAppKey,
     sendJoinRequest,
-    sendGpsLocation
+    sendGpsLocation,
+    convertGpsLocationToPayloadData
 };
