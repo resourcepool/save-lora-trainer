@@ -6,8 +6,8 @@ import { map, every, concat, indexOf, take, find } from 'lodash';
 import {
     HACKER_STEP_BROKER_CONNECT,
     HACKER_STEP_BROKER_SUBSCRIBE,
-    HACKER_STEP_JOIN_REQUEST_DECODE,
     HACKER_STEP_JOIN_REQUEST_SUPPORTED,
+    HACKER_STEP_JOIN_REQUEST_DECODE,
     HACKER_STEP_CREATE_DEVICE,
     HACKER_STEP_SET_DEVICE_NWK_KEY,
     GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
@@ -16,11 +16,11 @@ import {
 
 const logger = Logger.child({ service: 'progress'});
 
-const stepOrder = [
+const stepsOrder = [
     HACKER_STEP_BROKER_CONNECT,
     HACKER_STEP_BROKER_SUBSCRIBE,
-    HACKER_STEP_JOIN_REQUEST_DECODE,
     HACKER_STEP_JOIN_REQUEST_SUPPORTED,
+    HACKER_STEP_JOIN_REQUEST_DECODE,
     HACKER_STEP_CREATE_DEVICE,
     HACKER_STEP_SET_DEVICE_NWK_KEY,
     GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
@@ -28,8 +28,8 @@ const stepOrder = [
 ];
 
 const hasCompletedPreviousSteps = (team: Team, tag: string): boolean => {
-    const index: number = indexOf(stepOrder, tag) + 1;
-    const steps: string[] = take(stepOrder, index);
+    const index: number = indexOf(stepsOrder, tag) + 1;
+    const steps: string[] = take(stepsOrder, index);
     const teamProgress = concat(team.progress.hackerSteps || [], team.progress.geekInDangerSteps || []);
     const filtered = map(steps, step => {
         const team = find(teamProgress, s => s.tag === step);
