@@ -14,6 +14,8 @@ Before you get to the workshop, please follow the following guidelines.
  * Clone the current repository in your workspace
  * Browse to chapter1/ and Run `npm install`. This might take a while.
  * Browse to chapter2/ and Run `npm install`. This might take a while.
+ * For Linux users, open your serial port with the following command : 
+ `sudo usermod -aG dialout $USER`
 
 ## Game guide
 
