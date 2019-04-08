@@ -81,7 +81,7 @@ export const createJoinRequestChallenge = async (tag: string, clientId: string):
     const content: { messages: { topic: string, message: string }[] } = {
         messages: []
     };
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 200; i++) {
         content.messages.push(tag === CHALLENGE_TAG_JOIN_REQUEST_SUPPORTED ? helper.randomRequest() : helper.randomJoinRequest());
     }
     const challenge = new Challenge(tag, team, content);
