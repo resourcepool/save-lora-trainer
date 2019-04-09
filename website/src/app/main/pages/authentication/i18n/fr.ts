@@ -13,7 +13,8 @@ export const locale = {
         'devEUI': {
             'label': 'Numéro EUI',
             'errorRequired': 'Le numéro EUI est obligatoire',
-            'errorInvalid': 'Le numéro EUI doit être valide'
+            'errorInvalid': 'Le numéro EUI doit être valide',
+            'notInList': 'Vous avez surement une erreur dans votre numéro EUI ;)',
         },
         'clientId': {
             'label': 'ID Client',
@@ -24,6 +25,7 @@ export const locale = {
             'label': 'Connexion',
             'error': 'Une erreur serveur est survenue',
             '401': 'Mot de passe incorrect',
+            'badcredentials': 'ClientID ou devEUI incorrect',
         }
     }
 };

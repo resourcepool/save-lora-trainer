@@ -1,1 +1,1 @@
-export { countries } from './countries';
+export { devEUIs } from './dev-eui';

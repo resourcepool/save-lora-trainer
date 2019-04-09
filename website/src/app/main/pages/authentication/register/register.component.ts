@@ -12,7 +12,8 @@ import { locale as french } from '../i18n/fr';
 
 import { TitleService, TeamService, UserService } from '../../../../_services';
 import { Router } from '@angular/router';
-import { replace, forEach, join } from 'lodash';
+import { forEach, join } from 'lodash';
+import { validateDevEUI } from './dev-eui.validator';
 
 @Component({
     selector: 'register',
@@ -60,7 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm = this._formBuilder.group({
             name: ['', Validators.required],
             clientId: ['', [Validators.required, Validators.pattern('[A-Za-z0-9_\-]{3,15}')]],
-            devEUI: ['', [Validators.required, Validators.pattern(devEUIPattern)]],
+            devEUI: ['', [Validators.required, Validators.pattern(devEUIPattern), validateDevEUI]],
         });
         this.registerForm.get('devEUI').valueChanges.subscribe(currentValue => {
             if (!this.prefixDevEUI.length) {
@@ -132,7 +133,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }
         });
         const formattedEUI = join(result, '');
-        console.log(formattedEUI, formattedEUI.length);
         this.prefixDevEUI = formattedEUI;
         this.registerForm.patchValue({devEUI: formattedEUI});
     }

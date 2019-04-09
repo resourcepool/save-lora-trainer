@@ -9,8 +9,8 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 const routes = [
     {
-        path     : 'login',
-        component: LoginComponent
+        path     : 'admin/login',
+        component: LoginComponent,
     }
 ];
 

@@ -14,6 +14,7 @@ export const locale = {
             'label': 'EUI Number',
             'errorRequired': 'EUI Number is required',
             'errorInvalid': 'EUI Number must be valid',
+            'notInList': 'You may have an error in your EUI Number ;)',
         },
         'clientId': {
             'label': 'Client ID',
@@ -24,6 +25,7 @@ export const locale = {
             'label': 'Login',
             'error': 'A server error occurred',
             '401': 'Invalid credentials',
+            'badcredentials': 'Bad credentials',
         }
     }
 };

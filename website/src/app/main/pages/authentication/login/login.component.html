@@ -32,19 +32,19 @@
                     </mat-spinner>
                 </div>
 
+                <div *ngIf="error">
+                    <mat-error *ngIf="error.status === 401">
+                        {{ 'login.401' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="error.status !== 401">
+                        {{ 'login.error' | translate }}
+                    </mat-error>
+                </div>
+
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
                         [disabled]="loginForm.invalid" *ngIf="!loading">
                     {{ 'login.label' | translate | uppercase }}
                 </button>
-
-                <div *ngIf="error">
-                    <mat-error *ngIf="error.code === 401">
-                        {{ 'login.401' | translate }}
-                    </mat-error>
-                    <mat-error *ngIf="error.code !== 401">
-                        {{ 'login.error' | translate }}
-                    </mat-error>
-                </div>
 
             </form>
 

@@ -8,21 +8,17 @@
                 <img src="assets/images/logos/logo_takima.svg">
             </div>
 
-            <div class="title">ADMIN LOGIN</div>
+            <div class="title">LOGIN</div>
 
+            <div class="text-center">
+                Retrieve your team information with your client ID
+            </div>
             <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
 
                 <mat-form-field>
-                    <input matInput placeholder="Username" autocomplete="username" formControlName="username">
-                    <mat-error *ngIf="loginForm.get('username').hasError('required')">
-                        Username is required
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <input matInput type="password" autocomplete="current-password" placeholder="Password" formControlName="password">
-                    <mat-error>
-                        Password is required
+                    <input matInput placeholder="Client ID" autocomplete="off" formControlName="clientId">
+                    <mat-error *ngIf="loginForm.get('clientId').hasError('required')">
+                        Client ID is required
                     </mat-error>
                 </mat-form-field>
 
@@ -32,19 +28,19 @@
                     </mat-spinner>
                 </div>
 
+                <div *ngIf="error" class="text-center">
+                    <mat-error *ngIf="!error.status">
+                        {{ 'login.error' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="error.status === 404">
+                        {{ 'login.badcredentials' | translate }}
+                    </mat-error>
+                </div>
+
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
                         [disabled]="loginForm.invalid" *ngIf="!loading">
                     {{ 'login.label' | translate | uppercase }}
                 </button>
-
-                <div *ngIf="error">
-                    <mat-error *ngIf="error.code === 401">
-                        {{ 'login.401' | translate }}
-                    </mat-error>
-                    <mat-error *ngIf="error.code !== 401">
-                        {{ 'login.error' | translate }}
-                    </mat-error>
-                </div>
 
             </form>
 

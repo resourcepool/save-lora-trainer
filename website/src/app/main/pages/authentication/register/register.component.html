@@ -31,12 +31,14 @@
 
                 <mat-form-field>
                     <input matInput placeholder="{{'devEUI.label' | translate}}" (focus)="onFocus()" autocomplete="off" formControlName="devEUI" required>
-                    <!--<span matPrefix>13:17:00:00:</span>-->
                     <mat-error *ngIf="registerForm.get('devEUI').hasError('required')">
                         {{'devEUI.errorRequired' | translate}}
                     </mat-error>
                     <mat-error *ngIf="registerForm.get('devEUI').hasError('pattern')">
                         {{'devEUI.errorInvalid' | translate}}
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('devEUI').hasError('validateDevEUI')">
+                        {{'devEUI.notInList' | translate}}
                     </mat-error>
                 </mat-form-field>
 

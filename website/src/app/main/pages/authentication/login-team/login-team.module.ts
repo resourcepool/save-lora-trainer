@@ -6,17 +6,18 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { LoginTeamComponent } from './login-team.component';
 
 const routes = [
     {
         path     : 'login',
-        component: LoginComponent
+        component: LoginTeamComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        LoginComponent
+        LoginTeamComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -31,6 +32,6 @@ const routes = [
         SharedModule,
     ]
 })
-export class LoginModule
+export class LoginTeamModule
 {
 }

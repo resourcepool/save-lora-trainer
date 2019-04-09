@@ -7,13 +7,18 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpConfigService } from '../http-config.service';
 import { TokenService } from './token.service';
+import { TeamService, UserService } from 'app/_services';
+import { Team } from '../../_models';
 
 @Injectable()
 export class AuthenticationService {
 
     constructor(private http: HttpClient,
                 private httpConfig: HttpConfigService,
-                private tokenService: TokenService) {
+                private teamService: TeamService,
+                private tokenService: TokenService,
+                private userService: UserService,
+                ) {
     }
 
     authenticate(user: any): Observable<string> {
@@ -29,6 +34,16 @@ export class AuthenticationService {
                 }
                 return response.token;
             }));
+    }
+
+    authenticateTeam(clientId: string): Observable<Team> {
+        return this.teamService.getByClientId(clientId)
+                .pipe(map((response: Team) => {
+                    if (response.clientId) {
+                        this.userService.setTeam(response.clientId);
+                    }
+                    return response;
+                }));
     }
 
     logout(): void {

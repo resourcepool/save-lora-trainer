@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from './authentication/token.service';
-import { Team } from '../_models';
-import { includes } from 'lodash';
-import { TeamService } from './team/team.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    constructor(private tokenService: TokenService,
-                private teamService: TeamService) {
+    constructor(private tokenService: TokenService) {
     }
 
     setTeam(clientId: string) {
@@ -17,13 +13,15 @@ export class UserService {
     }
 
     hasTeam(): boolean {
-        // @TODO make control in already existing teams
-        //const teams = this.teamService.getLocalClientId();
         const team = this.tokenService.getToken('user_team');
-        return team !== null
+        return team !== null;
     }
 
     getClientId(): string {
         return this.tokenService.getToken('user_team') || '';
+    }
+
+    logoutUser(): void {
+        this.tokenService.removeToken('user_team');
     }
 }

@@ -46,7 +46,7 @@ export class AdminComponent implements OnInit {
     }
 
     resetDate(): void {
-        this.timeService.resetGame().then(() => {
+        this.timeService.resetTime().then(() => {
                 this.startDate = null;
                 this.snackBar.open('Date reset successfully done!', null, {
                     duration: 3000,
