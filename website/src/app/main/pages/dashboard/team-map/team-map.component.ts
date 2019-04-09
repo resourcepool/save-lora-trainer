@@ -55,7 +55,12 @@ export class TeamMapComponent implements AfterViewInit, OnChanges {
             center: [this.lng, this.lat]
         });
 
-        this.map.addControl(new mapboxgl.NavigationControl());
+        this.map
+            .addControl(new mapboxgl.NavigationControl())
+            .addControl(new mapboxgl.AttributionControl({
+                compact: false,
+                customAttribution: "<a href='https://jawg.io' target='_blank'>© Jawg</a> &bullet; <a href='https://www.openstreetmap.org' target='_blank'>© OpenStreetMap</a>"
+            }));
     }
 
     mapResize() {
