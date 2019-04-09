@@ -1,21 +1,28 @@
 const conf = require("../conf");
-const serialComService = require("../serial-com");
+let serialComService = require("../serial-com");
 
-const setModeLoraWan = () => {
+
+const buildCommandForSetModeLoraWan = () => {
+    // TODO STEP 1.1
     console.debug("Setting LoRaWAN mode");
-    serialComService.sendCommand("at+mode=0");
+    return "at+mode=0";
+};
 
-};
-const setAppEui = () => {
+const buildCommandForSetAppEui = () => {
+    // TODO STEP 1.2
+    const appEUI = conf.appEUI;
     console.debug("Setting App EUI");
-    const cmd = "at+set_config=app_eui:" + conf.appEUI;
-    serialComService.sendCommand(cmd);
+    return "at+set_config=app_eui:" + appEUI;
 };
-const setAppKey = () => {
+
+const buildCommandForSetAppKey = () => {
+    // TODO STEP 1.2
+    const appKey = conf.appKey;
     console.debug("Setting App Key");
-    const cmd = "at+set_config=app_key:" + conf.appKey;
-    serialComService.sendCommand(cmd);
+    return "at+set_config=app_key:" + appKey;
 };
+
+
 const sendJoinRequest = () => {
     console.debug("Setting Join Request");
     serialComService.sendCommand("at+join=otaa");
@@ -48,10 +55,22 @@ const round_number = (num, dec) => {
     return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 };
 
+const setModeLoraWan = () => {
+    serialComService.sendCommand(buildCommandForSetModeLoraWan());
+};
+const setAppEui = () => {
+    serialComService.sendCommand(buildCommandForSetAppEui());
+};
+const setAppKey = () => {
+    serialComService.sendCommand(buildCommandForSetAppKey());
+};
 module.exports = {
     setModeLoraWan,
+    buildCommandForSetModeLoraWan,
     setAppEui,
+    buildCommandForSetAppEui,
     setAppKey,
+    buildCommandForSetAppKey,
     sendJoinRequest,
     sendGpsLocation,
     convertGpsLocationToPayloadData

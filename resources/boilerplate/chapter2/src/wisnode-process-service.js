@@ -13,27 +13,26 @@ const ProcessStep = {
 
 let currentStep = ProcessStep.IDLE;
 
-const getCurrentStep = () => {
-    return Object.keys(ProcessStep).find(k => ProcessStep[k] === currentStep);
-};
-
-
 const delay = async (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 const initConnect = async () => {
     console.log("Init connection");
-    currentStep = ProcessStep.IDLE;
-    serialComService.sendCommand("at+reset=0");
-    serialComService.serialEventEmitter.emit("write-console", "Sent reset command");
+    if(currentStep !== ProcessStep.IDLE) {
+        serialComService.sendCommand("at+reset=0");
+        serialComService.serialEventEmitter.emit("write-console", "Sent reset command");
+    }
+    currentStep = ProcessStep.SETTING_MODE;
+    await processNextStep();
 };
 
 
 serialComService.serialEventEmitter.on("rx", async (data) => {
     if (isResetResponse(data)) {
-        currentStep = ProcessStep.SETTING_MODE;
-        await processNextStep();
+        serialComService.serialEventEmitter.emit("reset");
+        console.log("reset received")
+        currentStep = ProcessStep.IDLE;
         // Do nothing
     } else if (data === "OK") {
         await processNextStep();
@@ -41,7 +40,7 @@ serialComService.serialEventEmitter.on("rx", async (data) => {
         if (currentStep >= ProcessStep.SETTING_APP_KEY) {
             return;
         }
-        console.log(currentStep);
+        console.log("in isModeSetResponse : " + currentStep);
         await processNextStep();
     } else if (isJoinRequestAcceptResponse(data)) {
         serialComService.serialEventEmitter.emit("write-console", "Congrats! you're connected to loraServer");
@@ -57,7 +56,8 @@ serialComService.serialEventEmitter.on("rx", async (data) => {
 let stepInProgress = false;
 
 const processNextStep = async () => {
-    if (stepInProgress) {
+    console.log("current step " + currentStep);
+    if (stepInProgress || currentStep === ProcessStep.IDLE) {
         return;
     }
     stepInProgress = true;

@@ -1,23 +1,33 @@
 const conf = require("../conf");
 const serialComService = require("../serial-com");
 
-const setModeLoraWan = () => {
+
+// IMPORTANT !!!!
+//replace "CHANGEME" by the command you want to send, please use "buildCommandFor***" methods instead of changing "set***" methods.
+//if you don't, tests won't work as expected.
+
+
+const buildCommandForSetModeLoraWan = () => {
     // TODO STEP 1.1
-    // serialComService.sendCommand(CHANGEME);
+    return "CHANGEME";
 };
-const setAppEui = () => {
+
+const buildCommandForSetAppEui = () => {
     // TODO STEP 1.2
     const appEUI = conf.appEUI;
-    // serialComService.sendCommand(CHANGEME);
+    return "CHANGEME";
 };
-const setAppKey = () => {
+
+const buildCommandForSetAppKey = () => {
     // TODO STEP 1.2
     const appKey = conf.appKey;
-    // serialComService.sendCommand(CHANGEME);
+    return "CHANGEME";
 };
+
+
 const sendJoinRequest = () => {
     // TODO STEP 2
-    // serialComService.sendCommand(CHANGEME);
+    serialComService.sendCommand("CHANGEME");
 };
 const sendGpsLocation = () => {
     // TODO STEP 3
@@ -26,22 +36,37 @@ const sendGpsLocation = () => {
         longitude:conf.longitude,
         altitudeInCm: conf.altitudeAsCm
     };
-    const type = -1; //CHANGEME
+    // You need to set correct values for those 3 variables
     const port = -1; //CHANGEME
+    const type = -1; //CHANGEME
+    //please implement convertGpsLocationToPayloadData (just below this function) instead of hardcode your hexa
     const gpsDataAsHexa = convertGpsLocationToPayloadData(gpsLocation);
 
-    // hint : You need to use the 3 previous variables in your command
-    // there might be a useful function in serialComService, about sending payload...
 
-    // serialComService.sendCommand(CHANGEME);
+    serialComService.sendPayload({ type: type, port: port, data: gpsDataAsHexa });
 };
 const convertGpsLocationToPayloadData = (gpsLocation) => {
+    // TODO STEP 3
     return "IMPLEMENT_ME";
+};
+
+
+const setModeLoraWan = () => {
+    serialComService.sendCommand(buildCommandForSetModeLoraWan());
+};
+const setAppEui = () => {
+    serialComService.sendCommand(buildCommandForSetAppEui());
+};
+const setAppKey = () => {
+    serialComService.sendCommand(buildCommandForSetAppKey());
 };
 module.exports = {
     setModeLoraWan,
+    buildCommandForSetModeLoraWan,
     setAppEui,
+    buildCommandForSetAppEui,
     setAppKey,
+    buildCommandForSetAppKey,
     sendJoinRequest,
     sendGpsLocation,
     convertGpsLocationToPayloadData

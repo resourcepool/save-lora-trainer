@@ -13,13 +13,13 @@ const init = () => {
         port = new SerialPort(conf.tty, {baudRate: 115200}, (err) => {
             if (err) {
                 serialEventEmitter.emit("write-console-error", err.message);
-                serialEventEmitter.emit("write-console-error",  "check if your wisnode is connected to the computer, and check configurated port (currently : " + conf.tty + ").");
-                serialEventEmitter.emit("write-console-error",  "in case of emergency, open the console, and use takima...");
+                serialEventEmitter.emit("write-console-error", "check if your wisnode is connected to the computer, and check configurated port (currently : " + conf.tty + ").");
+                serialEventEmitter.emit("write-console-error", "in case of emergency, open the console, and use takima...");
                 reject(err);
                 return;
             }
             port.pipe(parser);
-            port.on('error', function(err) {
+            port.on('error', function (err) {
                 serialEventEmitter.emit("write-console-error", err.message);
                 console.error(err.message);
             });

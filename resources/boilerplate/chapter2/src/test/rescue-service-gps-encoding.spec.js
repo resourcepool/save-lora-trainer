@@ -1,14 +1,9 @@
 "use strict";
-const conf = require("../conf");
 const rescueService = require("../tobeimpl/rescue-service");
 
 const correctChannel = "01";
 const correctType = "88";
-// test('STEP 1', async () => {
-//     await rescueService.serialComService.init();
-//     rescueService.setModeLoraWan();
-//     await rescueService.serialComService.destroy();
-// });
+
 const easyGps = {
     latitude: 0,
     longitude: 0,
@@ -28,11 +23,10 @@ const encodedEasyGps = "000000000000000000";
 const encodedPositiveValuesGps = "01e23f09fbf10004d2";
 const encodedNegativeValuesGps = "06765ff2960a0003e8";
 
-
 test('STEP 3 : easy gps location', () => {
     const result = rescueService.convertGpsLocationToPayloadData(easyGps);
-    const channel = result.substring(0,2);
-    const type = result.substring(2,4);
+    const channel = result.substring(0, 2);
+    const type = result.substring(2, 4);
     const gpsData = result.substring(4);
     expect(channel, "you haven't set the right Data Channel, check the doc").toBe(correctChannel);
     expect(type, "you haven't set the right Data Type, check the doc").toBe(correctType);
@@ -41,8 +35,8 @@ test('STEP 3 : easy gps location', () => {
 test('STEP 3 : positive values gps location', () => {
 
     const result = rescueService.convertGpsLocationToPayloadData(positiveValuesGps);
-    const channel = result.substring(0,2);
-    const type = result.substring(2,4);
+    const channel = result.substring(0, 2);
+    const type = result.substring(2, 4);
     const gpsData = result.substring(4);
     expect(channel, "you haven't set the right Data Channel, check the doc").toBe(correctChannel);
     expect(type, "you haven't set the right Data Type, check the doc").toBe(correctType);
@@ -51,8 +45,8 @@ test('STEP 3 : positive values gps location', () => {
 test('STEP 3 : negative values gps location', () => {
 
     const result = rescueService.convertGpsLocationToPayloadData(negativeValuesGps);
-    const channel = result.substring(0,2);
-    const type = result.substring(2,4);
+    const channel = result.substring(0, 2);
+    const type = result.substring(2, 4);
     const gpsData = result.substring(4);
     expect(channel, "you haven't set the right Data Channel, check the doc").toBe(correctChannel);
     expect(type, "you haven't set the right Data Type, check the doc").toBe(correctType);

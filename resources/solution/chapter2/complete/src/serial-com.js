@@ -8,8 +8,8 @@ const parser = new Readline({delimiter: "\r\n"});
 
 let port;
 
-const init = () => {
-    return new Promise((resolve, reject) => {
+const init =() => {
+    return new Promise( (resolve, reject) => {
         port = new SerialPort(conf.tty, {baudRate: 115200}, (err) => {
             if (err) {
                 serialEventEmitter.emit("write-console-error", err.message);
