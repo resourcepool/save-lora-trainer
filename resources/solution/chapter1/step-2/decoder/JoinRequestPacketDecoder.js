@@ -41,6 +41,7 @@ class JoinRequestPacketDecoder {
       devNOnce: null,
       mic: null
     };
+
     request.appEUI = utils.bytesToHexString(this.payload.slice(1, 9).reverse());
     request.devEUI = utils.bytesToHexString(this.payload.slice(9, 17).reverse());
     request.devNOnce = this.payload.slice(17, 19).readUInt16LE(0);

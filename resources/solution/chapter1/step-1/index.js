@@ -2,9 +2,9 @@ const api = require('./api/api');
 const utils = require('./utils');
 const mqtt = require('mqtt');
 const conf = require('./conf');
-const reviewService = require('./progress/review-service');
+const reviewService = require('./noedit/progress/review-service');
 
-const Logger = require('./log/logger');
+const Logger = require('./noedit/log/logger');
 
 const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
 
@@ -20,7 +20,11 @@ let client;
 
 let init = () => {
   reviewService.init();
-  client = mqtt.connect(conf.mqtt.host, {username: conf.mqtt.username, password: conf.mqtt.password, clientId: conf.mqtt.clientId});
+  client = mqtt.connect(conf.mqtt.host, {
+    username: conf.mqtt.username,
+    password: conf.mqtt.password,
+    clientId: conf.mqtt.clientId
+  });
   client.on('connect', () => {
     client.subscribe('#', (err) => {
       if (err) {
