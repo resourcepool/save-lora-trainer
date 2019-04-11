@@ -123,7 +123,6 @@ afterEach(() => {
 
 test('STEP 2.1 : join request payload is undefined => hint if failed: check for undefined payload', () => {
   let d = new JoinRequestPacketDecoder_1.default(validTopic, Buffer.from(JSON.stringify(validMessageNoPhyPayload), 'utf8'));
-  expect(d.isSupported()).toBeDefined();
   expect(d.isSupported()).toBeFalsy();
 });
 
