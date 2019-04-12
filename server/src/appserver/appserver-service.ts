@@ -48,20 +48,13 @@ const checkDevices = async () => {
 };
 
 const updateDeviceProgress = async (team: Team, d: DeviceDescriptor): Promise<boolean> => {
-    if (!team.progress.hackerSteps!.find(step => step.tag === pg.HACKER_STEP_CREATE_DEVICE)!.validated) {
-        let success = await progressService.validateDeviceCreated(team);
-        if (!success) {
-            logger.warn(`Failed to update progress for team: ${team.name}`);
-            return false;
-        }
-    }
     let deviceKeys = await appServerClient.getKeys(d.devEUI!);
     if (!deviceKeys || !deviceKeys.nwkKey || normalizeHexString(deviceKeys.nwkKey!) !== normalizeHexString(config.loRaServer.targetNwkKey)) {
         return true;
     }
     // Device keys match the target. We can validate this step
-    if (!team.progress.hackerSteps!.find(step => step.tag === pg.HACKER_STEP_SET_DEVICE_NWK_KEY)!.validated) {
-        let success = await progressService.validateDeviceNwkKeySet(team);
+    if (!team.progress.hackerSteps!.find(step => step.tag === pg.HACKER_STEP_REGISTER_DEVICE)!.validated) {
+        let success = await progressService.validateDeviceCreated(team);
         if (!success) {
             logger.warn(`Failed to update progress for team: ${team.name}`);
             return false;
