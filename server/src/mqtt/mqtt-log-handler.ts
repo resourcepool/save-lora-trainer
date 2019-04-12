@@ -21,12 +21,15 @@ export const handleOtherLogMessage = async (topic: string, message: Buffer) => {
         let success = await updateProgressWithClientId(progressService.validateMQTTConnect, clientId);
         if (success) {
             logger.info(`Connection success for: ${clientId}`);
+        } else {
+            logger.error(`Failed to change connection completion for client ${clientId}`);
         }
     }
 };
 
 export const handleSubscriptionLogMessage = async (message: Buffer) => {
-    let match: RegExpExecArray = MOSQUITTO_CLIENT_SUBSCRIPTION_REGEX.exec(message.toString())!;
+    let msgStr = message.toString();
+    let match: RegExpExecArray = MOSQUITTO_CLIENT_SUBSCRIPTION_REGEX.exec(msgStr)!;
     if (!match) {
         logger.warn("Couldn't parse subscription log message correctly");
         return;
@@ -35,6 +38,9 @@ export const handleSubscriptionLogMessage = async (message: Buffer) => {
     let topicSubscribed = match[2];
     // Ignore mock client messages
     if (clientId.startsWith(config.mqttClient.clientId)) {
+        return;
+    }
+    if (topicSubscribed !== "#") {
         return;
     }
     let success = await updateProgressWithClientId(progressService.validateMQTTSubscription, clientId);

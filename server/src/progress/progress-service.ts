@@ -2,19 +2,19 @@ import Logger from '../log/logger';
 import Team from '../team/models/Team';
 import * as teamDao from '../team/team-dao';
 import Step from './models/Step';
-import { map, every, concat, indexOf, take, find } from 'lodash';
+import {concat, every, find, indexOf, map, take} from 'lodash';
 import {
+    GEEK_IN_DANGER_STEP_GPS_LOCATION_SENT,
+    GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
     HACKER_STEP_BROKER_CONNECT,
     HACKER_STEP_BROKER_SUBSCRIBE,
-    HACKER_STEP_JOIN_REQUEST_SUPPORTED,
-    HACKER_STEP_JOIN_REQUEST_DECODE,
     HACKER_STEP_CREATE_DEVICE,
-    HACKER_STEP_SET_DEVICE_NWK_KEY,
-    GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
-    GEEK_IN_DANGER_STEP_GPS_LOCATION_SENT
+    HACKER_STEP_JOIN_REQUEST_DECODE,
+    HACKER_STEP_JOIN_REQUEST_SUPPORTED,
+    HACKER_STEP_SET_DEVICE_NWK_KEY
 } from "./models/Progress";
 
-const logger = Logger.child({ service: 'progress'});
+const logger = Logger.child({service: 'progress'});
 
 const stepsOrder = [
     HACKER_STEP_BROKER_CONNECT,
@@ -28,7 +28,10 @@ const stepsOrder = [
 ];
 
 const hasCompletedPreviousSteps = (team: Team, tag: string): boolean => {
-    const index: number = indexOf(stepsOrder, tag) + 1;
+    const index: number = indexOf(stepsOrder, tag);
+    if (index === 0) {
+        return true;
+    }
     const steps: string[] = take(stepsOrder, index);
     const teamProgress = concat(team.progress.hackerSteps || [], team.progress.geekInDangerSteps || []);
     const filtered = map(steps, step => {
@@ -40,12 +43,12 @@ const hasCompletedPreviousSteps = (team: Team, tag: string): boolean => {
 
 const validateStep = async (team: Team, tag: string): Promise<boolean> => {
     if (!hasCompletedPreviousSteps(team, tag)) {
-       return Promise.resolve(false);
+        return Promise.resolve(false);
     }
 
     let step: Step = team.progress.hackerSteps!.find(s => s.tag === tag)!;
 
-    if (!step){
+    if (!step) {
         step = team.progress.geekInDangerSteps!.find(s => s.tag === tag)!;
     }
 
