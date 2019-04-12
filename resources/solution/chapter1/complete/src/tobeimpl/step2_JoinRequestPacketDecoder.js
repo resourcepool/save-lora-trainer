@@ -1,6 +1,6 @@
 const utils = require('../utils');
 
-class JoinRequestPacketDecoder {
+class Step2_JoinRequestPacketDecoder {
 
   constructor(topic, msg) {
     this.topic = topic;
@@ -53,4 +53,4 @@ class JoinRequestPacketDecoder {
 
 
 
-module.exports = JoinRequestPacketDecoder;
+module.exports = Step2_JoinRequestPacketDecoder;

@@ -83,18 +83,18 @@ That means we can easily decode them from the MQTT broker packets!
 
 To understand how to spot a Join Request, you need to read the binary protocol used to encode the payload. You should read your LoRaWAN 101 course... [Here's a link if you don't have it](/resources/course/lorawan-101-course.md).
 
-The file you will need to modify is in **src/decoder/JoinRequestPacketDecoder.js**
+The file you will need to modify is in **src/decoder/Step2_JoinRequestPacketDecoderecoder.js**
 
- 1. Implement the `JoinRequestPacketDecoder.isSupported()` method
- 2. Implement the `JoinRequestPacketDecoder.decode()` method
+ 1. Implement the `Step2_JoinRequestPacketDecoder.isSupported()` method
+ 2. Implement the `Step2_JoinRequestPacketDecoder.decode()` method
 
 **Tests:**
 To make your life easier, we have implemented a sequence of tests to validate these two points.  
 Just run `npm test` and it should give you a good way to see whether your implementation of both methods is right or not.
-The test file is available in **src/decoder/JoinRequestPacketDecoder.spec.js** for reference.
+The test file is available in **src/decoder/Step2_JoinRequestPacketDecoder.spec.js** for reference.
 
 
-### Step 2.1 JoinRequestPacketDecoder.isSupported() ?
+### Step 2.1 Step2_JoinRequestPacketDecoder.isSupported() ?
 
 **How to spot a JoinRequest:**  
   A join request can be recognized by the following:
@@ -102,7 +102,7 @@ The test file is available in **src/decoder/JoinRequestPacketDecoder.spec.js** f
  * the message has a string field called "phyPayload" containing **base64 encoded data** 
  * the binary message of phyPayload has the following Mac Header (first byte of phyPayload): **0b00000000**
   
-### Step 2.2 JoinRequestPacketDecoder.decode() ?
+### Step 2.2 Step2_JoinRequestPacketDecoder.decode() ?
   
 Now that you have found which Packets are JoinRequests, you need to extract its metadata from the binary buffer.
   

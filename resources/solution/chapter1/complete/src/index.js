@@ -1,12 +1,13 @@
 const api = require('./api/api');
 const utils = require('./utils');
-const mqtt = require('mqtt');
 const conf = require('./conf');
 const reviewService = require('./noedit/progress/review-service');
 
+const step1 = require('./tobeimpl/step1');
+
 const Logger = require('./noedit/log/logger');
 
-const JoinRequestPacketDecoder = require('./decoder/JoinRequestPacketDecoder');
+const JoinRequestPacketDecoder = require('./tobeimpl/step2_JoinRequestPacketDecoder');
 
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 
@@ -20,18 +21,11 @@ let client;
 
 let init = () => {
     reviewService.init();
-    client = mqtt.connect(conf.mqtt.host, {
-        username: conf.mqtt.username,
-        password: conf.mqtt.password,
-        clientId: conf.mqtt.clientId
-    });
-    client.on('connect', () => {
-        client.subscribe('#', (err) => {
-            if (err) {
-                process.exit(1);
-            }
-        });
-    });
+
+    client = step1.getConnectedMqttClient();
+
+    step1.subscribeToAllTopics(client);
+
     client.on("message", onMessage);
 };
 
@@ -55,6 +49,10 @@ let onMessage = async (topic, message) => {
         return;
     }
 
+    // We are only interested in the join request packets.
+    // Problem is: those packets are encoded... Therefore we need to use a decoder.
+    // You need to implement the PacketDecoder code of course!
+    // How? RTFM => README.md
     logger.debug("Join Request identified");
     let decodedJoinRequest = msgDecoder.decode();
     logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));

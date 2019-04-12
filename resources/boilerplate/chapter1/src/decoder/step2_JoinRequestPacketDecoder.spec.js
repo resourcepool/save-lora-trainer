@@ -162,4 +162,4 @@ test('STEP 2.2 : join request valid 2 => hint if failed, you are not correctly p
   expect(decoded.devNOnce).toBe(validMessage2DevNonce);
   expect(decoded.mic).toBe(validMessage2Mic);
 });
-//# sourceMappingURL=JoinRequestPacketDecoder.spec.js.map
+//# sourceMappingURL=step2_JoinRequestPacketDecoder.spec.js.map
