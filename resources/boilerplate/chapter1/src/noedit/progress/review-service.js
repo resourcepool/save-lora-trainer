@@ -5,7 +5,7 @@
 const Logger = require('../log/logger');
 const conf = require('../../conf');
 const client = require('./progress-client');
-const JoinRequestPacketDecoder = require('../../decoder/JoinRequestPacketDecoder');
+const JoinRequestPacketDecoder = require('../../tobeimpl/step-2/JoinRequestPacketDecoder');
 const pg = require('./Progress');
 const logger = Logger.child({service: 'review-service'});
 

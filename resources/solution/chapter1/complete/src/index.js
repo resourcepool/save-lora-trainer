@@ -1,15 +1,16 @@
-const api = require('./api/api');
+const api = require('./noedit/api/api');
 const utils = require('./utils');
 const conf = require('./conf');
 const reviewService = require('./noedit/progress/review-service');
 
-const step1 = require('./tobeimpl/step1');
+const mqttConnector = require('./tobeimpl/step-1/mqtt-connector');
 
 const Logger = require('./noedit/log/logger');
 
-const JoinRequestPacketDecoder = require('./tobeimpl/step2_JoinRequestPacketDecoder');
+const JoinRequestPacketDecoder = require('./tobeimpl/step-2/JoinRequestPacketDecoder');
 
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
+const timeBeforeTopicSubscription = 2000;
 
 const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
 const validMockAppEUI = utils.hexStringToBytes(conf.user.mockAppEUI);
@@ -22,22 +23,25 @@ let client;
 let init = () => {
     reviewService.init();
 
-    client = step1.getConnectedMqttClient();
+    client = mqttConnector.getConnectedMqttClient();
 
-    step1.subscribeToAllTopics(client);
-
+    client.on('connect', async () => {
+        // We wait two seconds before calling onClientConnected callback in order to ensure previous steps were validated successfully.
+        await delay(timeBeforeTopicSubscription);
+        mqttConnector.onClientConnected(client);
+    });
     client.on("message", onMessage);
 };
 
 /**
- * Step 2
+ * This function is called when any message is received on any topic
  * @param topic
  * @param message
  */
 let onMessage = async (topic, message) => {
-    if (!connectedToMqtt){
+    if (!connectedToMqtt) {
         connectedToMqtt = true;
-        logger.log('info',"Congrats! you are successfully receiving messages from the MQTT Broker")
+        logger.log('info', "Congrats! you are successfully receiving messages from the MQTT Broker")
     }
     if (!gatewayRxTopicRegex.test(topic)) {
         return;
@@ -60,7 +64,7 @@ let onMessage = async (topic, message) => {
     // Congratulations, you are decoding all the join requests of the LoRa network.
     // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
     if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
-        logger.log('verbose',"AppEUI and DevEUI are valid. Will register device");
+        logger.log('verbose', "AppEUI and DevEUI are valid. Will register device");
         if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
             await api.createDevice({
                 devEUI: decodedJoinRequest.devEUI,
@@ -73,7 +77,7 @@ let onMessage = async (topic, message) => {
         if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
             await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
         }
-        logger.log('verbose',"Device registered successfully");
+        logger.log('verbose', "Device registered successfully");
     }
 };
 
@@ -95,17 +99,28 @@ let isRightDeviceEUI = (devEUI) => {
     return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, deviceEUI);
 };
 
+
+/**
+ * Asynchronous delay
+ * @param ms
+ * @returns {Promise}
+ */
+let delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+
 init();
 
 let connectedToMqtt = false;
 let waiting = 0;
-checkMqttConnection = setInterval(() => {
+let checkMqttConnection = setInterval(() => {
     if (!connectedToMqtt) {
-        if (waiting<3){
+        if (waiting < 3) {
             waiting++;
-            logger.log('info',"waiting for messages from MQTT broker")
-        }else{
-            logger.log('warn', "you should have received messages from MQTT broker by now, check how you connect to it")
+            logger.log('info', "waiting for messages from MQTT broker")
+        } else {
+            logger.log('warn', "you should have received messages from the broker by now, check your parameters")
         }
     } else {
         clearInterval(checkMqttConnection)

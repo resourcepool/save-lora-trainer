@@ -1,7 +1,12 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
-class Step2_JoinRequestPacketDecoder {
+class JoinRequestPacketDecoder {
 
+    /**
+     * If there is a phyPayload, it will be decoded into a Buffer named this.payload
+     * @param topic
+     * @param msg
+     */
     constructor(topic, msg) {
         this.topic = topic;
         try {
@@ -11,6 +16,7 @@ class Step2_JoinRequestPacketDecoder {
         }
 
         if (this.msg && this.msg.phyPayload) {
+            // We will decode the Base64 phyPayload into a byte Buffer
             this.payload = Buffer.from(this.msg.phyPayload, 'base64');
         }
     }
@@ -21,9 +27,9 @@ class Step2_JoinRequestPacketDecoder {
      * check if the message is indeed a join-request, return true if.. true
      * return false otherwise.
      *
-     * you can use this.payload (look at line 14) but check how it is populated and remember that a message without a PHYpayload is not a joinRequest.
-     * hint: if there is no phyPayload, this.payload is undefined... and then it's not a joinRequest.
-     *
+     * you can use this.payload (look at line 20) but check how it is populated and remember...
+     * A message without a PHYpayload is NOT a joinRequest.
+     * Be careful : this.payload will be UNDEFINED when PHYPayload does not exist.
      */
     isSupported() {
         // TODO Step 2.1
@@ -32,7 +38,9 @@ class Step2_JoinRequestPacketDecoder {
 
     /**
      *
-     *  decode the payload (you can access it with this.payload), and store all informations in the request object, then return it.
+     * decode the payload (you can access it with this.payload),
+     * store all information in the request object,
+     * then return it.
      *
      * @returns {{mic: {string}, appEUI: {string}, devNOnce: {number}, devEUI: {string}}}
      * Example:
@@ -45,8 +53,9 @@ class Step2_JoinRequestPacketDecoder {
      *
      * Be careful:
      *  - devNOnce IS A NUMBER (not a string)
-     *  - remember... LE... if you don't know what LE stands for, read the doc
+     *  - remember... LE... if you don't know what LE stands for, read the f*** manual!
      *  - you may want to use utils.bytesToHexString :)
+     *  - what's the difference between a signed and an unsigned int?
      */
     decode() {
         // TODO Step 2.2
@@ -63,4 +72,4 @@ class Step2_JoinRequestPacketDecoder {
 }
 
 
-module.exports = Step2_JoinRequestPacketDecoder;
+module.exports = JoinRequestPacketDecoder;

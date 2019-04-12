@@ -1,15 +1,16 @@
-const api = require('./api/api');
+const api = require('./noedit/api/api');
 const utils = require('./utils');
 const conf = require('./conf');
 const reviewService = require('./noedit/progress/review-service');
 
-const step1 = require('./tobeimpl/step1');
+const mqttConnector = require('./tobeimpl/step-1/mqtt-connector');
 
 const Logger = require('./noedit/log/logger');
 
-const JoinRequestPacketDecoder = require('./tobeimpl/step2_JoinRequestPacketDecoder');
+const JoinRequestPacketDecoder = require('./tobeimpl/step-2/JoinRequestPacketDecoder');
 
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
+const timeBeforeTopicSubscription = 2000;
 
 const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
 const validMockAppEUI = utils.hexStringToBytes(conf.user.mockAppEUI);
@@ -20,61 +21,64 @@ const logger = Logger.child({service: 'index'});
 let client;
 
 let init = () => {
-    reviewService.init();
+  reviewService.init();
 
-    client = step1.getConnectedMqttClient();
+  client = mqttConnector.getConnectedMqttClient();
 
-    step1.subscribeToAllTopics(client);
-
-    client.on("message", onMessage);
+  client.on('connect', async () => {
+    // We wait two seconds before calling onClientConnected callback in order to ensure previous steps were validated successfully.
+    await delay(timeBeforeTopicSubscription);
+    mqttConnector.onClientConnected(client);
+  });
+  client.on("message", onMessage);
 };
 
 /**
- * Step 2
+ * This function is called when any message is received on any topic
  * @param topic
  * @param message
  */
 let onMessage = async (topic, message) => {
-    if (!connectedToMqtt){
-        connectedToMqtt = true;
-        logger.log('info',"Congrats! you are successfully receiving messages from the MQTT Broker")
-    }
-    if (!gatewayRxTopicRegex.test(topic)) {
-        return;
-    }
+  if (!connectedToMqtt) {
+    connectedToMqtt = true;
+    logger.log('info', "Congrats! you are successfully receiving messages from the MQTT Broker")
+  }
+  if (!gatewayRxTopicRegex.test(topic)) {
+    return;
+  }
 
-    let msgDecoder = new JoinRequestPacketDecoder(topic, message);
-    if (!msgDecoder.isSupported()) {
-        logger.log('verbose', 'msg received is not a JoinRequest, according to your JoinRequestPacketDecoder#isSupported method ;)');
-        return;
-    }
+  let msgDecoder = new JoinRequestPacketDecoder(topic, message);
+  if (!msgDecoder.isSupported()) {
+    logger.log('verbose', 'msg received is not a JoinRequest, according to your JoinRequestPacketDecoder#isSupported method ;)');
+    return;
+  }
 
-    // We are only interested in the join request packets.
-    // Problem is: those packets are encoded... Therefore we need to use a decoder.
-    // You need to implement the PacketDecoder code of course!
-    // How? RTFM => README.md
-    logger.debug("Join Request identified");
-    let decodedJoinRequest = msgDecoder.decode();
-    logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
+  // We are only interested in the join request packets.
+  // Problem is: those packets are encoded... Therefore we need to use a decoder.
+  // You need to implement the PacketDecoder code of course!
+  // How? RTFM => README.md
+  logger.debug("Join Request identified");
+  let decodedJoinRequest = msgDecoder.decode();
+  logger.debug("Decoded:" + JSON.stringify(decodedJoinRequest));
 
-    // Congratulations, you are decoding all the join requests of the LoRa network.
-    // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
-    if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
-        logger.log('verbose',"AppEUI and DevEUI are valid. Will register device");
-        if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
-            await api.createDevice({
-                devEUI: decodedJoinRequest.devEUI,
-                applicationID: conf.loRaServer.loRaApplicationId,
-                deviceProfileID: conf.loRaServer.rak811DevProfileId,
-                name: conf.user.clientId,
-                description: '4242'
-            });
-        }
-        if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
-            await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
-        }
-        logger.log('verbose',"Device registered successfully");
+  // Congratulations, you are decoding all the join requests of the LoRa network.
+  // However, we want to be smart hackers and only activate your friend's device on the specific APP_EUI
+  if (isValidAppEUI(decodedJoinRequest.appEUI) && isRightDeviceEUI(decodedJoinRequest.devEUI)) {
+    logger.log('verbose', "AppEUI and DevEUI are valid. Will register device");
+    if (!await api.deviceExists(decodedJoinRequest.devEUI)) {
+      await api.createDevice({
+        devEUI: decodedJoinRequest.devEUI,
+        applicationID: conf.loRaServer.loRaApplicationId,
+        deviceProfileID: conf.loRaServer.rak811DevProfileId,
+        name: conf.user.clientId,
+        description: '4242'
+      });
     }
+    if (!await api.deviceNwkKeyExists(decodedJoinRequest.devEUI)) {
+      await api.setDeviceNwkKey(decodedJoinRequest.devEUI, deviceNetworkKey);
+    }
+    logger.log('verbose', "Device registered successfully");
+  }
 };
 
 /**
@@ -83,7 +87,7 @@ let onMessage = async (topic, message) => {
  * @returns {boolean}
  */
 let isValidAppEUI = (msgAppEUI) => {
-    return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI) || utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validMockAppEUI);
+  return utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validAppEUI) || utils.arraysEqual((typeof msgAppEUI === 'string') ? utils.hexStringToBytes(msgAppEUI) : msgAppEUI, validMockAppEUI);
 };
 
 /**
@@ -92,22 +96,33 @@ let isValidAppEUI = (msgAppEUI) => {
  * @returns {boolean}
  */
 let isRightDeviceEUI = (devEUI) => {
-    return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, deviceEUI);
+  return utils.arraysEqual((typeof devEUI === 'string') ? utils.hexStringToBytes(devEUI) : devEUI, deviceEUI);
 };
+
+
+/**
+ * Asynchronous delay
+ * @param ms
+ * @returns {Promise}
+ */
+let delay = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
 
 init();
 
 let connectedToMqtt = false;
 let waiting = 0;
-checkMqttConnection = setInterval(() => {
-    if (!connectedToMqtt) {
-        if (waiting<3){
-            waiting++;
-            logger.log('info',"waiting for messages from MQTT broker")
-        }else{
-            logger.log('warn', "you should have received messages from MQTT broker by now, check how you connect to it")
-        }
+let checkMqttConnection = setInterval(() => {
+  if (!connectedToMqtt) {
+    if (waiting < 3) {
+      waiting++;
+      logger.log('info', "waiting for messages from MQTT broker")
     } else {
-        clearInterval(checkMqttConnection)
+      logger.log('warn', "you should have received messages from the broker by now, check your parameters")
     }
+  } else {
+    clearInterval(checkMqttConnection)
+  }
 }, 3000);

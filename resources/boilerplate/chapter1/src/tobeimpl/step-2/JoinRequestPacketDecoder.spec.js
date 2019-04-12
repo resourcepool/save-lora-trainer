@@ -11,8 +11,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", {value: true});
 const JoinRequestPacketDecoder_1 = __importDefault(require("./JoinRequestPacketDecoder"));
-const utils = __importStar(require("../utils"));
-const index = __importDefault('../index');
+const utils = __importStar(require("../../utils"));
+const index = __importDefault('../../index');
 const validTopic = 'gateway/abcdef0123456789/rx';
 const invalidTopic = 'gateway/abcdef0123456789/tx';
 const invalidTopic2 = 'gateway/abcdef0123456789/stats';
@@ -162,4 +162,4 @@ test('STEP 2.2 : join request valid 2 => hint if failed, you are not correctly p
   expect(decoded.devNOnce).toBe(validMessage2DevNonce);
   expect(decoded.mic).toBe(validMessage2Mic);
 });
-//# sourceMappingURL=step2_JoinRequestPacketDecoder.spec.js.map
+//# sourceMappingURL=JoinRequestPacketDecoder.spec.js.map

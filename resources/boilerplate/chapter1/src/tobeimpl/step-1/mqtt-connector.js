@@ -1,5 +1,5 @@
 const mqtt = require('mqtt');
-const conf = require('../conf');
+const conf = require('../../conf');
 
 
 /**
@@ -22,34 +22,32 @@ const conf = require('../conf');
  */
 const getConnectedMqttClient = () => {
 
-    //You need to create the client (don't forget to use your conf, and provide to the mqttclient your clientId (you will find it in conf)
-    return mqtt.connect(conf.mqtt.host, {
-        username: conf.mqtt.username,
-        password: conf.mqtt.password,
-        clientId: conf.mqtt.clientId
-    });
+    let client;
+
+    // TODO
+    // You need to create the client (and connect to it)
+    // (don't forget to take a look at your conf.js
+    // and provide ALL credentials and clientId to connect
+
+    return client;
 };
 
 
-/**
- * in this function, you need to subscribe to all topics existing in the MQTT broker.
- *
- * wildcard? good idea. but careful... check mqtt documentation to find out which one is the good one.
- * @param client
- */
-const subscribeToAllTopics = (client) => {
 
-    //once your client is created, connect to it, and subscript to all topics.
-    client.on('connect', () => {
-        client.subscribe('#', (err) => {
-            if (err) {
-                process.exit(1);
-            }
-        });
-    });
+/**
+ * This function will be called when the client has successfully connected to the remote MQTT Broker.
+ * in this function, you need to subscribe to all topics in the Broker.
+ * wildcard? good idea. but careful... check mqtt documentation to find out which wildcard to use.
+ * @param client the MQTT client which is already connected
+ */
+const onClientConnected = (client) => {
+
+    // TODO
+    // Subscribe to all topics on the client.
+
 };
 
 module.exports = {
     getConnectedMqttClient,
-    subscribeToAllTopics
+    onClientConnected
 };
