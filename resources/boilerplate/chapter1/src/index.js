@@ -11,6 +11,7 @@ const JoinRequestPacketDecoder = require('./tobeimpl/step-2/JoinRequestPacketDec
 
 const gatewayRxTopicRegex = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
 const timeBeforeTopicSubscription = 2000;
+const maxRetriesBeforeFail = 5;
 
 const validAppEUI = utils.hexStringToBytes(conf.user.appEUI);
 const validMockAppEUI = utils.hexStringToBytes(conf.user.mockAppEUI);
@@ -119,7 +120,7 @@ let step1Done = false;
 let waiting = 0;
 let checkMqttConnection = setInterval(() => {
   if (!step1Done) {
-    if (waiting < 3) {
+    if (waiting < maxRetriesBeforeFail) {
       waiting++;
       logger.log('info', "waiting for messages from MQTT broker")
     } else {

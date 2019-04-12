@@ -4,7 +4,7 @@ import * as mqttService from './mqtt-service';
 import Timeout = NodeJS.Timeout;
 import {config} from "../config";
 import * as teamDao from "../team/team-dao";
-import {HACKER_STEP_SET_DEVICE_NWK_KEY} from "../progress/models/Progress";
+import {HACKER_STEP_REGISTER_DEVICE} from "../progress/models/Progress";
 
 const GATEWAY_STATS_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
 const logger = Logger.child({service: "mqtt-joinrequest-mock-service"});
@@ -41,7 +41,7 @@ const joinRequestDummy = async () => {
     }
     teams!.forEach(t => {
         // Publish only if device has not been created (<=> if chapter one is not finished yet)
-        if (t.progress.hackerSteps!.find(s => s.tag === HACKER_STEP_SET_DEVICE_NWK_KEY)!.validated) {
+        if (t.progress.hackerSteps!.find(s => s.tag === HACKER_STEP_REGISTER_DEVICE)!.validated) {
             return;
         }
         logger.debug("Sending mock Join Request for device " + t.devEUI);

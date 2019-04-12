@@ -8,10 +8,9 @@ import {
     GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
     HACKER_STEP_BROKER_CONNECT,
     HACKER_STEP_BROKER_SUBSCRIBE,
-    HACKER_STEP_CREATE_DEVICE,
+    HACKER_STEP_REGISTER_DEVICE,
     HACKER_STEP_JOIN_REQUEST_DECODE,
     HACKER_STEP_JOIN_REQUEST_SUPPORTED,
-    HACKER_STEP_SET_DEVICE_NWK_KEY
 } from "./models/Progress";
 
 const logger = Logger.child({service: 'progress'});
@@ -21,8 +20,7 @@ const stepsOrder = [
     HACKER_STEP_BROKER_SUBSCRIBE,
     HACKER_STEP_JOIN_REQUEST_SUPPORTED,
     HACKER_STEP_JOIN_REQUEST_DECODE,
-    HACKER_STEP_CREATE_DEVICE,
-    HACKER_STEP_SET_DEVICE_NWK_KEY,
+    HACKER_STEP_REGISTER_DEVICE,
     GEEK_IN_DANGER_STEP_JOIN_REQUEST_SENT,
     GEEK_IN_DANGER_STEP_GPS_LOCATION_SENT
 ];
@@ -69,11 +67,11 @@ export const validateGpsLocationReceived = async (team: Team): Promise<boolean> 
 };
 
 export const validateDeviceCreated = async (team: Team): Promise<boolean> => {
-    return await validateStep(team, HACKER_STEP_CREATE_DEVICE);
+    return await validateStep(team, HACKER_STEP_REGISTER_DEVICE);
 };
 
 export const validateDeviceNwkKeySet = async (team: Team): Promise<boolean> => {
-    return await validateStep(team, HACKER_STEP_SET_DEVICE_NWK_KEY);
+    return Promise.resolve(true);
 };
 
 export const validateMQTTConnect = async (team: Team): Promise<boolean> => {

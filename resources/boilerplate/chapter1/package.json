@@ -1,8 +1,9 @@
 {
-  "name": "save-lora-server",
+  "name": "save-lora-rescue-hacker",
   "version": "1.0.0",
   "description": "MQTT client which monitors and registers LoRa devices in the Save Lora hack game",
   "scripts": {
+    "watch": "node ./node_modules/nodemon/bin/nodemon ./src/index.js",
     "start": "node ./src/index.js",
     "test": "./node_modules/jest/bin/jest.js src"
   },
@@ -20,6 +21,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "jest": "^24.0.0"
+    "jest": "^24.0.0",
+    "nodemon": "^1.18.11"
   }
 }

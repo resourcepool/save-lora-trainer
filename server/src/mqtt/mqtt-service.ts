@@ -4,10 +4,10 @@ import * as mqttRxHandler from './mqtt-rx-handler';
 import * as mqttAppRxHandler from './mqtt-application-rx-handler';
 import * as mqttLogHandler from './mqtt-log-handler';
 import * as mqttJoinRequestMockService from './mqtt-joinrequest-mock-service';
-import * as winston from "winston";
 import {config} from "../config";
 
-const GATEWAY_RX_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/rx$");
+const GATEWAY_RX_MOCK_TOPIC = "gateway/b3b313374242/stats";
+const GATEWAY_RX_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
 const GATEWAY_APP_RX_TOPIC_REGEX = new RegExp("^application/[0-9]*/device/([0-9a-fA-F]+)/rx$");
 const GATEWAY_STATS_TOPIC_REGEX = new RegExp("^gateway/([0-9a-fA-F]+)/stats$");
 const LOG_TOPIC_REGEX = new RegExp("^\\$SYS\\/broker\\/log\\/(\\w+)\\/?(\\w*)$");
@@ -29,6 +29,10 @@ export const init = () => {
         client.subscribe("$SYS/broker/log/#", (err) => {
             logger.info("Subscribed to $SYS/broker/log/#");
         });
+        if (!mqttJoinRequestMockService.isStarted()) {
+            // Send a dummy join request every 10 seconds
+            mqttJoinRequestMockService.init(GATEWAY_RX_MOCK_TOPIC);
+        }
     });
     client.on('message', onMessage);
 };
@@ -54,10 +58,6 @@ const onMessage = (topic: string, message: Buffer) => {
 
 const handleGatewayStatsMessage = (topic: string, message: Buffer) => {
     logger.debug("Gateway Stats Message received");
-    if (!mqttJoinRequestMockService.isStarted()) {
-        // Send a dummy join request every 10 seconds
-        mqttJoinRequestMockService.init(topic);
-    }
 };
 
 const handleGatewayRxMessage = (topic: string, message: Buffer) => {
