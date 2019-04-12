@@ -1,4 +1,5 @@
-const rescueService = require("./tobeimpl/rescue-service");
+const step1 = require("./tobeimpl/step1");
+const step2 = require("./tobeimpl/step2");
 const serialComService = require("./serial-com");
 
 const ProcessStep = {
@@ -64,22 +65,22 @@ const processNextStep = async () => {
     switch (currentStep) {
         case ProcessStep.SETTING_MODE:
             await delay(2000);
-            rescueService.setModeLoraWan();
+            step1.setModeLoraWan();
             serialComService.serialEventEmitter.emit("write-console", "Sent set mode command");
             break;
         case ProcessStep.SETTING_APP_EUI:
             await delay(2000);
-            rescueService.setAppEui();
+            step1.setAppEui();
             serialComService.serialEventEmitter.emit("write-console", "Sent set App EUI command");
             break;
         case ProcessStep.SETTING_APP_KEY:
             await delay(2000);
-            rescueService.setAppKey();
+            step1.setAppKey();
             serialComService.serialEventEmitter.emit("write-console", "Sent set App Key command");
             break;
         case ProcessStep.STARTING_JOIN_REQUEST:
             await delay(2000);
-            rescueService.sendJoinRequest();
+            step1.sendJoinRequest();
             serialComService.serialEventEmitter.emit("write-console", "Sent Join Request command");
             break;
     }
@@ -117,8 +118,21 @@ const fireCustomCmd = (value) => {
         serialComService.serialEventEmitter.emit("write-console-error", "invalid AT command...");
     }
 };
+
+const sendGpsLocation = () => {
+    console.debug("Setting GPS Location");
+    const gpsLocation = {
+        latitude: conf.latitude,
+        longitude:conf.longitude,
+        altitudeInCm: conf.altitudeAsCm
+    };
+    const gpsData = step2.convertGpsLocationToPayloadData(gpsLocation);
+    serialComService.sendPayload({ type: 0, port: 1, data: gpsData });
+};
+
 module.exports = {
     initConnect,
     fireCustomCmd,
+    sendGpsLocation,
     debug
 };

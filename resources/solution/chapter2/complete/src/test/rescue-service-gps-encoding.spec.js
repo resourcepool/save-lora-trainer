@@ -1,5 +1,5 @@
 "use strict";
-const rescueService = require("../tobeimpl/rescue-service");
+const step2 = require("../tobeimpl/step2");
 
 const correctChannel = "01";
 const correctType = "88";
@@ -24,7 +24,7 @@ const encodedPositiveValuesGps = "01e23f09fbf10004d2";
 const encodedNegativeValuesGps = "06765ff2960a0003e8";
 
 test('STEP 3 : easy gps location', () => {
-    const result = rescueService.convertGpsLocationToPayloadData(easyGps);
+    const result = step2.convertGpsLocationToPayloadData(easyGps);
     const channel = result.substring(0, 2);
     const type = result.substring(2, 4);
     const gpsData = result.substring(4);
@@ -34,7 +34,7 @@ test('STEP 3 : easy gps location', () => {
 });
 test('STEP 3 : positive values gps location', () => {
 
-    const result = rescueService.convertGpsLocationToPayloadData(positiveValuesGps);
+    const result = step2.convertGpsLocationToPayloadData(positiveValuesGps);
     const channel = result.substring(0, 2);
     const type = result.substring(2, 4);
     const gpsData = result.substring(4);
@@ -44,7 +44,7 @@ test('STEP 3 : positive values gps location', () => {
 });
 test('STEP 3 : negative values gps location', () => {
 
-    const result = rescueService.convertGpsLocationToPayloadData(negativeValuesGps);
+    const result = step2.convertGpsLocationToPayloadData(negativeValuesGps);
     const channel = result.substring(0, 2);
     const type = result.substring(2, 4);
     const gpsData = result.substring(4);

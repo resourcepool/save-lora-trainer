@@ -1,5 +1,4 @@
 const wisnodeService = require("./wisnode-process-service");
-const rescueService = require("./tobeimpl/rescue-service");
 const serialComService = require("./serial-com");
 const displayText = document.getElementById("wisnode-serial");
 const addLineToDisplay = (value) => {
@@ -66,6 +65,6 @@ document.getElementById("connect_port").addEventListener("click", async () => {
 
 });
 document.getElementById("connect").addEventListener("click", wisnodeService.initConnect);
-document.getElementById("send_location").addEventListener("click", rescueService.sendGpsLocation);
+document.getElementById("send_location").addEventListener("click", wisnodeService.sendGpsLocation);
 document.getElementById("fire-custom-cmd").addEventListener("click", fireCustomCmd);
 document.getElementById("logo-takima").addEventListener("click", wisnodeService.debug);

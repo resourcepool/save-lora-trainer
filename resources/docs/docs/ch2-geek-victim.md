@@ -36,7 +36,7 @@ The boilerplate code was already done in your project. That's a real time-saver.
 
 Unfortunately, you did not know anything about AT Commands so you didn't really implement it... 
 
-**==> Implement the code in `src/tobeimpl/rescue-service.js` and use the relevant AT Commands and payload.**    
+**==> Implement the code in `src/tobeimpl/step1.js` and use the relevant AT Commands and payload.**    
 
 Warning: Only implement Step 1 methods, which are : `setModeLoraWan()`, `setAppEui()`, `setAppKey()`  
 
@@ -64,4 +64,4 @@ Bad thing is : you need to implement it yourself.
 
 Hurry up, you're almost there!
 
-==> Implement the method `sendGpsLocation()`   
+**==> Implement the code in `src/tobeimpl/step2.js`**
