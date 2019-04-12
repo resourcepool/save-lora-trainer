@@ -7,7 +7,6 @@ test("STEP 0 : serial ports is correct in conf => if failed, check that: wisnode
         await easySerialComService.init();
         await easySerialComService.destroy();
     }catch (e) {
-
         expect(e.message).not.toContain("Error: No such file or directory,");
         expect(e.message).toEqual('Error Resource temporarily unavailable Cannot lock port');
     }

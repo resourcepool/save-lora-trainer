@@ -57,7 +57,7 @@ const sendCommand = (cmd) => {
 };
 
 const sendPayload = (payload) => {
-    const cmd = "at+send=" + payload.type + "," + payload.port + "," + payload.data;
+    const cmd = "at+send=0,1," + payload;
     sendCommand(cmd);
 };
 
