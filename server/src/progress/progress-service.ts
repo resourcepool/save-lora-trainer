@@ -38,7 +38,7 @@ const hasCompletedPreviousSteps = (team: Team, tag: string): boolean => {
         const team = find(teamProgress, s => s.tag === step);
         return team && team.validated || false;
     });
-    return Boolean(filtered.length) && every(filtered, true);
+    return Boolean(filtered.length) && every(filtered, (v) => v === true);
 };
 
 const validateStep = async (team: Team, tag: string): Promise<boolean> => {

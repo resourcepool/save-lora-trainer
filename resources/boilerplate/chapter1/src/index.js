@@ -24,7 +24,10 @@ let init = () => {
   reviewService.init();
 
   client = mqttConnector.getConnectedMqttClient();
-
+  if (!client) {
+    logger.error("[Step-1] Please check your implementation of getConnectedMqttClient");
+    process.exit(1);
+  }
   client.on('connect', async () => {
     // We wait two seconds before calling onClientConnected callback in order to ensure previous steps were validated successfully.
     await delay(timeBeforeTopicSubscription);
@@ -39,9 +42,9 @@ let init = () => {
  * @param message
  */
 let onMessage = async (topic, message) => {
-  if (!connectedToMqtt) {
-    connectedToMqtt = true;
-    logger.log('info', "Congrats! you are successfully receiving messages from the MQTT Broker")
+  if (!step1Done) {
+    step1Done = true;
+    logger.log('info', "Congrats! Step 1 is done! You are successfully sniffing all messages from the MQTT Broker.");
   }
   if (!gatewayRxTopicRegex.test(topic)) {
     return;
@@ -112,15 +115,16 @@ let delay = (ms) => {
 
 init();
 
-let connectedToMqtt = false;
+let step1Done = false;
 let waiting = 0;
 let checkMqttConnection = setInterval(() => {
-  if (!connectedToMqtt) {
+  if (!step1Done) {
     if (waiting < 3) {
       waiting++;
       logger.log('info', "waiting for messages from MQTT broker")
     } else {
       logger.log('warn', "you should have received messages from the broker by now, check your parameters")
+      process.exit(1);
     }
   } else {
     clearInterval(checkMqttConnection)
