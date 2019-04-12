@@ -23,8 +23,8 @@ export default class Progress {
             new Step(HACKER_STEP_BROKER_SUBSCRIBE),
             new Step(HACKER_STEP_JOIN_REQUEST_SUPPORTED),
             new Step(HACKER_STEP_JOIN_REQUEST_DECODE),
-            new Step(HACKER_STEP_CREATE_DEVICE),
-            new Step(HACKER_STEP_SET_DEVICE_NWK_KEY)
+            //new Step(HACKER_STEP_CREATE_DEVICE),
+            //new Step(HACKER_STEP_SET_DEVICE_NWK_KEY)
         ];
         this.geekInDangerSteps = [
             //new Step(GEEK_IN_DANGER_STEP_SET_DEVICE_SETTINGS),
