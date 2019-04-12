@@ -1,19 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { first } from 'rxjs/internal/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {first} from 'rxjs/internal/operators';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import {FuseConfigService} from '@fuse/services/config.service';
+import {fuseAnimations} from '@fuse/animations';
+import {FuseTranslationLoaderService} from '@fuse/services/translation-loader.service';
 
-import { locale as english } from '../i18n/en';
-import { locale as french } from '../i18n/fr';
+import {locale as english} from '../i18n/en';
+import {locale as french} from '../i18n/fr';
 
-import { TitleService, TeamService, UserService } from '../../../../_services';
-import { Router } from '@angular/router';
-import { forEach, join } from 'lodash';
-import { validateDevEUI } from './dev-eui.validator';
+import {TitleService, TeamService, UserService} from '../../../../_services';
+import {Router} from '@angular/router';
+import {forEach, join} from 'lodash';
+import {validateDevEUI} from './dev-eui.validator';
 
 @Component({
     selector: 'register',
@@ -73,6 +73,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.onKeyBackspace();
             }
         });
+        this.registerForm.get('name').valueChanges.subscribe(() => {
+            this.onKeyPressedTeamName();
+        });
 
 
     }
@@ -112,6 +115,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         if (!this.registerForm.get('devEUI').value.length) {
             this.registerForm.patchValue({devEUI: this.prefixDevEUI});
         }
+    }
+
+    onKeyPressedTeamName(): void {
+        this.registerForm.patchValue({clientId: this.registerForm.get('name').value.replace(/[^a-z0-9.]+/g, "_")})
     }
 
     onKeyBackspace(): void {
