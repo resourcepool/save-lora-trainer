@@ -9,6 +9,9 @@ Before you get to the workshop, please follow the following guidelines.
  * 1 USB Port available
  * Internet connection
  * Requires [Node 10+](https://nodejs.org/en/download/)
+ * You can use NVM to get node/npm easily : for linux/MacOs go to :  https://github.com/creationix/nvm#install--update-script  
+ Once you have installed nvm, issue the following command : `nvm install v10` and you are ready to go  
+ For windows, try https://github.com/coreybutler/nvm-windows#installation--upgrades but you will need to previously uninstall any version of node you have on your computer.
 
 ## Setup
  * Clone the current repository in your workspace
