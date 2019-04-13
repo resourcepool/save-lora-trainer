@@ -1,4 +1,4 @@
-# Save-LoRa
+# Save-LoRa - Game Guide
 
 Let's make it quick.
 

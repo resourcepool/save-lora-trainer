@@ -51,7 +51,8 @@ We have provided a MQTT client, take a look at their official doc here: [https:/
  1. Connect to the MQTT Broker
  2. Subscribe to all topics
 
-**Important:** 
+**Important:**  
+
 Hint 1:  
 All the code you need to implement is in **chapter1/src/tobeimpl/step-1**
 
@@ -87,8 +88,10 @@ The file you will need to modify is in **chapter1/src/step-2/JoinRequestPacketDe
  2. Implement the `chapter1/src/step-2/JoinRequestPacketDecoder.decode()` method
 
 **Tests:**
+
 To make your life easier, we have implemented a sequence of tests to validate these two points.  
 Just run `npm test` and it should give you a good way to see whether your implementation of both methods is right or not.
+
 The test file is available in **chapter1/src/step-2/JoinRequestPacketDecoder.spec.js** for reference.
 
 **Important:**
@@ -123,7 +126,7 @@ Now that you have found which Packets are JoinRequests, you need to extract its 
   
 We are looking for the AppEUI, the DevEUI, the DevNOnce and the MIC.  
 
-**Important:**  
+**Important:**   
 
 Hint 1:  
 Don't forget that we have already deserialized the base64 string payload into a byte Buffer! 
