@@ -1,5 +1,6 @@
 const step1 = require("./tobeimpl/step1");
 const step2 = require("./tobeimpl/step2");
+const conf = require("./conf");
 const serialComService = require("./serial-com");
 
 const ProcessStep = {

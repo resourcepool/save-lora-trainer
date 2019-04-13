@@ -11,7 +11,7 @@
             <div class="title">{{ team?.name | uppercase }}</div>
 
             <p class="mat-h3">ClientId : {{ team?.clientId }}</p>
-            <p class="mat-h3">DevEUI : {{ team?.devEUI }}</p>
+            <p class="mat-h3">DevEUI : {{ insertCharsEveryNChars(team?.devEUI, 2) }}</p>
             <p class="mat-h3">Provided location :</p>
             Lat : {{ team?.secretLocation.lat }}
             Lng : {{ team?.secretLocation.lng }}
