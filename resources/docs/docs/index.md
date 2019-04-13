@@ -22,6 +22,12 @@ Can you make your way through the LoRaWAN protocol, connect to a network, and em
 Well, let's hope the answer is yes, because your survival depends on it.
 
 
+## Before your Start
+
+ 1. Register your team and your device on [https://www.save-lora.takima.io](https://www.save-lora.takima.io)
+ 2. Change your configuration in **chapter1/src/conf.js** and **chapter2/src/conf.js** with the elements provided on team creation
+
+
 **Hack Gotham City's LoRa Network**
 
 [Chapter one steps are available here](ch1-rescue-hacker.md)
