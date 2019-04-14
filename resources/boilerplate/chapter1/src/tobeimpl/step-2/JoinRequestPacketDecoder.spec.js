@@ -71,7 +71,7 @@ const validMessage = {
     "dataRate": {"modulation": "LORA", "spreadFactor": 12, "bandwidth": 125},
     "board": 0,
     "antenna": 0
-  }, "phyPayload": "AEvKMb6JWFv321eME8sz8kQBANapY24="
+  }, "phyPayload": "AEvKMb6JWFv321eME8sz8kQB1NapY24="
 };
 const validMessageNoPhyPayload = {
   "rxInfo": {
@@ -94,7 +94,8 @@ const validMessageNoPhyPayload = {
 };
 const validMessageDevEUI = "44:f2:33:cb:13:8c:57:db";
 const validMessageAppEUI = "f7:5b:58:89:be:31:ca:4b";
-const validMessageDevNonce = 1;
+const validMessageDevNonce = 54273;
+const invalidMessageDevNonce = -11263;
 const validMessageMic = "6e63a9d6";
 const validMessage2 = {
   "rxInfo": {
@@ -148,6 +149,8 @@ test('STEP 2.2 : join request valid 1 => hint if failed, you are not correctly p
   expect(decoded).toBeDefined();
   expect(decoded.devEUI).toBe(utils.normalizeHexString(validMessageDevEUI));
   expect(decoded.appEUI).toBe(utils.normalizeHexString(validMessageAppEUI));
+  expect(typeof decoded.devNOnce, "read again the comment, devNOnce should be returned as a NUMBER (others params are string)").toBe('number');
+  expect(decoded.devNOnce, "signed VS unsigned int, it matters... devNOnce is an unsigned int").not.toBe(invalidMessageDevNonce);
   expect(decoded.devNOnce).toBe(validMessageDevNonce);
   expect(decoded.mic).toBe(validMessageMic);
 });
@@ -159,6 +162,7 @@ test('STEP 2.2 : join request valid 2 => hint if failed, you are not correctly p
   expect(decoded).toBeDefined();
   expect(decoded.devEUI).toBe(utils.normalizeHexString(validDevEUI));
   expect(decoded.appEUI).toBe(utils.normalizeHexString(validAppEUI));
+  expect(typeof decoded.devNOnce, "read again the comment, devNOnce should be returned as a NUMBER (others params are string)").toBe('number');
   expect(decoded.devNOnce).toBe(validMessage2DevNonce);
   expect(decoded.mic).toBe(validMessage2Mic);
 });
