@@ -59,6 +59,10 @@ export class TeamService {
         return map(this.teamProgress, 'clientId');
     }
 
+    unlockStep(step: Step, clientId: string): Observable<Object> {
+        return this.http.post(`${environment.apiAdminUrl}/teams/progress/unlock`, {step, clientId}, this.httpConfig.getAdminHeaders())
+    }
+
     /** Mappers **/
     registerMapper(team: Team): object {
         const devEUISuffix = team.devEUI.replace('13:37:00:00', '');

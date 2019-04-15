@@ -9,6 +9,7 @@ import { AdminComponent } from './admin.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatIconModule, MatSortModule, MatTableModule, MatTooltipModule } from '@angular/material';
 import { AuthGuard } from 'app/_guard';
+import { TeamProgressManagerComponent } from './team-progress-manager/team-progress-manager.component';
 
 const routes = [
     {
@@ -21,6 +22,7 @@ const routes = [
 @NgModule({
     declarations: [
         AdminComponent,
+        TeamProgressManagerComponent,
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -37,7 +39,8 @@ const routes = [
         MatSortModule,
     ],
     exports     : [
-        AdminComponent
+        AdminComponent,
+        TeamProgressManagerComponent,
     ],
     providers: [
         AuthGuard,

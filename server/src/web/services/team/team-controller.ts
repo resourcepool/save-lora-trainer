@@ -1,9 +1,10 @@
 import { NextFunction, Response, Request } from 'express';
 import Team from '../../../team/models/Team';
-import { addTeam, findAll, findByClientId } from '../../../team/team-dao';
+import { addTeam, findAll, findByClientId, updateProgress } from '../../../team/team-dao';
 import Progress from "../../../progress/models/Progress";
 import {config} from '../../../config';
-import { round } from 'lodash';
+import { round, map } from 'lodash';
+import { mapStep } from './team-service';
 
 const randomLocation = (): {lat: number, lng: number} => {
     let lngRange = config.team.targetBBox[2] - config.team.targetBBox[0];
@@ -54,3 +55,21 @@ export const getAllTeamProgressAction = async (req: Request, res: Response, next
     }
     return res.status(200).send(teams);
 };
+
+export const unlockChallengeAction = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const team = await findByClientId(req.body.clientId);
+        if (!team) {
+            return res.status(404).send('No Team found');
+        }
+
+        team.progress.hackerSteps = mapStep(req.body.step, team.progress.hackerSteps || []);
+        team.progress.geekInDangerSteps = mapStep(req.body.step, team.progress.geekInDangerSteps || []);
+
+        const result = await updateProgress(team);
+        return res.status(200).send(result);
+    } catch (err) {
+        return res.status(500).send(err);
+    }
+};
+

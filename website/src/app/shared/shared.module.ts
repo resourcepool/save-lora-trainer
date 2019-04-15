@@ -10,7 +10,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Error404Module } from '../main/pages/errors/404/error-404.module';
 
 import { PipesModule } from './pipes/pipes.module';
-import { TitleService, TeamService, ScoringService, TimeService, AuthenticationService, TokenService } from '../_services';
+import {
+    TitleService,
+    TeamService,
+    ScoringService,
+    TimeService,
+    AuthenticationService,
+    TokenService,
+    TeamUtils
+} from '../_services';
 import { HttpConfigService } from '../_services/http-config.service';
 
 
@@ -71,6 +79,7 @@ import { HttpConfigService } from '../_services/http-config.service';
     ],
     providers: [
         TeamService,
+        TeamUtils,
         TitleService,
         ScoringService,
         TimeService,

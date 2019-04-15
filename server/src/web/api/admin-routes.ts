@@ -1,6 +1,7 @@
 import {setDateAction, resetDateAction} from "../services/dates/date-controller";
 import {authAdminJwtHandler} from "../middleware/checks";
 import {resetAction} from "../services/admin/admin-controller";
+import { unlockChallengeAction } from '../services/team/team-controller';
 
 export default [
   {
@@ -25,6 +26,14 @@ export default [
     handler: [
       authAdminJwtHandler,
       resetAction,
+    ]
+  },
+  {
+    path: "/api/admin/teams/progress/unlock",
+    method: "post",
+    handler: [
+      authAdminJwtHandler,
+      unlockChallengeAction,
     ]
   },
 ];

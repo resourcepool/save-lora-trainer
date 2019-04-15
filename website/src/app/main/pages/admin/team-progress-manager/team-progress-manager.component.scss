@@ -1,0 +1,51 @@
+mat-table {
+  .background-row:nth-child(2n) {
+    background: #383838;
+  }
+
+  .background-row:nth-child(2n+1) {
+    background: inherit;
+  }
+}
+
+.mat-column-name {
+  max-width: 250px
+}
+
+.mat-column-scores {
+  max-width: 150px;
+}
+
+.team-name {
+  font-size: 1.5em;
+  text-transform: capitalize;
+}
+
+.chapter-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin: auto;
+}
+
+.team-progress {
+  margin: auto;
+}
+
+.score {
+  font-size: 1.8em;
+  margin: auto;
+}
+
+mat-icon.star {
+  margin-left: 5px;
+  color: #c2185b;
+}
+
+button.unlock-btn {
+  margin: 0 8px;
+  background-color: #AA0000;
+  color: white;
+  &.unlocked {
+    background-color: #00AA00;
+  }
+}

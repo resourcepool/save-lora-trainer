@@ -3,7 +3,6 @@
     <div class="center" fusePerfectScrollbar>
         <!-- HEADER -->
         <div class="header accent accent-bg p-24 pb-0" fxLayout="column" fxLayoutAlign="space-between">
-
             <div fxLayout="row" fxLayoutAlign="space-between start">
                 <span class="mat-display-4 mb-0 welcome-message"
                       [@animate]="{value:'*',params:{x:'50px'}}">Admin Panel
@@ -13,21 +12,34 @@
         <!-- /HEADER-->
 
         <!-- CONTENT -->
-        <div class="content px-24 pt-8">
-            <mat-card class="game-card mat-elevation-z5">
-                <mat-card-header>
-                    <mat-card-title>Game start</mat-card-title>
-                    <mat-card-subtitle>Game not started</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <span class="start-date">{{ startDate | date:'HH:mm:ss' }}</span>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="startGame()">Start game</button>
-                    <button mat-raised-button color="warn" (click)="resetDate()">Stop/end game</button>
-                    <button mat-raised-button color="warn" (click)="resetGame()">Reset game</button>
-                </mat-card-actions>
-            </mat-card>
+        <div fxLayout="column" fxLayoutAlign="start">
+            <div class="content px-24 pt-8" fxFlex="1 0 auto">
+                <mat-card class="game-card mat-elevation-z5">
+                    <mat-card-header>
+                        <mat-card-title>Game start</mat-card-title>
+                        <mat-card-subtitle>Game not started</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <span class="start-date">{{ startDate | date:'HH:mm:ss' }}</span>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="startGame()">Start game</button>
+                        <button mat-raised-button color="warn" (click)="resetDate()">Stop/end game</button>
+                        <button mat-raised-button color="warn" (click)="resetGame()">Reset game</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+
+            <div class="content px-24 pt-8" fxFlex="3 0 auto">
+                <mat-card class="game-card mat-elevation-z5">
+                    <mat-card-header>
+                        <mat-card-title>Team management</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <team-progress-manager></team-progress-manager>
+                    </mat-card-content>
+                </mat-card>
+            </div>
         </div>
 
         <!-- /CONTENT -->

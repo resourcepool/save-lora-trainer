@@ -1,0 +1,51 @@
+<mat-table [dataSource]="teams" matSort class="mat-elevation-z2">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="chapter-title">
+        Team
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span class="team-name">{{element.name}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Rescue Hacker Column -->
+  <ng-container matColumnDef="challenges">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="chapter-title">
+        Challenges
+      </div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="center center">
+      <div *ngFor="let step of element.progress.hackerSteps" fxFlex="1 1 auto" class="text-center">
+        <button mat-raised-button
+                class="unlock-btn"
+                [ngClass]="{'unlocked': step?.validated}"
+                (click)="setUnlocked(step, element.clientId)"
+                [matTooltip]="step?.tag"
+                matTooltipPosition="above"
+                matTooltipClass="tooltip-challenge">
+          {{ step?.validated ? 'Unlocked': 'Locked' }}
+        </button>
+      </div>
+
+      <div *ngFor="let step of element.progress.geekInDangerSteps" fxFlex="1 1 auto" class="text-center">
+        <button mat-raised-button
+                class="unlock-btn"
+                [ngClass]="{'unlocked': step?.validated}"
+                (click)="setUnlocked(step, element.clientId)"
+                [matTooltip]="step?.tag"
+                matTooltipPosition="above"
+                matTooltipClass="tooltip-challenge">
+          {{ step?.validated ? 'Unlocked': 'Locked' }}
+        </button>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['name', 'challenges']"></mat-header-row>
+  <mat-row class="background-row" *matRowDef="let row; columns: ['name', 'challenges'];"></mat-row>
+</mat-table>
