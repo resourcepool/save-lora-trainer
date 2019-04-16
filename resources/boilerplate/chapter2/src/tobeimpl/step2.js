@@ -5,7 +5,7 @@
  *
  *  const gpsLocation = {
  *      latitude: conf.latitude,
- *      longitude:conf.longitude,
+ *      longitude: conf.longitude,
  *      altitudeInCm: conf.altitudeAsCm
  *  }
  *

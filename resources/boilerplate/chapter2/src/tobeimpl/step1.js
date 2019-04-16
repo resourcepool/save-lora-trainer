@@ -25,19 +25,17 @@ const setModeLoraWan = () => {
 
 const setAppEui = () => {
     const appEUI = conf.appEUI;
-    serialComService.sendCommand(("CHANGEME"));
+    serialComService.sendCommand("CHANGEME");
 };
 
 const setAppKey = () => {
     const appKey = conf.appKey;
-    serialComService.sendCommand(("CHANGEME"));
+    serialComService.sendCommand("CHANGEME");
 };
 
 const sendJoinRequest = () => {
-    serialComService.sendCommand(("CHANGEME"));
+    serialComService.sendCommand("CHANGEME");
 };
-
-
 
 
 module.exports = {

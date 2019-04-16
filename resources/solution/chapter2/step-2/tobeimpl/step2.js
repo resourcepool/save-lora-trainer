@@ -5,7 +5,7 @@
  *
  *  const gpsLocation = {
  *      latitude: conf.latitude,
- *      longitude:conf.longitude,
+ *      longitude: conf.longitude,
  *      altitudeInCm: conf.altitudeAsCm
  *  }
  *
@@ -13,7 +13,7 @@
  *
  *
  * a few hints:
- *  - the returned String will be used in the AT command as : "at+send=0,1,{your string}"
+ *  - the returned String will be used in the AT command as : "at+send=0,1,{your string}". Be careful, the returned String might need to contain more information than only encoded gps values.
  *  - use the tests (`npm test` in chapter2 directory is the command you are looking for)
  *  - don't forget : a gpsLocation contains 3 values, and they are ALL signed! Be careful when converting a decimal value to hexa, you must take care of negative values.
  *  - the altitude is given AS CENTIMETERS. (you may need to convert it as meters... or NOT)
@@ -24,26 +24,27 @@
  *
  */
 
-const convertGpsLocationToPayloadData = (gpsLocation) => {
-    return "01" + "88" + gpsCoordAsHexa(gpsLocation.latitude)
-        + gpsCoordAsHexa(gpsLocation.longitude) + gpsLocation.altitudeInCm.toString(16).padStart(6, "0");
-};
-
-const decimalToHexString = (number) => {
-    if (number < 0){
-        number = 0xFFFFFF + number + 1;
+const convertToHexa = (rawValue) => {
+    if (rawValue < 0) {
+        rawValue = 0xFFFFFF + rawValue + 1;
     }
-    return number.toString(16);
+    return rawValue.toString(16).padStart(6, '0');
 };
 
-const gpsCoordAsHexa = (coord) => {
-    const rawData = Math.trunc(round_number(coord, 4) * 10000) ;
-    return decimalToHexString(rawData).slice(-6).padStart(6, "0");
+const convertToRaw = (value) => {
+    return Math.round(value * 10000);
 };
 
-const round_number = (num, dec) => {
-    return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+const convertGpsToHexa = (latitude, longitude, altitude) => {
+    return convertToHexa(convertToRaw(latitude)) + convertToHexa(convertToRaw(longitude)) + convertToHexa(altitude);
 };
+
+
+const convertGpsLocationToPayloadData = (gpsLocation) => {
+    //TODO implement me
+    return "0188" + convertGpsToHexa(gpsLocation.latitude, gpsLocation.longitude, gpsLocation.altitudeInCm);
+};
+
 
 module.exports = {
     convertGpsLocationToPayloadData

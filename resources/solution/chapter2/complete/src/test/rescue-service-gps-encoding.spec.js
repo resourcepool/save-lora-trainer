@@ -20,7 +20,7 @@ const negativeValuesGps = {
     altitudeInCm: 1000
 };
 const encodedEasyGps = "000000000000000000";
-const encodedPositiveValuesGps = "01e23f09fbf10004d2";
+const encodedPositiveValuesGps = "01e24009fbf10004d2";
 const encodedNegativeValuesGps = "06765ff2960a0003e8";
 
 test('STEP 3 : easy gps location', () => {
