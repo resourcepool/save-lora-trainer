@@ -45,7 +45,6 @@ const convertGpsLocationToPayloadData = (gpsLocation) => {
     return "0188" + convertGpsToHexa(gpsLocation.latitude, gpsLocation.longitude, gpsLocation.altitudeInCm);
 };
 
-
 module.exports = {
     convertGpsLocationToPayloadData
 };
