@@ -16,7 +16,7 @@ services:
       MYSQL_PASSWORD: {{ save_lora_db_password }}
       MYSQL_DATABASE: {{ save_lora_db_database }}
     volumes:
-      - /etc/appserver/db/init:/docker-entrypoint-initdb.d
+      - /etc/appserver/conf/db/init:/docker-entrypoint-initdb.d
       - /opt/appserver/db:/var/lib/mysql
     logging: *default-logging
   adminer:

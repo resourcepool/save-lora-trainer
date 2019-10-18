@@ -6,11 +6,10 @@ The game briefing and details are in the `guide/` folder.
 
 ## Requirements
 
-This game requires : 
+This game requires :
  * Two public production servers with domain-names
  * One Github repository for players
  * RAK811 Wisnode LoRa Nodes (as much as you have players)
-
 
 ## Software requirements
  * python3
@@ -18,7 +17,6 @@ This game requires :
  * node 8+
  * mkdocs
  * mkdocs-material theme
- 
 
 ## Deploy
 
@@ -26,3 +24,4 @@ To deploy the game :
  1. Change all constants in bin/constants.py
  2. Run `python3 bin/setup.py`
  3. Run playbook `ansible/site.yml` to setup your production servers
+ 4. Default password is `TakimaRocks!!!`

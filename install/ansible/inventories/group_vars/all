@@ -20,7 +20,7 @@ save_lora_api_proxy_secret: "IAmTheGodOfGothamAndThisPasswordIsSeri0u$"
 save_lora_api_proxy_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDciLCJuYW1lIjoiVHJpbml0eSIsImlhdCI6MTU0NjI5NzIwMH0.lMVZyGRwiq0LK4INzYIQj0wST0qMsImXG-9-qg1j8CU"
 save_lora_api_admin_secret: "U9KXC8INT4uQKbOPRc7Gm9rVpbH9BsRtyteQqZ7etKJFu7JJBA9qIeW5ZXwJoN40"
 save_lora_api_admin_username: "admin"
-save_lora_api_admin_password: "password"
+save_lora_api_admin_password: "TakimaRocks!!!"
 
 # Save Lora AppServer DB Configuration
 save_lora_db_host: "db"
@@ -39,6 +39,8 @@ loraserver_api_jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb3JhLWFwcC
 loraserver_jwt_user: "root"
 loraserver_device_profile_id: "1d99a006-e617-4fb3-9ffe-a71567ee36a7"
 loraserver_application_id: 1
+loraserver_service_profile_id: "790bb798-d88c-45bd-9e97-0811b57e7bd0"
+loraserver_organization_id: 1
 
 # Docker Configuration
 save_lora_api_image: "resourcepool/save-lora-appserver"

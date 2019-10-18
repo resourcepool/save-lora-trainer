@@ -30,6 +30,12 @@
   become: yes
   shell: "curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose"
 
+- name: Make docker-compose accessible
+  become: yes
+  file:
+    path: /bin/docker-compose
+    mode: '0755'
+
 - name: Add current system user to docker group
   user:
     name: "{{system_user}}"

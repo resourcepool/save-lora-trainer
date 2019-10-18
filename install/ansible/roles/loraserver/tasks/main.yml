@@ -3,8 +3,13 @@
   become: yes
   file: path=/opt/loraserver/redis state=directory mode=0755 owner=1000 group=1000 recurse=yes
 
+- name: Extract bootstraped db
+  become: yes
+  unarchive:
+    src: dump/db.tar.gz
+    dest: /opt/loraserver
 
-- name: Create content directory (db)
+- name: Ensure db rights
   become: yes
   file: path=/opt/loraserver/db state=directory mode=0755 owner=1000 group=1000 recurse=yes
 
